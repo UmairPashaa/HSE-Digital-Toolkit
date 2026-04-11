@@ -107,8 +107,8 @@ A ready-to-use toolbox talk form covering:
 | Risk Assessment | ✅ Done |
 | Incident Report | ✅ Done |
 | Toolbox Talk | ✅ Done |
-| Site Inspection Checklist | 🔄 In Progress |
-| PPE Inspection Checklist | 📅 Planned |
+| Site Inspection Checklist | ✅ Done |
+| PPE Inspection Checklist | ✅ Done |
 | AI Prompt Library for Hazard Analysis | 📅 Planned |
 
 ---
