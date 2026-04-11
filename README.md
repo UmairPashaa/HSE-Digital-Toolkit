@@ -28,12 +28,12 @@ The goal is simple: give safety officers ready-to-use digital tools that work on
 HSE-Digital-Toolkit/
 │
 ├── templates/
-│   ├── JSA-Template.md              ✅ Available
-│   ├── Risk-Assessment-Template.md  🔄 Coming Soon
-│   ├── Incident-Report-Template.md  🔄 Coming Soon
-│   └── Toolbox-Talk-Template.md     🔄 Coming Soon
+│   ├── JSA-Template.md                ✅ Available
+│   ├── Risk-Assessment-Template.md    ✅ Available
+│   ├── Incident-Report-Template.md    ✅ Available
+│   └── Toolbox-Talk-Template.md       ✅ Available
 │
-├── checklists/                      🔄 Coming Soon
+├── checklists/                        🔄 Coming Soon
 │   ├── Site-Inspection-Checklist.md
 │   └── PPE-Inspection-Checklist.md
 │
@@ -56,22 +56,58 @@ A complete JSA form covering:
 - Worker sign-off section
 - Revision log
 
-**How to use:**
-1. Open the file
-2. Click "Raw" to see plain text
-3. Copy and paste into Word, Google Docs, or print directly
+---
+
+### 2. Risk Assessment
+**File:** `templates/Risk-Assessment-Template.md`
+
+A full risk assessment form covering:
+- Scope and persons at risk
+- Risk rating matrix (Likelihood x Severity)
+- Hazard identification with initial and residual risk scores
+- Hierarchy of controls
+- Emergency arrangements
+- CAPA tracking
+- Review and revision log
+
+---
+
+### 3. Incident Report
+**File:** `templates/Incident-Report-Template.md`
+
+A comprehensive incident report covering:
+- Incident type classification
+- Injured person details
+- Step-by-step incident description
+- Root cause analysis — human, system, and environmental factors
+- Corrective and Preventive Actions (CAPA)
+- Multi-level sign-off
+- Follow-up review
+
+---
+
+### 4. Toolbox Talk
+**File:** `templates/Toolbox-Talk-Template.md`
+
+A ready-to-use toolbox talk form covering:
+- Key safety points for the topic
+- Hazards and prevention measures
+- Dos and Don'ts
+- Lesson from incident or near miss
+- Worker attendance and sign-off
+- List of 12 suggested TBT topics
 
 ---
 
 ## 🛣️ Roadmap
 
-| Template | Status |
+| Template / Tool | Status |
 |---|---|
 | Job Safety Analysis (JSA) | ✅ Done |
-| Risk Assessment | 🔄 In Progress |
-| Incident Report | 📅 Planned |
-| Toolbox Talk | 📅 Planned |
-| Site Inspection Checklist | 📅 Planned |
+| Risk Assessment | ✅ Done |
+| Incident Report | ✅ Done |
+| Toolbox Talk | ✅ Done |
+| Site Inspection Checklist | 🔄 In Progress |
 | PPE Inspection Checklist | 📅 Planned |
 | AI Prompt Library for Hazard Analysis | 📅 Planned |
 
