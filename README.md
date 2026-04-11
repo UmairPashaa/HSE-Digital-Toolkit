@@ -33,7 +33,7 @@ HSE-Digital-Toolkit/
 │   ├── Incident-Report-Template.md    ✅ Available
 │   └── Toolbox-Talk-Template.md       ✅ Available
 │
-├── checklists/                        🔄 Coming Soon
+├── checklists/                        ✅ Available
 │   ├── Site-Inspection-Checklist.md
 │   └── PPE-Inspection-Checklist.md
 │
