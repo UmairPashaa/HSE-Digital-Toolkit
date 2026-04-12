@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HSE Digital Toolkit</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f6f9;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0f172a, #2563eb);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+    }
+
+    header p {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 30px 20px 50px;
+    }
+
+    .intro {
+      background: white;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      margin-bottom: 25px;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .tool-card {
+      background: white;
+      padding: 22px;
+      border-radius: 14px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    }
+
+    .tool-card h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: #111827;
+    }
+
+    .tool-card p {
+      color: #4b5563;
+      min-height: 60px;
+    }
+
+    .tool-card a,
+    .tool-card span {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .tool-card a {
+      background: #2563eb;
+      color: white;
+    }
+
+    .tool-card a:hover {
+      background: #1d4ed8;
+    }
+
+    .coming-soon {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>HSE Digital Toolkit</h1>
+    <p>Simple digital tools for HSE professionals</p>
+  </header>
+
+  <div class="container">
+    <div class="intro">
+      <h2>Welcome</h2>
+      <p>
+        This toolkit is being developed to help HSE professionals with practical digital tools
+        such as risk assessment, checklists, and reporting systems.
+      </p>
+    </div>
+
+    <div class="tools-grid">
+      <div class="tool-card">
+        <h3>Risk Assessment Tool</h3>
+        <p>
+          Multi-hazard risk assessment tool with scoring, chart, and PDF report.
+        </p>
+        <a href="https://umairpashaa.github.io/hse-risk-calculator/" target="_blank">Open Tool</a>
+      </div>
+
+      <div class="tool-card">
+        <h3>PPE Checklist Tool</h3>
+        <p>
+          A simple checklist tool for checking PPE compliance during site visits.
+        </p>
+        <span class="coming-soon">Coming Soon</span>
+      </div>
+
+      <div class="tool-card">
+        <h3>Incident Report Tool</h3>
+        <p>
+          A digital form for recording and reviewing workplace incidents.
+        </p>
+        <span class="coming-soon">Coming Soon</span>
+      </div>
+
+      <div class="tool-card">
+        <h3>Safety Inspection Tool</h3>
+        <p>
+          A site inspection tool for identifying hazards and recording findings.
+        </p>
+        <span class="coming-soon">Coming Soon</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Developed by Umair Pasha for HSE professionals
+  </footer>
+</body>
+</html>
