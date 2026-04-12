@@ -3,689 +3,641 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PPE Inspection Checklist | HSE Digital Toolkit</title>
+  <title>Advanced PPE Checklist | HSE Digital Toolkit</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
     :root {
-      --bg: #eef5f1;
+      --bg: #f3f4f6;
       --white: #ffffff;
       --dark: #0f172a;
-      --green: #0f766e;
-      --green-dark: #0b5d57;
-      --lime: #84cc16;
+      --green: #059669;
+      --green-light: #d1fae5;
+      --red: #dc2626;
+      --red-light: #fee2e2;
+      --gray: #9ca3af;
+      --gray-light: #f3f4f6;
       --blue: #2563eb;
       --amber: #f59e0b;
-      --red: #dc2626;
-      --muted: #6b7280;
-      --border: #d9e5de;
-      --shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
-      --radius: 20px;
+      --border: #e5e7eb;
+      --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      --radius: 16px;
     }
 
-    * {
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; scroll-behavior: smooth; }
 
     body {
       margin: 0;
       font-family: "Poppins", sans-serif;
       color: #1f2937;
-      background:
-        linear-gradient(rgba(255,255,255,0.80), rgba(255,255,255,0.88)),
-        repeating-linear-gradient(
-          45deg,
-          rgba(15,118,110,0.03),
-          rgba(15,118,110,0.03) 12px,
-          rgba(37,99,235,0.03) 12px,
-          rgba(37,99,235,0.03) 24px
-        );
+      background-color: var(--bg);
     }
 
-    a { text-decoration: none; }
-
+    /* Top Navigation */
     .topbar {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 3px solid var(--blue);
-    }
-
-    .topbar-inner {
-      max-width: 1000px;
-      margin: 0 auto;
+      background: var(--dark);
       padding: 15px 20px;
       display: flex;
       justify-content: space-between;
-      gap: 16px;
       align-items: center;
-      flex-wrap: wrap;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-bottom: 4px solid var(--blue);
     }
 
-    .brand {
-      display: flex;
-      gap: 14px;
-      align-items: center;
+    .brand { display: flex; align-items: center; gap: 12px; color: white; }
+    .brand i { font-size: 28px; color: var(--blue); }
+    .brand h1 { margin: 0; font-size: 20px; font-weight: 700; }
+    
+    .nav-btn {
       color: white;
-    }
-
-    .brand-icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, var(--blue), var(--green));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.22);
-    }
-
-    .brand-text h1 { margin: 0; font-size: 20px; line-height: 1.1; }
-    .brand-text p { margin: 4px 0 0; font-size: 12px; color: #cbd5e1; }
-
-    .nav a {
-      color: white;
-      padding: 10px 14px;
-      border-radius: 10px;
+      text-decoration: none;
+      background: rgba(255,255,255,0.1);
+      padding: 8px 16px;
+      border-radius: 8px;
       font-size: 14px;
-      border: 1px solid rgba(255,255,255,0.12);
-      transition: 0.25s ease;
+      transition: 0.3s;
+    }
+    .nav-btn:hover { background: var(--blue); }
+
+    /* Dashboard Container */
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 0 15px;
     }
 
-    .nav a:hover {
-      background: rgba(37, 99, 235, 0.2);
-      border-color: rgba(37, 99, 235, 0.5);
-    }
-
-    .page {
-      max-width: 1000px;
-      margin: 30px auto;
-      padding: 0 20px 40px;
-    }
-
-    .section-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 24px;
+    /* Hero / Visual Header */
+    .hero {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      border-radius: var(--radius);
+      padding: 30px;
+      color: white;
+      text-align: center;
+      margin-bottom: 25px;
       box-shadow: var(--shadow);
-      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::after {
+      content: '\f7d6'; /* Hard hat icon code */
+      font-family: 'FontAwesome';
+      position: absolute;
+      right: -20px;
+      bottom: -40px;
+      font-size: 180px;
+      opacity: 0.1;
+    }
+
+    .hero h2 { margin: 0 0 10px; font-size: 32px; }
+    .hero p { margin: 0; font-size: 15px; opacity: 0.9; }
+
+    /* Score Dashboard */
+    .score-board {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 15px;
       margin-bottom: 25px;
     }
 
-    .section-head { margin-bottom: 20px; border-bottom: 2px solid var(--bg); padding-bottom: 15px;}
-    .section-head h3 { margin: 0; font-size: 24px; color: var(--dark); display: flex; align-items: center; gap: 10px;}
-    .section-head h3 i { color: var(--blue); }
-    .section-head p { margin: 8px 0 0; color: var(--muted); font-size: 14px; }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
+    .score-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
     }
 
-    .col-full { grid-column: span 2; }
+    .score-card h3 { margin: 0; font-size: 36px; color: var(--dark); }
+    .score-card p { margin: 5px 0 0; font-size: 13px; color: var(--gray); font-weight: 600;}
+    .score-pass h3 { color: var(--green); }
+    .score-fail h3 { color: var(--red); }
 
-    label {
-      display: block;
-      margin-bottom: 7px;
-      font-weight: 600;
-      color: #111827;
-      font-size: 14px;
+    /* Progress Bar */
+    .progress-container {
+      background: var(--white);
+      padding: 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 25px;
+      border: 1px solid var(--border);
+    }
+    
+    .progress-header { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 600;}
+    .progress-bg { width: 100%; background: #e5e7eb; height: 12px; border-radius: 10px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--green); width: 0%; transition: width 0.5s ease; }
+
+    /* Form Inputs */
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 25px;
+      box-shadow: var(--shadow);
+      margin-bottom: 25px;
+      border: 1px solid var(--border);
     }
 
-    input, select, textarea {
-      width: 100%;
-      font-family: inherit;
-      font-size: 14px;
-      padding: 12px 13px;
-      border: 1px solid #d1d5db;
-      border-radius: 12px;
-      background: #f9fafb;
-    }
-
-    input:focus, select:focus, textarea:focus {
-      outline: none;
-      border-color: var(--blue);
-      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
-    }
-
-    /* Checklist Items styling */
-    .checklist-item {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 18px;
-      margin-bottom: 16px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      align-items: start;
-    }
-
-    .item-title {
-      font-size: 16px;
+    .card-title {
+      font-size: 18px;
       font-weight: 700;
       color: var(--dark);
+      margin-top: 0;
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 12px;
-      grid-column: span 2;
+      border-bottom: 2px solid var(--bg);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
     }
 
-    .item-title i {
-      color: var(--blue);
+    .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    @media(max-width: 600px) { .input-grid { grid-template-columns: 1fr; } }
+
+    .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #4b5563; }
+    .form-group input, .form-group textarea {
+      width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 10px; font-family: inherit; font-size: 14px; background: #f9fafb;
+    }
+
+    /* Checklist App-Style Items */
+    .category-group { margin-bottom: 30px; }
+    .category-title {
+      font-size: 16px;
+      font-weight: 700;
       background: #eff6ff;
-      padding: 8px;
-      border-radius: 8px;
+      color: var(--blue);
+      padding: 12px 15px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
     }
 
-    .status-select {
+    .check-item {
+      background: #fdfdfd;
+      border: 1px solid var(--border);
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+
+    .check-header {
+      font-size: 14px;
       font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--dark);
+    }
+
+    /* Smart Buttons (Segmented Controls) */
+    .segment-control {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
     }
     
-    .status-select.pass { color: var(--green-dark); background: #dcfce7; border-color: #86efac;}
-    .status-select.fail { color: #991b1b; background: #fee2e2; border-color: #fca5a5;}
-    .status-select.na { color: var(--muted); }
+    .segment-btn {
+      flex: 1;
+      padding: 10px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      background: white;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
 
+    .segment-btn.active.pass { background: var(--green-light); border-color: var(--green); color: var(--green); }
+    .segment-btn.active.fail { background: var(--red-light); border-color: var(--red); color: var(--red); }
+    .segment-btn.active.na { background: var(--gray-light); border-color: var(--gray); color: #4b5563; }
+
+    .check-item input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 13px;
+      border: 1px dashed var(--gray);
+      border-radius: 8px;
+      display: none; /* Hidden by default, shown if fail */
+    }
+
+    /* Toolbar */
     .toolbar {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 40px;
     }
 
     .btn {
-      padding: 12px 20px;
+      padding: 14px;
       border: none;
       border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
       cursor: pointer;
-      font-weight: 600;
-      display: inline-flex;
+      display: flex;
+      justify-content: center;
       align-items: center;
       gap: 8px;
-      transition: 0.2s;
-      font-family: inherit;
       color: white;
+      transition: 0.2s;
     }
-
     .btn:hover { transform: translateY(-2px); }
-    .btn-blue { background: linear-gradient(135deg, var(--blue), #1d4ed8); }
-    .btn-green { background: linear-gradient(135deg, var(--green), var(--green-dark)); }
-    .btn-amber { background: linear-gradient(135deg, #f59e0b, #d97706); }
-    .btn-red { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    
+    .btn-blue { background: var(--blue); }
+    .btn-green { background: var(--green); }
+    .btn-amber { background: var(--amber); }
+    .btn-red { background: var(--red); }
 
-    /* Signature Box */
-    .image-upload {
-      border: 2px dashed var(--blue);
-      padding: 20px;
-      text-align: center;
-      border-radius: 12px;
-      cursor: pointer;
-      position: relative;
-      background: #eff6ff;
-      color: var(--blue);
-      font-weight: 600;
-      margin-top: 10px;
-    }
-    .image-upload img { max-width: 100%; max-height: 80px; display: none; }
-    .image-upload input[type="file"] {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;
+    @media(max-width: 760px) {
+      .toolbar { grid-template-columns: 1fr 1fr; }
+      .score-board { grid-template-columns: 1fr; }
     }
 
-    @media (max-width: 760px) {
-      .grid, .checklist-item { grid-template-columns: 1fr; }
-      .col-full, .item-title { grid-column: span 1; }
-      .btn { width: 100%; justify-content: center; }
-    }
+    /* Print Formatting */
+    #reportArea { background: white; padding: 10px; }
   </style>
 </head>
 <body>
 
   <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
-        <div class="brand-icon"><i class="fa-solid fa-helmet-safety"></i></div>
-        <div class="brand-text">
-          <h1>PPE Checklist</h1>
-          <p>HSE Digital Toolkit • Site Compliance</p>
-        </div>
-      </div>
-      <nav class="nav">
-        <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
-      </nav>
+    <div class="brand">
+      <i class="fa-solid fa-clipboard-check"></i>
+      <h1>HSE Toolkit</h1>
     </div>
+    <a href="index.html" class="nav-btn"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
   </header>
 
-  <main class="page">
+  <div class="container">
     
-    <section class="section-card">
-      <div class="section-head">
-        <h3><i class="fa-solid fa-clipboard-list"></i> Inspection Details</h3>
-        <p>Record the location, date, and project information for this PPE compliance check.</p>
-      </div>
-      <div class="grid">
-        <div class="col-full">
-          <label>Project / Company Name</label>
-          <input type="text" id="projectName" placeholder="Enter project details">
-        </div>
-        <div>
-          <label>Specific Work Area</label>
-          <input type="text" id="workArea" placeholder="e.g., Block A, Scaffold level 2">
-        </div>
-        <div>
-          <label>Date of Inspection</label>
-          <input type="date" id="inspectionDate">
-        </div>
-      </div>
-    </section>
+    <div class="hero">
+      <h2>Advanced PPE Inspection</h2>
+      <p>ISO 45001 & OSHA Aligned Personal Protective Equipment Checklist</p>
+    </div>
 
-    <section class="section-card">
-      <div class="section-head">
-        <h3><i class="fa-solid fa-user-shield"></i> Personal Protective Equipment</h3>
-        <p>Assess compliance for all workers in the designated area. Add remarks for any "Fail" items.</p>
-      </div>
-
-      <div class="checklist-item">
-        <div class="item-title"><i class="fa-solid fa-hard-hat"></i> Head Protection (Hard Hats)</div>
-        <div>
-          <label>Status</label>
-          <select id="status-head" class="status-select" onchange="updateSelectColor(this)">
-            <option value="Select">-- Select --</option>
-            <option value="Pass">Pass (Compliant)</option>
-            <option value="Fail">Fail (Needs Action)</option>
-            <option value="N/A">N/A</option>
-          </select>
+    <div id="reportArea">
+      
+      <div class="score-board">
+        <div class="score-card">
+          <h3 id="totalChecked">0</h3>
+          <p>TOTAL CHECKED</p>
         </div>
-        <div>
-          <label>Remarks / Corrective Action</label>
-          <input type="text" id="remark-head" placeholder="Enter remarks if needed">
+        <div class="score-card score-pass">
+          <h3 id="totalPass">0</h3>
+          <p>COMPLIANT (PASS)</p>
+        </div>
+        <div class="score-card score-fail">
+          <h3 id="totalFail">0</h3>
+          <p>ACTIONS REQUIRED (FAIL)</p>
         </div>
       </div>
 
-      <div class="checklist-item">
-        <div class="item-title"><i class="fa-solid fa-glasses"></i> Eye & Face Protection (Glasses, Shields)</div>
-        <div>
-          <label>Status</label>
-          <select id="status-eye" class="status-select" onchange="updateSelectColor(this)">
-            <option value="Select">-- Select --</option>
-            <option value="Pass">Pass (Compliant)</option>
-            <option value="Fail">Fail (Needs Action)</option>
-            <option value="N/A">N/A</option>
-          </select>
+      <div class="progress-container">
+        <div class="progress-header">
+          <span>Overall Compliance Score</span>
+          <span id="scorePercentage">0%</span>
         </div>
-        <div>
-          <label>Remarks / Corrective Action</label>
-          <input type="text" id="remark-eye" placeholder="Enter remarks if needed">
+        <div class="progress-bg">
+          <div class="progress-fill" id="scoreFill"></div>
         </div>
       </div>
 
-      <div class="checklist-item">
-        <div class="item-title"><i class="fa-solid fa-ear-listen"></i> Hearing Protection (Earplugs, Muffs)</div>
-        <div>
-          <label>Status</label>
-          <select id="status-hear" class="status-select" onchange="updateSelectColor(this)">
-            <option value="Select">-- Select --</option>
-            <option value="Pass">Pass (Compliant)</option>
-            <option value="Fail">Fail (Needs Action)</option>
-            <option value="N/A">N/A</option>
-          </select>
-        </div>
-        <div>
-          <label>Remarks / Corrective Action</label>
-          <input type="text" id="remark-hear" placeholder="Enter remarks if needed">
-        </div>
-      </div>
-
-      <div class="checklist-item">
-        <div class="item-title"><i class="fa-solid fa-mask-ventilator"></i> Respiratory Protection (Masks)</div>
-        <div>
-          <label>Status</label>
-          <select id="status-resp" class="status-select" onchange="updateSelectColor(this)">
-            <option value="Select">-- Select --</option>
-            <option value="Pass">Pass (Compliant)</option>
-            <option value="Fail">Fail (Needs Action)</option>
-            <option value="N/A">N/A</option>
-          </select>
-        </div>
-        <div>
-          <label>Remarks / Corrective Action</label>
-          <input type="text" id="remark-resp" placeholder="Enter remarks if needed">
-        </div>
-      </div>
-
-      <div class="checklist-item">
-        <div class="item-title"><i class="fa-solid fa-mitten"></i> Hand Protection (Gloves)</div>
-        <div>
-          <label>Status</label>
-          <select id="status-hand" class="status-select" onchange="updateSelectColor(this)">
-            <option value="Select">-- Select --</option>
-            <option value="Pass">Pass (Compliant)</option>
-            <option value="Fail">Fail (Needs Action)</option>
-            <option value="N/A">N/A</option>
-          </select>
-        </div>
-        <div>
-          <label>Remarks / Corrective Action</label>
-          <input type="text" id="remark-hand" placeholder="Enter remarks if needed">
-        </div>
-      </div>
-
-      <div class="checklist-item">
-        <div class="item-title"><i class="fa-solid fa-vest"></i> Body Protection (Hi-Vis, Coveralls)</div>
-        <div>
-          <label>Status</label>
-          <select id="status-body" class="status-select" onchange="updateSelectColor(this)">
-            <option value="Select">-- Select --</option>
-            <option value="Pass">Pass (Compliant)</option>
-            <option value="Fail">Fail (Needs Action)</option>
-            <option value="N/A">N/A</option>
-          </select>
-        </div>
-        <div>
-          <label>Remarks / Corrective Action</label>
-          <input type="text" id="remark-body" placeholder="Enter remarks if needed">
-        </div>
-      </div>
-
-      <div class="checklist-item">
-        <div class="item-title"><i class="fa-solid fa-shoe-prints"></i> Foot Protection (Safety Boots)</div>
-        <div>
-          <label>Status</label>
-          <select id="status-foot" class="status-select" onchange="updateSelectColor(this)">
-            <option value="Select">-- Select --</option>
-            <option value="Pass">Pass (Compliant)</option>
-            <option value="Fail">Fail (Needs Action)</option>
-            <option value="N/A">N/A</option>
-          </select>
-        </div>
-        <div>
-          <label>Remarks / Corrective Action</label>
-          <input type="text" id="remark-foot" placeholder="Enter remarks if needed">
-        </div>
-      </div>
-
-      <div class="checklist-item">
-        <div class="item-title"><i class="fa-solid fa-person-falling"></i> Fall Protection (Harnesses)</div>
-        <div>
-          <label>Status</label>
-          <select id="status-fall" class="status-select" onchange="updateSelectColor(this)">
-            <option value="Select">-- Select --</option>
-            <option value="Pass">Pass (Compliant)</option>
-            <option value="Fail">Fail (Needs Action)</option>
-            <option value="N/A">N/A</option>
-          </select>
-        </div>
-        <div>
-          <label>Remarks / Corrective Action</label>
-          <input type="text" id="remark-fall" placeholder="Enter remarks if needed">
-        </div>
-      </div>
-
-    </section>
-
-    <section class="section-card">
-      <div class="section-head">
-        <h3><i class="fa-solid fa-pen-nib"></i> Sign-Off & Actions</h3>
-      </div>
-      <div class="grid">
-        <div class="col-full">
-          <label>General Observations & Final Comments</label>
-          <textarea id="generalComments" rows="3" placeholder="Summarize overall PPE compliance on site..."></textarea>
-        </div>
-        <div>
-          <label>Inspector Name & Job Title</label>
-          <input type="text" id="inspectorName" placeholder="e.g., Umair Pasha (HSE Officer)">
-        </div>
-        <div>
-          <label>Assessor Signature (Upload Image)</label>
-          <div class="image-upload" id="sigUploadBox">
-            <span id="sigText"><i class="fa-solid fa-upload"></i> Tap to attach signature</span>
-            <img id="sigImg" alt="Signature">
-            <input type="file" accept="image/*" onchange="previewSignature(event)">
+      <div class="card">
+        <h3 class="card-title"><i class="fa-solid fa-building-user"></i> Site & Worker Details</h3>
+        <div class="input-grid">
+          <div class="form-group">
+            <label>Project / Company Name</label>
+            <input type="text" id="projectName" placeholder="Enter details">
+          </div>
+          <div class="form-group">
+            <label>Inspection Date</label>
+            <input type="date" id="insDate">
+          </div>
+          <div class="form-group">
+            <label>Worker Assessed / Work Area</label>
+            <input type="text" id="workerName" placeholder="Name or specific area">
+          </div>
+          <div class="form-group">
+            <label>Inspector Name</label>
+            <input type="text" id="inspectorName" placeholder="Your name">
           </div>
         </div>
       </div>
 
-      <div class="toolbar">
-        <button class="btn btn-blue" onclick="saveData()"><i class="fa-solid fa-floppy-disk"></i> Save Data</button>
-        <button class="btn btn-green" onclick="loadData()"><i class="fa-solid fa-rotate"></i> Load Data</button>
-        <button class="btn btn-amber" onclick="generatePDF()"><i class="fa-solid fa-file-pdf"></i> Download PDF</button>
-        <button class="btn btn-red" onclick="clearForm()"><i class="fa-solid fa-trash"></i> Clear Form</button>
-      </div>
-    </section>
+      <div class="card">
+        <h3 class="card-title"><i class="fa-solid fa-list-check"></i> ISO Standard PPE Checklist</h3>
+        
+        <div class="category-group">
+          <div class="category-title"><i class="fa-solid fa-hard-hat"></i> Head Protection</div>
+          
+          <div class="check-item" data-id="head1">
+            <div class="check-header">1. Helmet shell is free from cracks, deep scratches, and damage.</div>
+            <div class="segment-control">
+              <button class="segment-btn" onclick="setStatus(this, 'pass')">Pass</button>
+              <button class="segment-btn" onclick="setStatus(this, 'fail')">Fail</button>
+              <button class="segment-btn" onclick="setStatus(this, 'na')">N/A</button>
+            </div>
+            <input type="text" class="remark-input" placeholder="Action required (e.g., Replace helmet)">
+          </div>
 
-  </main>
+          <div class="check-item" data-id="head2">
+            <div class="check-header">2. Internal harness & chin strap are intact and fit correctly.</div>
+            <div class="segment-control">
+              <button class="segment-btn" onclick="setStatus(this, 'pass')">Pass</button>
+              <button class="segment-btn" onclick="setStatus(this, 'fail')">Fail</button>
+              <button class="segment-btn" onclick="setStatus(this, 'na')">N/A</button>
+            </div>
+            <input type="text" class="remark-input" placeholder="Action required">
+          </div>
+        </div>
+
+        <div class="category-group">
+          <div class="category-title"><i class="fa-solid fa-glasses"></i> Eye & Face Protection</div>
+          
+          <div class="check-item" data-id="eye1">
+            <div class="check-header">3. Safety glasses/visors are clear, untinted (for indoor), and scratch-free.</div>
+            <div class="segment-control">
+              <button class="segment-btn" onclick="setStatus(this, 'pass')">Pass</button>
+              <button class="segment-btn" onclick="setStatus(this, 'fail')">Fail</button>
+              <button class="segment-btn" onclick="setStatus(this, 'na')">N/A</button>
+            </div>
+            <input type="text" class="remark-input" placeholder="Action required">
+          </div>
+        </div>
+
+        <div class="category-group">
+          <div class="category-title"><i class="fa-solid fa-mask-ventilator"></i> Respiratory Protection</div>
+          
+          <div class="check-item" data-id="resp1">
+            <div class="check-header">4. Mask/respirator is appropriate for the hazard and fits tightly.</div>
+            <div class="segment-control">
+              <button class="segment-btn" onclick="setStatus(this, 'pass')">Pass</button>
+              <button class="segment-btn" onclick="setStatus(this, 'fail')">Fail</button>
+              <button class="segment-btn" onclick="setStatus(this, 'na')">N/A</button>
+            </div>
+            <input type="text" class="remark-input" placeholder="Action required">
+          </div>
+        </div>
+
+        <div class="category-group">
+          <div class="category-title"><i class="fa-solid fa-mitten"></i> Hand Protection</div>
+          
+          <div class="check-item" data-id="hand1">
+            <div class="check-header">5. Gloves are free from holes, tears, or chemical saturation.</div>
+            <div class="segment-control">
+              <button class="segment-btn" onclick="setStatus(this, 'pass')">Pass</button>
+              <button class="segment-btn" onclick="setStatus(this, 'fail')">Fail</button>
+              <button class="segment-btn" onclick="setStatus(this, 'na')">N/A</button>
+            </div>
+            <input type="text" class="remark-input" placeholder="Action required">
+          </div>
+        </div>
+
+        <div class="category-group">
+          <div class="category-title"><i class="fa-solid fa-vest"></i> Body & Visibility</div>
+          
+          <div class="check-item" data-id="body1">
+            <div class="check-header">6. High-visibility vest or coveralls are clean and reflective strips work.</div>
+            <div class="segment-control">
+              <button class="segment-btn" onclick="setStatus(this, 'pass')">Pass</button>
+              <button class="segment-btn" onclick="setStatus(this, 'fail')">Fail</button>
+              <button class="segment-btn" onclick="setStatus(this, 'na')">N/A</button>
+            </div>
+            <input type="text" class="remark-input" placeholder="Action required">
+          </div>
+        </div>
+
+        <div class="category-group">
+          <div class="category-title"><i class="fa-solid fa-shoe-prints"></i> Foot Protection</div>
+          
+          <div class="check-item" data-id="foot1">
+            <div class="check-header">7. Safety boots have intact steel toes and anti-slip soles are not worn out.</div>
+            <div class="segment-control">
+              <button class="segment-btn" onclick="setStatus(this, 'pass')">Pass</button>
+              <button class="segment-btn" onclick="setStatus(this, 'fail')">Fail</button>
+              <button class="segment-btn" onclick="setStatus(this, 'na')">N/A</button>
+            </div>
+            <input type="text" class="remark-input" placeholder="Action required">
+          </div>
+        </div>
+
+        <div class="category-group">
+          <div class="category-title"><i class="fa-solid fa-person-falling"></i> Fall Protection</div>
+          
+          <div class="check-item" data-id="fall1">
+            <div class="check-header">8. Harness webbing, D-rings, and lanyards are inspected and tagged valid.</div>
+            <div class="segment-control">
+              <button class="segment-btn" onclick="setStatus(this, 'pass')">Pass</button>
+              <button class="segment-btn" onclick="setStatus(this, 'fail')">Fail</button>
+              <button class="segment-btn" onclick="setStatus(this, 'na')">N/A</button>
+            </div>
+            <input type="text" class="remark-input" placeholder="Action required">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card">
+        <h3 class="card-title"><i class="fa-solid fa-file-signature"></i> Final Remarks & Sign-Off</h3>
+        <div class="form-group" style="margin-bottom: 15px;">
+          <label>Overall Assessment Comments</label>
+          <textarea id="finalRemarks" rows="3" placeholder="Summarize findings..."></textarea>
+        </div>
+      </div>
+
+    </div> <div class="toolbar">
+      <button class="btn btn-blue" onclick="saveData()"><i class="fa-solid fa-floppy-disk"></i> Save Data</button>
+      <button class="btn btn-green" onclick="loadData()"><i class="fa-solid fa-rotate"></i> Load Data</button>
+      <button class="btn btn-amber" onclick="generatePDF()"><i class="fa-solid fa-file-pdf"></i> Download PDF</button>
+      <button class="btn btn-red" onclick="clearData()"><i class="fa-solid fa-trash"></i> Clear Form</button>
+    </div>
+
+  </div>
 
   <script>
-    const STORAGE_KEY = "hsePPEChecklistData";
+    const STORAGE_KEY = "hse_advanced_ppe_v1";
 
-    // Dynamic Select Styling
-    function updateSelectColor(selectObj) {
-      selectObj.classList.remove("pass", "fail", "na");
-      if(selectObj.value === "Pass") selectObj.classList.add("pass");
-      if(selectObj.value === "Fail") selectObj.classList.add("fail");
-      if(selectObj.value === "N/A") selectObj.classList.add("na");
-    }
+    // Initialize today's date
+    document.getElementById('insDate').valueAsDate = new Date();
 
-    // Image Preview for Signature
-    function previewSignature(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          document.getElementById('sigImg').src = e.target.result;
-          document.getElementById('sigImg').style.display = 'inline-block';
-          document.getElementById('sigText').style.display = 'none';
-        }
-        reader.readAsDataURL(file);
+    // Smart Button Logic
+    function setStatus(btn, status) {
+      // Find the parent item
+      const item = btn.closest('.check-item');
+      
+      // Remove active class from all buttons in this item
+      const buttons = item.querySelectorAll('.segment-btn');
+      buttons.forEach(b => b.classList.remove('active', 'pass', 'fail', 'na'));
+      
+      // Add active class to clicked button
+      btn.classList.add('active', status);
+      item.setAttribute('data-status', status);
+
+      // Show remark input only if failed
+      const remarkInput = item.querySelector('.remark-input');
+      if(status === 'fail') {
+        remarkInput.style.display = 'block';
+      } else {
+        remarkInput.style.display = 'none';
+        remarkInput.value = ''; // clear it
       }
+
+      calculateScore();
     }
 
-    // Helper: Get Values safely
-    function getVal(id) { return document.getElementById(id).value.trim(); }
-    function setVal(id, val) { 
-      const el = document.getElementById(id);
-      el.value = val || ""; 
-      if(el.tagName === "SELECT") updateSelectColor(el);
+    // Calculate Dashboard Scores
+    function calculateScore() {
+      const items = document.querySelectorAll('.check-item');
+      let passes = 0;
+      let fails = 0;
+      let nas = 0;
+
+      items.forEach(item => {
+        const status = item.getAttribute('data-status');
+        if (status === 'pass') passes++;
+        if (status === 'fail') fails++;
+        if (status === 'na') nas++;
+      });
+
+      const totalChecked = passes + fails; // N/A doesn't count against score
+      
+      document.getElementById('totalChecked').innerText = totalChecked + nas;
+      document.getElementById('totalPass').innerText = passes;
+      document.getElementById('totalFail').innerText = fails;
+
+      let percentage = 0;
+      if (totalChecked > 0) {
+        percentage = Math.round((passes / totalChecked) * 100);
+      }
+
+      document.getElementById('scorePercentage').innerText = percentage + "%";
+      
+      const fillBar = document.getElementById('scoreFill');
+      fillBar.style.width = percentage + "%";
+      
+      // Color code progress bar
+      if (percentage >= 90) fillBar.style.background = "#059669"; // Green
+      else if (percentage >= 50) fillBar.style.background = "#f59e0b"; // Amber
+      else fillBar.style.background = "#dc2626"; // Red
     }
 
-    // Save Data to LocalStorage
-    function saveData() {
+    // Collect all data for save
+    function collectData() {
       const data = {
-        projectName: getVal("projectName"),
-        workArea: getVal("workArea"),
-        inspectionDate: getVal("inspectionDate"),
-        
-        statusHead: getVal("status-head"), remarkHead: getVal("remark-head"),
-        statusEye: getVal("status-eye"), remarkEye: getVal("remark-eye"),
-        statusHear: getVal("status-hear"), remarkHear: getVal("remark-hear"),
-        statusResp: getVal("status-resp"), remarkResp: getVal("remark-resp"),
-        statusHand: getVal("status-hand"), remarkHand: getVal("remark-hand"),
-        statusBody: getVal("status-body"), remarkBody: getVal("remark-body"),
-        statusFoot: getVal("status-foot"), remarkFoot: getVal("remark-foot"),
-        statusFall: getVal("status-fall"), remarkFall: getVal("remark-fall"),
-
-        generalComments: getVal("generalComments"),
-        inspectorName: getVal("inspectorName"),
-        sigImgData: document.getElementById('sigImg').src // Saves base64 image data
+        project: document.getElementById('projectName').value,
+        date: document.getElementById('insDate').value,
+        worker: document.getElementById('workerName').value,
+        inspector: document.getElementById('inspectorName').value,
+        remarks: document.getElementById('finalRemarks').value,
+        checks: {}
       };
 
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      alert("PPE Checklist data saved locally!");
+      const items = document.querySelectorAll('.check-item');
+      items.forEach(item => {
+        const id = item.getAttribute('data-id');
+        const status = item.getAttribute('data-status') || '';
+        const remark = item.querySelector('.remark-input').value;
+        data.checks[id] = { status, remark };
+      });
+
+      return data;
     }
 
-    // Load Data from LocalStorage
+    // Save to LocalStorage
+    function saveData() {
+      const data = collectData();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      alert("✅ Inspection Data Saved Successfully!");
+    }
+
+    // Load from LocalStorage
     function loadData() {
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) { alert("No saved data found."); return; }
-      
-      const data = JSON.parse(raw);
-      setVal("projectName", data.projectName);
-      setVal("workArea", data.workArea);
-      setVal("inspectionDate", data.inspectionDate);
-
-      setVal("status-head", data.statusHead); setVal("remark-head", data.remarkHead);
-      setVal("status-eye", data.statusEye); setVal("remark-eye", data.remarkEye);
-      setVal("status-hear", data.statusHear); setVal("remark-hear", data.remarkHear);
-      setVal("status-resp", data.statusResp); setVal("remark-resp", data.remarkResp);
-      setVal("status-hand", data.statusHand); setVal("remark-hand", data.remarkHand);
-      setVal("status-body", data.statusBody); setVal("remark-body", data.remarkBody);
-      setVal("status-foot", data.statusFoot); setVal("remark-foot", data.remarkFoot);
-      setVal("status-fall", data.statusFall); setVal("remark-fall", data.remarkFall);
-
-      setVal("generalComments", data.generalComments);
-      setVal("inspectorName", data.inspectorName);
-
-      if (data.sigImgData && data.sigImgData !== window.location.href) {
-        document.getElementById('sigImg').src = data.sigImgData;
-        document.getElementById('sigImg').style.display = 'inline-block';
-        document.getElementById('sigText').style.display = 'none';
+      if(!raw) {
+        alert("No saved data found!");
+        return;
       }
+
+      const data = JSON.parse(raw);
+      document.getElementById('projectName').value = data.project || '';
+      document.getElementById('insDate').value = data.date || '';
+      document.getElementById('workerName').value = data.worker || '';
+      document.getElementById('inspectorName').value = data.inspector || '';
+      document.getElementById('finalRemarks').value = data.remarks || '';
+
+      const items = document.querySelectorAll('.check-item');
+      items.forEach(item => {
+        const id = item.getAttribute('data-id');
+        if(data.checks[id]) {
+          const status = data.checks[id].status;
+          const remark = data.checks[id].remark;
+          
+          if(status) {
+            // Find the button and click it to trigger styles and logic
+            const btn = Array.from(item.querySelectorAll('.segment-btn')).find(b => b.textContent.toLowerCase() === status.replace('/', ''));
+            if(btn) btn.click();
+          }
+          
+          item.querySelector('.remark-input').value = remark || '';
+        }
+      });
+      alert("📂 Saved Data Loaded!");
     }
 
     // Clear Form
-    function clearForm() {
-      if(!confirm("Clear all fields?")) return;
-      const inputs = document.querySelectorAll('input[type="text"], input[type="date"], textarea');
-      inputs.forEach(input => input.value = '');
+    function clearData() {
+      if(!confirm("Are you sure you want to clear all fields?")) return;
       
-      const selects = document.querySelectorAll('select');
-      selects.forEach(select => {
-        select.value = 'Select';
-        updateSelectColor(select);
+      document.getElementById('projectName').value = '';
+      document.getElementById('workerName').value = '';
+      document.getElementById('inspectorName').value = '';
+      document.getElementById('finalRemarks').value = '';
+      document.getElementById('insDate').valueAsDate = new Date();
+
+      const items = document.querySelectorAll('.check-item');
+      items.forEach(item => {
+        item.removeAttribute('data-status');
+        const buttons = item.querySelectorAll('.segment-btn');
+        buttons.forEach(b => b.classList.remove('active', 'pass', 'fail', 'na'));
+        
+        const remarkInput = item.querySelector('.remark-input');
+        remarkInput.style.display = 'none';
+        remarkInput.value = '';
       });
 
-      document.getElementById('sigImg').src = '';
-      document.getElementById('sigImg').style.display = 'none';
-      document.getElementById('sigText').style.display = 'inline-block';
+      calculateScore();
       localStorage.removeItem(STORAGE_KEY);
     }
 
-    // Generate PDF using jsPDF
+    // Generate Perfect PDF using HTML2PDF
     function generatePDF() {
-      const { jsPDF } = window.jspdf;
-      const pdf = new jsPDF("p", "mm", "a4");
+      // Small UI adjustment before print to make it look clean
+      const element = document.getElementById('reportArea');
       
-      // Header Banner
-      pdf.setFillColor(37, 99, 235); // Blue
-      pdf.rect(0, 0, 210, 28, "F");
-      pdf.setTextColor(255, 255, 255);
-      pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(18);
-      pdf.text("PPE Inspection Report", 14, 16);
-      pdf.setFontSize(10);
-      pdf.setFont("helvetica", "normal");
-      pdf.text("HSE Digital Toolkit", 14, 23);
+      const opt = {
+        margin:       10,
+        filename:     'Advanced_PPE_Inspection_Report.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
 
-      pdf.setTextColor(0, 0, 0);
-      let y = 40;
-
-      // Part 1: Details
-      pdf.setFontSize(12);
-      pdf.setFont("helvetica", "bold");
-      pdf.text("Inspection Details", 14, y);
-      y += 8;
-      pdf.setFontSize(10);
-      pdf.setFont("helvetica", "normal");
-      pdf.text(`Project: ${getVal("projectName") || "-"}`, 14, y);
-      pdf.text(`Date: ${getVal("inspectionDate") || "-"}`, 110, y);
-      y += 6;
-      pdf.text(`Area: ${getVal("workArea") || "-"}`, 14, y);
-      pdf.text(`Inspector: ${getVal("inspectorName") || "-"}`, 110, y);
-      
-      y += 15;
-
-      // Part 2: Checklist Table Header
-      pdf.setFontSize(12);
-      pdf.setFont("helvetica", "bold");
-      pdf.text("PPE Compliance Checklist", 14, y);
-      y += 8;
-      
-      pdf.setFillColor(240, 240, 240);
-      pdf.rect(14, y, 182, 8, "F");
-      pdf.setFontSize(9);
-      pdf.text("Category", 16, y + 5);
-      pdf.text("Status", 75, y + 5);
-      pdf.text("Remarks / Actions", 105, y + 5);
-      y += 8;
-
-      // Table Rows
-      const categories = [
-        { name: "Head Protection", stat: "status-head", rem: "remark-head" },
-        { name: "Eye/Face Protection", stat: "status-eye", rem: "remark-eye" },
-        { name: "Hearing Protection", stat: "status-hear", rem: "remark-hear" },
-        { name: "Respiratory Protection", stat: "status-resp", rem: "remark-resp" },
-        { name: "Hand Protection", stat: "status-hand", rem: "remark-hand" },
-        { name: "Body Protection", stat: "status-body", rem: "remark-body" },
-        { name: "Foot Protection", stat: "status-foot", rem: "remark-foot" },
-        { name: "Fall Protection", stat: "status-fall", rem: "remark-fall" }
-      ];
-
-      pdf.setFont("helvetica", "normal");
-      categories.forEach(item => {
-        let statVal = getVal(item.stat);
-        statVal = statVal === "Select" ? "-" : statVal;
-        
-        pdf.text(item.name, 16, y + 5);
-        
-        // Color code status text in PDF
-        if(statVal === "Pass") pdf.setTextColor(11, 93, 87);
-        else if(statVal === "Fail") pdf.setTextColor(153, 27, 27);
-        else pdf.setTextColor(100, 100, 100);
-        
-        pdf.text(statVal, 75, y + 5);
-        pdf.setTextColor(0, 0, 0); // reset color
-        
-        // Handle long remarks wrapping
-        let remarkLines = pdf.splitTextToSize(getVal(item.rem) || "-", 90);
-        pdf.text(remarkLines, 105, y + 5);
-        
-        y += Math.max(10, remarkLines.length * 5 + 3);
-        pdf.setDrawColor(220, 220, 220);
-        pdf.line(14, y - 2, 196, y - 2);
+      // Promise-based generation
+      html2pdf().set(opt).from(element).save().then(() => {
+        console.log("PDF Downloaded successfully");
       });
-
-      y += 10;
-
-      // Part 3: Sign-Off
-      if (y > 250) { pdf.addPage(); y = 20; }
-      
-      pdf.setFontSize(12);
-      pdf.setFont("helvetica", "bold");
-      pdf.text("General Comments", 14, y);
-      y += 6;
-      pdf.setFontSize(10);
-      pdf.setFont("helvetica", "normal");
-      
-      let comments = pdf.splitTextToSize(getVal("generalComments") || "-", 182);
-      pdf.text(comments, 14, y);
-      y += comments.length * 6 + 15;
-
-      pdf.setFont("helvetica", "bold");
-      pdf.text("Assessor Signature:", 14, y);
-      
-      const sigImgSrc = document.getElementById('sigImg').src;
-      if (sigImgSrc && sigImgSrc.startsWith("data:image")) {
-        // Draw the uploaded signature image
-        pdf.addImage(sigImgSrc, 'JPEG', 14, y + 5, 40, 20);
-      } else {
-        pdf.setFont("helvetica", "normal");
-        pdf.text("No signature attached.", 14, y + 15);
-      }
-
-      pdf.save("PPE_Checklist_Report.pdf");
     }
+
   </script>
 </body>
 </html>
