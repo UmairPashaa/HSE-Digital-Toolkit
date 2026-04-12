@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Safety Inspection | HSE Digital Toolkit</title>
+  <style>
+    :root {
+      --bg: #f3f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #0f766e;
+      --primary-dark: #115e59;
+      --secondary: #155e75;
+      --danger: #dc2626;
+      --warning: #d97706;
+      --success: #15803d;
+      --border: #d9e3ea;
+      --soft: #f8fbfc;
+      --shadow: 0 14px 36px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #edf7f8 0%, var(--bg) 100%);
+      color: var(--text);
+    }
+
+    .container {
+      width: min(1300px, 94%);
+      margin: 0 auto;
+      padding: 24px 0 40px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .brand h1 { margin: 0; font-size: 2rem; color: var(--primary-dark); }
+    .brand p { margin: 6px 0 0; color: var(--muted); font-size: 0.98rem; }
+
+    .top-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .hero {
+      background: linear-gradient(135deg, #0f766e 0%, #155e75 100%);
+      color: white;
+      padding: 24px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+
+    .hero h2 { margin: 0 0 8px; font-size: 1.55rem; }
+    .hero p { margin: 0; line-height: 1.65; opacity: 0.96; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.4fr 0.85fr;
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      border: 1px solid rgba(217, 227, 234, 0.9);
+    }
+
+    .card h3 { margin: 0 0 14px; color: var(--primary-dark); font-size: 1.2rem; }
+
+    .section-title {
+      margin: 22px 0 12px;
+      font-size: 1rem;
+      color: var(--primary-dark);
+      border-left: 4px solid var(--primary);
+      padding-left: 10px;
+      font-weight: 700;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+    .full { grid-column: 1 / -1; }
+    label { font-size: 0.93rem; font-weight: 700; color: #1f2937; }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 13px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      font-size: 0.95rem;
+      color: var(--text);
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+    }
+
+    textarea { min-height: 100px; resize: vertical; line-height: 1.5; }
+
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-secondary { background: #e8f0f3; color: var(--text); }
+    .btn-danger { background: var(--danger); color: white; }
+    .btn-warning { background: var(--warning); color: white; }
+    .btn-success { background: var(--success); color: white; }
+
+    .button-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .metric {
+      background: var(--soft);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .metric h4 { margin: 0 0 8px; color: var(--muted); font-size: 0.92rem; }
+    .metric .value { font-size: 1.55rem; font-weight: 800; color: var(--primary-dark); }
+
+    .status-box {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 0.98rem;
+    }
+
+    .status-good { background: #dcfce7; color: #166534; }
+    .status-fair { background: #fef3c7; color: #92400e; }
+    .status-poor { background: #fee2e2; color: #991b1b; }
+
+    .note-box {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 14px;
+      background: var(--soft);
+      border: 1px solid var(--border);
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+
+    .upload-box { padding: 14px; border: 2px dashed #b9cad4; border-radius: 14px; background: #fbfdfe; }
+    
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .preview-item { border: 1px solid var(--border); border-radius: 12px; background: white; padding: 8px; text-align: center; }
+    .preview-item img { width: 100%; height: 90px; object-fit: cover; border-radius: 8px; display: block; margin-bottom: 6px; }
+    .preview-item small { display: block; color: var(--muted); word-break: break-word; }
+
+    .logo-preview { margin-top: 10px; border: 1px solid var(--border); background: white; border-radius: 12px; padding: 10px; text-align: center; }
+    .logo-preview img { max-width: 100%; max-height: 110px; object-fit: contain; }
+
+    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 14px; margin-top: 8px; }
+    table { width: 100%; border-collapse: collapse; min-width: 900px; background: white; }
+    th, td { border-bottom: 1px solid #ebf1f4; padding: 12px; text-align: left; vertical-align: top; font-size: 0.93rem; }
+    th { background: #f3f8f9; color: var(--primary-dark); font-weight: 800; }
+    td input, td select, td textarea { padding: 8px; font-size: 0.9rem; border-radius: 8px; }
+    td textarea { min-height: 50px; }
+
+    .signature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .signature-box { border: 1px solid var(--border); border-radius: 14px; padding: 14px; background: #fcfefe; }
+
+    .print-header { display: none; margin-bottom: 20px; border: 1px solid #ccc; padding: 14px; border-radius: 10px; }
+    .print-header-grid { display: grid; grid-template-columns: 140px 1fr; gap: 14px; align-items: center; }
+    .print-header-logo img { max-width: 120px; max-height: 90px; object-fit: contain; }
+    .print-header-info h2 { margin: 0 0 6px; font-size: 1.35rem; }
+    .print-header-info p { margin: 0; line-height: 1.5; font-size: 0.93rem; }
+    .footer-note { text-align: center; margin-top: 22px; color: var(--muted); font-size: 0.92rem; }
+
+    @media (max-width: 1100px) { .layout { grid-template-columns: 1fr; } }
+    @media (max-width: 720px) {
+      .form-grid, .mini-grid, .signature-grid { grid-template-columns: 1fr; }
+      .brand h1 { font-size: 1.6rem; }
+      .hero h2 { font-size: 1.28rem; }
+      .btn { width: 100%; }
+    }
+
+    @media print {
+      body { background: white; }
+      .topbar, .hero, .button-row, .footer-note, .upload-box, .btn, .top-actions { display: none !important; }
+      .print-header { display: block; }
+      .container { width: 100%; padding: 0; }
+      .layout { display: block; }
+      .card { box-shadow: none; border: 1px solid #ccc; margin-bottom: 16px; }
+      input, select, textarea { border: 1px solid #bbb; }
+      table { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <div class="brand">
+        <h1>Safety Inspection</h1>
+        <p>HSE Digital Toolkit | Standard Site Walkdown & Audit Form</p>
+      </div>
+      <div class="top-actions">
+        <button class="btn btn-secondary" onclick="window.location.href='index.html'">Home</button>
+        <button class="btn btn-primary" onclick="generateReport()">Generate Report</button>
+      </div>
+    </div>
+
+    <div class="hero">
+      <h2>Professional Site Safety Walkdown</h2>
+      <p>Record site conditions, unsafe acts, positive observations, and generate an actionable inspection report. Keep track of specific findings and assign corrective actions instantly.</p>
+    </div>
+
+    <div class="print-header" id="printHeader">
+      <div class="print-header-grid">
+        <div class="print-header-logo" id="printLogoContainer"></div>
+        <div class="print-header-info">
+          <h2 id="printCompanyName">Safety Inspection Report</h2>
+          <p id="printCompanyInfo">Professional HSE inspection record</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <div class="card">
+        <h3>Inspection Details</h3>
+
+        <div class="section-title">Site & Audit Information</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="companyName">Company / Client Name</label>
+            <input type="text" id="companyName" placeholder="Enter company name" />
+          </div>
+          <div class="form-group">
+            <label for="projectName">Project / Facility Name</label>
+            <input type="text" id="projectName" placeholder="Enter project name" />
+          </div>
+          <div class="form-group">
+            <label for="inspectionArea">Specific Area Inspected</label>
+            <input type="text" id="inspectionArea" placeholder="e.g. Scaffolding Level 4, Workshop B" />
+          </div>
+          <div class="form-group">
+            <label for="inspectorName">Lead Inspector / Auditor</label>
+            <input type="text" id="inspectorName" placeholder="Enter inspector name" />
+          </div>
+          <div class="form-group">
+            <label for="inspectionDate">Inspection Date</label>
+            <input type="date" id="inspectionDate" />
+          </div>
+          <div class="form-group">
+            <label for="inspectionTime">Inspection Time</label>
+            <input type="time" id="inspectionTime" />
+          </div>
+          <div class="form-group full">
+            <label for="generalComments">General Overview / Opening Comments</label>
+            <textarea id="generalComments" placeholder="Describe the general condition of the site at the time of inspection..."></textarea>
+          </div>
+        </div>
+
+        <div class="section-title">Findings & Observations</div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 40px;">#</th>
+                <th style="width: 140px;">Category</th>
+                <th>Observation Details</th>
+                <th style="width: 120px;">Risk Level</th>
+                <th>Corrective Action</th>
+                <th style="width: 120px;">Action By</th>
+                <th style="width: 120px;">Status</th>
+              </tr>
+            </thead>
+            <tbody id="observationsTableBody"></tbody>
+          </table>
+        </div>
+        <div class="button-row" style="margin-top: 10px;">
+          <button class="btn btn-secondary" type="button" onclick="addObservationRow()">+ Add Observation Row</button>
+        </div>
+
+        <div class="section-title">Evidence & Attachments</div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label for="companyLogo">Company Logo Upload (For Report Header)</label>
+            <div class="upload-box">
+              <input type="file" id="companyLogo" accept="image/*" />
+              <div class="logo-preview" id="logoPreview">No company logo uploaded.</div>
+            </div>
+          </div>
+          <div class="form-group full">
+            <label for="photoEvidence">Photo Evidence Upload (Observations)</label>
+            <div class="upload-box">
+              <input type="file" id="photoEvidence" accept="image/*" multiple />
+              <div class="preview-grid" id="evidencePreview"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-title">Signatures & Review</div>
+        <div class="signature-grid">
+          <div class="signature-box">
+            <div class="form-group">
+              <label for="inspectorSignature">Inspector / HSE Officer</label>
+              <input type="text" id="inspectorSignature" placeholder="Type full name" />
+            </div>
+            <div class="form-group">
+              <label for="inspectorSignDate">Date</label>
+              <input type="date" id="inspectorSignDate" />
+            </div>
+          </div>
+
+          <div class="signature-box">
+            <div class="form-group">
+              <label for="managerSignature">Site Manager / Supervisor</label>
+              <input type="text" id="managerSignature" placeholder="Type full name" />
+            </div>
+            <div class="form-group">
+              <label for="managerSignDate">Date</label>
+              <input type="date" id="managerSignDate" />
+            </div>
+          </div>
+        </div>
+
+        <div class="button-row" style="margin-top: 30px; border-top: 1px solid var(--border); padding-top: 20px;">
+          <button class="btn btn-primary" type="button" onclick="generateReport()">Generate Summary</button>
+          <button class="btn btn-success" type="button" onclick="saveData()">Save Data</button>
+          <button class="btn btn-secondary" type="button" onclick="loadData()">Load Saved Data</button>
+          <button class="btn btn-warning" type="button" onclick="downloadPDF()">Print / Download PDF</button>
+          <button class="btn btn-danger" type="button" onclick="clearForm()">Clear Form</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Inspection Dashboard</h3>
+
+        <div class="mini-grid">
+          <div class="metric">
+            <h4>Total Findings</h4>
+            <div class="value" id="totalFindings">0</div>
+          </div>
+          <div class="metric">
+            <h4>High Risk</h4>
+            <div class="value" id="highRisk" style="color: var(--danger);">0</div>
+          </div>
+          <div class="metric">
+            <h4>Open Actions</h4>
+            <div class="value" id="openActions">0</div>
+          </div>
+          <div class="metric">
+            <h4>Safe Practices</h4>
+            <div class="value" id="safePractices" style="color: var(--success);">0</div>
+          </div>
+        </div>
+
+        <div id="statusBox" class="status-box status-good">
+          Status: Ready for Inspection
+        </div>
+
+        <div class="section-title">Auto-Generated Report</div>
+        <div class="note-box" id="reportSummary">
+No summary generated yet.
+Click "Generate Summary" after adding your findings.
+        </div>
+
+        <div class="section-title">Action Items Summary</div>
+        <div class="note-box" id="actionSummary">
+No actions recorded.
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      HSE Digital Toolkit | Advanced Safety Inspection Module
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "hseSafetyInspectionData";
+    let companyLogoData = "";
+    let evidenceImages = [];
+
+    // Dropdown options for categories
+    const categories = [
+      "Housekeeping", "PPE Compliance", "Work at Height", "Scaffolding", 
+      "Electrical Safety", "Fire Safety", "Lifting Operations", "Tools & Equipment", 
+      "Chemical / COSHH", "Excavation", "Traffic Management", "Positive Finding", "Other"
+    ];
+
+    // Add Dynamic Observation Row
+    function addObservationRow(data = {}) {
+      const tbody = document.getElementById("observationsTableBody");
+      const rowCount = tbody.querySelectorAll("tr").length + 1;
+
+      const tr = document.createElement("tr");
+      
+      let categoryOptions = `<option value="">Select...</option>`;
+      categories.forEach(cat => {
+        const selected = data.category === cat ? "selected" : "";
+        categoryOptions += `<option value="${cat}" ${selected}>${cat}</option>`;
+      });
+
+      tr.innerHTML = `
+        <td>${rowCount}</td>
+        <td><select class="obs-category">${categoryOptions}</select></td>
+        <td><textarea class="obs-desc" placeholder="Describe observation...">${escapeHtml(data.description || "")}</textarea></td>
+        <td>
+          <select class="obs-risk">
+            <option value="">N/A</option>
+            <option value="Low" ${data.risk === "Low" ? "selected" : ""}>Low</option>
+            <option value="Medium" ${data.risk === "Medium" ? "selected" : ""}>Medium</option>
+            <option value="High" ${data.risk === "High" ? "selected" : ""}>High</option>
+          </select>
+        </td>
+        <td><textarea class="obs-action" placeholder="Action required...">${escapeHtml(data.action || "")}</textarea></td>
+        <td><input type="text" class="obs-owner" placeholder="Name" value="${escapeAttribute(data.owner || "")}" /></td>
+        <td>
+          <select class="obs-status">
+            <option value="Open" ${data.status === "Open" ? "selected" : ""}>Open</option>
+            <option value="Closed" ${data.status === "Closed" ? "selected" : ""}>Closed</option>
+            <option value="N/A" ${data.status === "N/A" ? "selected" : ""}>N/A</option>
+          </select>
+        </td>
+      `;
+      tbody.appendChild(tr);
+      updateRowNumbers();
+    }
+
+    function updateRowNumbers() {
+      const rows = document.querySelectorAll("#observationsTableBody tr");
+      rows.forEach((row, index) => {
+        row.querySelector("td").textContent = index + 1;
+      });
+    }
+
+    function escapeHtml(value) {
+      return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    }
+    function escapeAttribute(value) {
+      return String(value).replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    }
+    function getValue(id) { return document.getElementById(id).value.trim(); }
+    function setValue(id, value) { document.getElementById(id).value = value || ""; }
+
+    // Get Data from Table
+    function getObservationsData() {
+      const rows = document.querySelectorAll("#observationsTableBody tr");
+      const observations = [];
+      rows.forEach((row) => {
+        observations.push({
+          category: row.querySelector(".obs-category").value,
+          description: row.querySelector(".obs-desc").value.trim(),
+          risk: row.querySelector(".obs-risk").value,
+          action: row.querySelector(".obs-action").value.trim(),
+          owner: row.querySelector(".obs-owner").value.trim(),
+          status: row.querySelector(".obs-status").value
+        });
+      });
+      return observations;
+    }
+
+    // Dashboard Calculation
+    function updateDashboard(observations) {
+      const validObs = observations.filter(o => o.description !== "");
+      const total = validObs.length;
+      const highRisk = validObs.filter(o => o.risk === "High").length;
+      const openActions = validObs.filter(o => o.status === "Open").length;
+      const safePractices = validObs.filter(o => o.category === "Positive Finding").length;
+
+      document.getElementById("totalFindings").textContent = total;
+      document.getElementById("highRisk").textContent = highRisk;
+      document.getElementById("openActions").textContent = openActions;
+      document.getElementById("safePractices").textContent = safePractices;
+
+      const statusBox = document.getElementById("statusBox");
+      if (highRisk > 0) {
+        statusBox.className = "status-box status-poor";
+        statusBox.textContent = "Status: Critical Hazards Found! Immediate Action Required.";
+      } else if (openActions > 0) {
+        statusBox.className = "status-box status-fair";
+        statusBox.textContent = "Status: Issues Identified. Action Tracking Required.";
+      } else if (total > 0 && highRisk === 0 && openActions === 0) {
+        statusBox.className = "status-box status-good";
+        statusBox.textContent = "Status: Satisfactory. All actions closed or positive.";
+      } else {
+        statusBox.className = "status-box status-good";
+        statusBox.textContent = "Status: Ready for Inspection.";
+      }
+    }
+
+    // Report Generation
+    function generateReport() {
+      const observations = getObservationsData();
+      updateDashboard(observations);
+
+      const company = getValue("companyName") || "N/A";
+      const project = getValue("projectName") || "N/A";
+      const area = getValue("inspectionArea") || "N/A";
+      const inspector = getValue("inspectorName") || "N/A";
+      const date = document.getElementById("inspectionDate").value || "N/A";
+      const time = document.getElementById("inspectionTime").value || "N/A";
+      const general = getValue("generalComments") || "No general comments provided.";
+
+      const reportText = `
+Site Inspection Summary
+-----------------------------------
+Company: ${company}
+Project: ${project}
+Area Inspected: ${area}
+Date & Time: ${date} at ${time}
+Lead Inspector: ${inspector}
+
+General Overview:
+${general}
+
+Total Findings Recorded: ${observations.filter(o => o.description).length}
+      `.trim();
+      document.getElementById("reportSummary").textContent = reportText;
+
+      let actionText = "";
+      const validObs = observations.filter(o => o.description !== "");
+      if (validObs.length === 0) {
+        actionText = "No observations or actions recorded.";
+      } else {
+        validObs.forEach((obs, index) => {
+          actionText += `${index + 1}. [${obs.category || "Uncategorized"}] ${obs.description}\n`;
+          if(obs.category !== "Positive Finding") {
+            actionText += `   Risk: ${obs.risk || "N/A"} | Status: ${obs.status}\n`;
+            actionText += `   Action: ${obs.action || "None specified"}\n`;
+            actionText += `   Owner: ${obs.owner || "Unassigned"}\n\n`;
+          } else {
+            actionText += `   Status: Positive Behavior / Safe Condition\n\n`;
+          }
+        });
+      }
+      document.getElementById("actionSummary").textContent = actionText.trim();
+      updatePrintHeader();
+    }
+
+    // Print Header Setup
+    function updatePrintHeader() {
+      const company = getValue("companyName") || "Safety Inspection Report";
+      const project = getValue("projectName") || "Site Area Not Provided";
+      const date = document.getElementById("inspectionDate").value || "";
+      
+      document.getElementById("printCompanyName").textContent = company + " - Safety Inspection";
+      document.getElementById("printCompanyInfo").textContent = `Project: ${project} | Date: ${date}`;
+
+      const printLogoContainer = document.getElementById("printLogoContainer");
+      if (companyLogoData) {
+        printLogoContainer.innerHTML = `<img src="${companyLogoData}" alt="Company Logo">`;
+      } else {
+        printLogoContainer.innerHTML = "";
+      }
+    }
+
+    // Image Upload Handlers
+    function handleCompanyLogoUpload(event) {
+      const file = event.target.files[0];
+      const preview = document.getElementById("logoPreview");
+      if (!file) {
+        companyLogoData = "";
+        preview.textContent = "No company logo uploaded.";
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        companyLogoData = e.target.result;
+        preview.innerHTML = `<img src="${companyLogoData}" alt="Company Logo Preview">`;
+        updatePrintHeader();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handlePhotoEvidenceUpload(event) {
+      const files = Array.from(event.target.files || []);
+      const preview = document.getElementById("evidencePreview");
+      preview.innerHTML = "";
+      evidenceImages = [];
+
+      if (!files.length) return;
+
+      files.forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const imageData = { name: file.name, data: e.target.result };
+          evidenceImages.push(imageData);
+
+          const item = document.createElement("div");
+          item.className = "preview-item";
+          item.innerHTML = `
+            <img src="${imageData.data}" alt="${escapeHtml(file.name)}">
+            <small>${escapeHtml(file.name)}</small>
+          `;
+          preview.appendChild(item);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Save, Load, Clear Logic
+    function saveData() {
+      const data = {
+        companyName: getValue("companyName"),
+        projectName: getValue("projectName"),
+        inspectionArea: getValue("inspectionArea"),
+        inspectorName: getValue("inspectorName"),
+        inspectionDate: document.getElementById("inspectionDate").value,
+        inspectionTime: document.getElementById("inspectionTime").value,
+        generalComments: getValue("generalComments"),
+        inspectorSignature: getValue("inspectorSignature"),
+        inspectorSignDate: document.getElementById("inspectorSignDate").value,
+        managerSignature: getValue("managerSignature"),
+        managerSignDate: document.getElementById("managerSignDate").value,
+        observations: getObservationsData(),
+        companyLogoData,
+        evidenceImages
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      alert("Inspection data saved locally successfully.");
+    }
+
+    function loadData() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) { alert("No saved inspection data found."); return; }
+
+      try {
+        const data = JSON.parse(raw);
+        setValue("companyName", data.companyName);
+        setValue("projectName", data.projectName);
+        setValue("inspectionArea", data.inspectionArea);
+        setValue("inspectorName", data.inspectorName);
+        document.getElementById("inspectionDate").value = data.inspectionDate || "";
+        document.getElementById("inspectionTime").value = data.inspectionTime || "";
+        setValue("generalComments", data.generalComments);
+        setValue("inspectorSignature", data.inspectorSignature);
+        document.getElementById("inspectorSignDate").value = data.inspectorSignDate || "";
+        setValue("managerSignature", data.managerSignature);
+        document.getElementById("managerSignDate").value = data.managerSignDate || "";
+
+        document.getElementById("observationsTableBody").innerHTML = "";
+        if (Array.isArray(data.observations) && data.observations.length > 0) {
+          data.observations.forEach(obs => addObservationRow(obs));
+        } else {
+          addObservationRow(); addObservationRow(); addObservationRow();
+        }
+
+        companyLogoData = data.companyLogoData || "";
+        evidenceImages = Array.isArray(data.evidenceImages) ? data.evidenceImages : [];
+
+        const logoPreview = document.getElementById("logoPreview");
+        if (companyLogoData) {
+          logoPreview.innerHTML = `<img src="${companyLogoData}" alt="Company Logo Preview">`;
+        } else {
+          logoPreview.textContent = "No company logo uploaded.";
+        }
+
+        const evidencePreview = document.getElementById("evidencePreview");
+        evidencePreview.innerHTML = "";
+        evidenceImages.forEach((img) => {
+          const item = document.createElement("div");
+          item.className = "preview-item";
+          item.innerHTML = `<img src="${img.data}" alt="${escapeHtml(img.name)}"><small>${escapeHtml(img.name)}</small>`;
+          evidencePreview.appendChild(item);
+        });
+
+        generateReport();
+        alert("Saved inspection data loaded.");
+      } catch (error) {
+        console.error(error);
+        alert("Error loading data.");
+      }
+    }
+
+    function clearForm() {
+      if (!confirm("Are you sure you want to clear the entire form?")) return;
+      document.querySelectorAll("input, textarea").forEach(el => el.value = "");
+      document.querySelectorAll("select").forEach(el => el.selectedIndex = 0);
+      document.getElementById("observationsTableBody").innerHTML = "";
+      addObservationRow(); addObservationRow(); addObservationRow();
+      companyLogoData = ""; evidenceImages = [];
+      document.getElementById("logoPreview").textContent = "No company logo uploaded.";
+      document.getElementById("evidencePreview").innerHTML = "";
+      setDefaultDates();
+      generateReport();
+    }
+
+    function downloadPDF() {
+      generateReport();
+      window.print();
+    }
+
+    function setDefaultDates() {
+      const now = new Date();
+      const dateStr = now.toISOString().split("T")[0];
+      const timeStr = String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
+      
+      if(!document.getElementById("inspectionDate").value) document.getElementById("inspectionDate").value = dateStr;
+      if(!document.getElementById("inspectionTime").value) document.getElementById("inspectionTime").value = timeStr;
+      if(!document.getElementById("inspectorSignDate").value) document.getElementById("inspectorSignDate").value = dateStr;
+      if(!document.getElementById("managerSignDate").value) document.getElementById("managerSignDate").value = dateStr;
+    }
+
+    // Initialization
+    document.getElementById("companyLogo").addEventListener("change", handleCompanyLogoUpload);
+    document.getElementById("photoEvidence").addEventListener("change", handlePhotoEvidenceUpload);
+    addObservationRow(); addObservationRow(); addObservationRow();
+    setDefaultDates();
+    generateReport();
+  </script>
+</body>
+</html>
