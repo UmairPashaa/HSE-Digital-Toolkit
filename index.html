@@ -16,35 +16,83 @@
       color: #1f2937;
     }
 
-    header {
+    .topbar {
       background: linear-gradient(135deg, #0f172a, #2563eb);
       color: white;
-      padding: 40px 20px;
-      text-align: center;
+      padding: 18px 20px;
     }
 
-    header h1 {
-      margin: 0 0 10px;
-      font-size: 34px;
-    }
-
-    header p {
-      margin: 0;
-      font-size: 18px;
-    }
-
-    .container {
-      max-width: 1100px;
+    .topbar .inner {
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 30px 20px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
-    .intro {
+    .brand h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .brand p {
+      margin: 6px 0 0;
+      opacity: 0.95;
+      font-size: 15px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 14px;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 36px 20px 18px;
+    }
+
+    .hero-card {
       background: white;
-      padding: 20px;
-      border-radius: 14px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-      margin-bottom: 25px;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+
+    .hero-card h2 {
+      margin-top: 0;
+      font-size: 30px;
+      color: #0f172a;
+    }
+
+    .hero-card p {
+      color: #4b5563;
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 10px 20px 30px;
+    }
+
+    .section h3 {
+      font-size: 24px;
+      margin-bottom: 18px;
+      color: #111827;
     }
 
     .tools-grid {
@@ -55,30 +103,36 @@
 
     .tool-card {
       background: white;
+      border-radius: 16px;
       padding: 22px;
-      border-radius: 14px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      min-height: 220px;
     }
 
-    .tool-card h3 {
+    .tool-card h4 {
       margin-top: 0;
       margin-bottom: 10px;
-      color: #111827;
+      font-size: 20px;
+      color: #0f172a;
     }
 
     .tool-card p {
       color: #4b5563;
-      min-height: 60px;
+      line-height: 1.5;
+      flex-grow: 1;
     }
 
     .tool-card a,
     .tool-card span {
       display: inline-block;
-      margin-top: 10px;
-      padding: 10px 14px;
-      border-radius: 8px;
       text-decoration: none;
+      padding: 11px 15px;
+      border-radius: 10px;
       font-weight: bold;
+      text-align: center;
+      margin-top: 10px;
     }
 
     .tool-card a {
@@ -95,65 +149,126 @@
       color: #374151;
     }
 
-    footer {
+    .about-box {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      line-height: 1.7;
+      color: #374151;
+    }
+
+    .footer {
+      background: #111827;
+      color: #d1d5db;
       text-align: center;
-      padding: 20px;
-      color: #6b7280;
-      font-size: 14px;
+      padding: 22px 20px;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .brand h1 {
+        font-size: 24px;
+      }
+
+      .hero-card h2 {
+        font-size: 24px;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>HSE Digital Toolkit</h1>
-    <p>Simple digital tools for HSE professionals</p>
+  <header class="topbar">
+    <div class="inner">
+      <div class="brand">
+        <h1>HSE Digital Toolkit</h1>
+        <p>Practical digital tools for HSE professionals</p>
+      </div>
+
+      <nav class="nav">
+        <a href="#home">Home</a>
+        <a href="#tools">Tools</a>
+        <a href="#about">About</a>
+      </nav>
+    </div>
   </header>
 
-  <div class="container">
-    <div class="intro">
-      <h2>Welcome</h2>
+  <section class="hero" id="home">
+    <div class="hero-card">
+      <h2>Welcome to the HSE Digital Toolkit</h2>
       <p>
-        This toolkit is being developed to help HSE professionals with practical digital tools
-        such as risk assessment, checklists, and reporting systems.
+        This platform is designed to support HSE professionals with simple and useful
+        digital tools for site work, inspections, reporting, and risk management.
+        The goal is to make HSE tasks easier, faster, and more organized.
       </p>
     </div>
+  </section>
+
+  <section class="section" id="tools">
+    <h3>Available Tools</h3>
 
     <div class="tools-grid">
       <div class="tool-card">
-        <h3>Risk Assessment Tool</h3>
+        <h4>Risk Assessment</h4>
         <p>
-          Multi-hazard risk assessment tool with scoring, chart, and PDF report.
+          Perform structured risk assessments and build a professional hazard evaluation process.
         </p>
-        <a href="https://umairpashaa.github.io/hse-risk-calculator/" target="_blank">Open Tool</a>
+        <a href="risk-assessment.html">Open Tool</a>
       </div>
 
       <div class="tool-card">
-        <h3>PPE Checklist Tool</h3>
+        <h4>PPE Checklist</h4>
         <p>
-          A simple checklist tool for checking PPE compliance during site visits.
+          Check personal protective equipment requirements for workers during site visits.
         </p>
-        <span class="coming-soon">Coming Soon</span>
+        <a href="ppe-checklist.html">Open Tool</a>
       </div>
 
       <div class="tool-card">
-        <h3>Incident Report Tool</h3>
+        <h4>Incident Report</h4>
         <p>
-          A digital form for recording and reviewing workplace incidents.
+          Record workplace incidents in a simple digital format for review and follow-up.
         </p>
-        <span class="coming-soon">Coming Soon</span>
+        <a href="incident-report.html">Open Tool</a>
       </div>
 
       <div class="tool-card">
-        <h3>Safety Inspection Tool</h3>
+        <h4>Safety Inspection</h4>
         <p>
-          A site inspection tool for identifying hazards and recording findings.
+          Carry out inspection activities and note observations, hazards, and actions.
         </p>
-        <span class="coming-soon">Coming Soon</span>
+        <a href="safety-inspection.html">Open Tool</a>
+      </div>
+
+      <div class="tool-card">
+        <h4>Toolbox Talk</h4>
+        <p>
+          Keep short safety discussions organized with useful daily or weekly toolbox talk topics.
+        </p>
+        <a href="toolbox-talk.html">Open Tool</a>
+      </div>
+
+      <div class="tool-card">
+        <h4>Emergency Contacts</h4>
+        <p>
+          Keep important emergency contact details available in one accessible place.
+        </p>
+        <a href="emergency-contacts.html">Open Tool</a>
       </div>
     </div>
-  </div>
+  </section>
 
-  <footer>
+  <section class="section" id="about">
+    <h3>About This Toolkit</h3>
+    <div class="about-box">
+      This toolkit is being developed to help HSE professionals use digital solutions
+      in daily work activities. It focuses on practical safety tasks such as risk assessment,
+      inspections, incident reporting, and PPE compliance. This project is also part of a
+      learning journey to build useful tools for the HSE field.
+    </div>
+  </section>
+
+  <footer class="footer">
     Developed by Umair Pasha for HSE professionals
   </footer>
 </body>
