@@ -1,275 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HSE Digital Toolkit</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HSE Digital Toolkit</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f3f6f9;
-      color: #1f2937;
-    }
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #0f172a;
+  color: white;
+}
 
-    .topbar {
-      background: linear-gradient(135deg, #0f172a, #2563eb);
-      color: white;
-      padding: 18px 20px;
-    }
+/* HEADER */
+header {
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    .topbar .inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
+header h1 {
+  margin: 0;
+  font-size: 24px;
+}
 
-    .brand h1 {
-      margin: 0;
-      font-size: 28px;
-    }
+nav a {
+  color: #94a3b8;
+  margin-left: 20px;
+  text-decoration: none;
+}
 
-    .brand p {
-      margin: 6px 0 0;
-      opacity: 0.95;
-      font-size: 15px;
-    }
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+}
 
-    .nav {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+.hero h2 {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
 
-    .nav a {
-      color: white;
-      text-decoration: none;
-      padding: 10px 14px;
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 8px;
-      font-size: 14px;
-    }
+.hero p {
+  color: #94a3b8;
+}
 
-    .hero {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 36px 20px 18px;
-    }
+/* TOOL GRID */
+.tools {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  gap: 20px;
+  padding: 40px;
+}
 
-    .hero-card {
-      background: white;
-      border-radius: 16px;
-      padding: 28px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-    }
+/* CARD */
+.card {
+  background: #1e293b;
+  padding: 25px;
+  border-radius: 15px;
+  transition: 0.3s;
+}
 
-    .hero-card h2 {
-      margin-top: 0;
-      font-size: 30px;
-      color: #0f172a;
-    }
+.card:hover {
+  transform: translateY(-5px);
+  background: #334155;
+}
 
-    .hero-card p {
-      color: #4b5563;
-      line-height: 1.6;
-      margin-bottom: 0;
-    }
+.card h3 {
+  margin-top: 0;
+}
 
-    .section {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 10px 20px 30px;
-    }
+.card p {
+  color: #94a3b8;
+}
 
-    .section h3 {
-      font-size: 24px;
-      margin-bottom: 18px;
-      color: #111827;
-    }
+.card a {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 15px;
+  background: #3b82f6;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+}
 
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-    }
-
-    .tool-card {
-      background: white;
-      border-radius: 16px;
-      padding: 22px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-      display: flex;
-      flex-direction: column;
-      min-height: 220px;
-    }
-
-    .tool-card h4 {
-      margin-top: 0;
-      margin-bottom: 10px;
-      font-size: 20px;
-      color: #0f172a;
-    }
-
-    .tool-card p {
-      color: #4b5563;
-      line-height: 1.5;
-      flex-grow: 1;
-    }
-
-    .tool-card a,
-    .tool-card span {
-      display: inline-block;
-      text-decoration: none;
-      padding: 11px 15px;
-      border-radius: 10px;
-      font-weight: bold;
-      text-align: center;
-      margin-top: 10px;
-    }
-
-    .tool-card a {
-      background: #2563eb;
-      color: white;
-    }
-
-    .tool-card a:hover {
-      background: #1d4ed8;
-    }
-
-    .coming-soon {
-      background: #e5e7eb;
-      color: #374151;
-    }
-
-    .about-box {
-      background: white;
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-      line-height: 1.7;
-      color: #374151;
-    }
-
-    .footer {
-      background: #111827;
-      color: #d1d5db;
-      text-align: center;
-      padding: 22px 20px;
-      margin-top: 20px;
-    }
-
-    @media (max-width: 768px) {
-      .brand h1 {
-        font-size: 24px;
-      }
-
-      .hero-card h2 {
-        font-size: 24px;
-      }
-    }
-  </style>
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #94a3b8;
+}
+</style>
 </head>
+
 <body>
-  <header class="topbar">
-    <div class="inner">
-      <div class="brand">
-        <h1>HSE Digital Toolkit</h1>
-        <p>Practical digital tools for HSE professionals</p>
-      </div>
 
-      <nav class="nav">
-        <a href="#home">Home</a>
-        <a href="#tools">Tools</a>
-        <a href="#about">About</a>
-      </nav>
-    </div>
-  </header>
+<header>
+  <h1>HSE Toolkit</h1>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Tools</a>
+    <a href="#">About</a>
+  </nav>
+</header>
 
-  <section class="hero" id="home">
-    <div class="hero-card">
-      <h2>Welcome to the HSE Digital Toolkit</h2>
-      <p>
-        This platform is designed to support HSE professionals with simple and useful
-        digital tools for site work, inspections, reporting, and risk management.
-        The goal is to make HSE tasks easier, faster, and more organized.
-      </p>
-    </div>
-  </section>
+<section class="hero">
+  <h2>HSE Digital Toolkit</h2>
+  <p>Professional tools for safety management and risk assessment</p>
+</section>
 
-  <section class="section" id="tools">
-    <h3>Available Tools</h3>
+<section class="tools">
 
-    <div class="tools-grid">
-      <div class="tool-card">
-        <h4>Risk Assessment</h4>
-        <p>
-          Perform structured risk assessments and build a professional hazard evaluation process.
-        </p>
-        <a href="risk-assessment.html">Open Tool</a>
-      </div>
+  <div class="card">
+    <h3>Risk Assessment</h3>
+    <p>Multi hazard risk calculator with report</p>
+    <a href="#">Open</a>
+  </div>
 
-      <div class="tool-card">
-        <h4>PPE Checklist</h4>
-        <p>
-          Check personal protective equipment requirements for workers during site visits.
-        </p>
-        <a href="ppe-checklist.html">Open Tool</a>
-      </div>
+  <div class="card">
+    <h3>PPE Checklist</h3>
+    <p>Check worker PPE compliance</p>
+    <a href="#">Open</a>
+  </div>
 
-      <div class="tool-card">
-        <h4>Incident Report</h4>
-        <p>
-          Record workplace incidents in a simple digital format for review and follow-up.
-        </p>
-        <a href="incident-report.html">Open Tool</a>
-      </div>
+  <div class="card">
+    <h3>Incident Report</h3>
+    <p>Create and manage incident reports</p>
+    <a href="#">Open</a>
+  </div>
 
-      <div class="tool-card">
-        <h4>Safety Inspection</h4>
-        <p>
-          Carry out inspection activities and note observations, hazards, and actions.
-        </p>
-        <a href="safety-inspection.html">Open Tool</a>
-      </div>
+  <div class="card">
+    <h3>Safety Inspection</h3>
+    <p>Perform site inspections</p>
+    <a href="#">Open</a>
+  </div>
 
-      <div class="tool-card">
-        <h4>Toolbox Talk</h4>
-        <p>
-          Keep short safety discussions organized with useful daily or weekly toolbox talk topics.
-        </p>
-        <a href="toolbox-talk.html">Open Tool</a>
-      </div>
+</section>
 
-      <div class="tool-card">
-        <h4>Emergency Contacts</h4>
-        <p>
-          Keep important emergency contact details available in one accessible place.
-        </p>
-        <a href="emergency-contacts.html">Open Tool</a>
-      </div>
-    </div>
-  </section>
+<footer>
+  Built by Umair Pasha
+</footer>
 
-  <section class="section" id="about">
-    <h3>About This Toolkit</h3>
-    <div class="about-box">
-      This toolkit is being developed to help HSE professionals use digital solutions
-      in daily work activities. It focuses on practical safety tasks such as risk assessment,
-      inspections, incident reporting, and PPE compliance. This project is also part of a
-      learning journey to build useful tools for the HSE field.
-    </div>
-  </section>
-
-  <footer class="footer">
-    Developed by Umair Pasha for HSE professionals
-  </footer>
 </body>
 </html>
