@@ -3,972 +3,689 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PPE Checklist | HSE Digital Toolkit</title>
+  <title>PPE Inspection Checklist | HSE Digital Toolkit</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
   <style>
     :root {
-      --bg: #f4f7fb;
-      --card: #ffffff;
-      --text: #1f2937;
+      --bg: #eef5f1;
+      --white: #ffffff;
+      --dark: #0f172a;
+      --green: #0f766e;
+      --green-dark: #0b5d57;
+      --lime: #84cc16;
+      --blue: #2563eb;
+      --amber: #f59e0b;
+      --red: #dc2626;
       --muted: #6b7280;
-      --primary: #0f766e;
-      --primary-dark: #115e59;
-      --accent: #dc2626;
-      --border: #dbe3ea;
-      --success-bg: #dcfce7;
-      --success-text: #166534;
-      --warning-bg: #fef3c7;
-      --warning-text: #92400e;
-      --danger-bg: #fee2e2;
-      --danger-text: #991b1b;
-      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-      --radius: 18px;
+      --border: #d9e5de;
+      --shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+      --radius: 20px;
     }
 
     * {
       box-sizing: border-box;
+      scroll-behavior: smooth;
     }
 
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(180deg, #eef6f8 0%, var(--bg) 100%);
-      color: var(--text);
+      font-family: "Poppins", sans-serif;
+      color: #1f2937;
+      background:
+        linear-gradient(rgba(255,255,255,0.80), rgba(255,255,255,0.88)),
+        repeating-linear-gradient(
+          45deg,
+          rgba(15,118,110,0.03),
+          rgba(15,118,110,0.03) 12px,
+          rgba(37,99,235,0.03) 12px,
+          rgba(37,99,235,0.03) 24px
+        );
     }
 
-    .container {
-      width: min(1200px, 94%);
-      margin: 0 auto;
-      padding: 24px 0 40px;
-    }
+    a { text-decoration: none; }
 
     .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 3px solid var(--blue);
+    }
+
+    .topbar-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 15px 20px;
       display: flex;
       justify-content: space-between;
-      align-items: center;
       gap: 16px;
+      align-items: center;
       flex-wrap: wrap;
-      margin-bottom: 22px;
     }
 
-    .brand h1 {
-      margin: 0;
-      font-size: 2rem;
-      color: var(--primary-dark);
-    }
-
-    .brand p {
-      margin: 6px 0 0;
-      color: var(--muted);
-      font-size: 0.98rem;
-    }
-
-    .nav-actions {
+    .brand {
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      color: white;
     }
 
-    .btn {
-      border: none;
-      border-radius: 12px;
-      padding: 12px 16px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: 0.2s ease;
+    .brand-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.22);
     }
 
-    .btn:hover {
-      transform: translateY(-1px);
+    .brand-text h1 { margin: 0; font-size: 20px; line-height: 1.1; }
+    .brand-text p { margin: 4px 0 0; font-size: 12px; color: #cbd5e1; }
+
+    .nav a {
+      color: white;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      transition: 0.25s ease;
     }
 
-    .btn-primary {
-      background: var(--primary);
-      color: #fff;
+    .nav a:hover {
+      background: rgba(37, 99, 235, 0.2);
+      border-color: rgba(37, 99, 235, 0.5);
     }
 
-    .btn-primary:hover {
-      background: var(--primary-dark);
+    .page {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 20px 40px;
     }
 
-    .btn-secondary {
-      background: #e5eef1;
-      color: var(--text);
-    }
-
-    .btn-danger {
-      background: var(--accent);
-      color: #fff;
-    }
-
-    .hero {
-      background: linear-gradient(135deg, #0f766e 0%, #155e75 100%);
-      color: #fff;
-      padding: 24px;
-      border-radius: var(--radius);
+    .section-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 24px;
       box-shadow: var(--shadow);
-      margin-bottom: 24px;
+      padding: 24px;
+      margin-bottom: 25px;
     }
 
-    .hero h2 {
-      margin: 0 0 8px;
-      font-size: 1.5rem;
-    }
-
-    .hero p {
-      margin: 0;
-      line-height: 1.6;
-      opacity: 0.96;
-    }
+    .section-head { margin-bottom: 20px; border-bottom: 2px solid var(--bg); padding-bottom: 15px;}
+    .section-head h3 { margin: 0; font-size: 24px; color: var(--dark); display: flex; align-items: center; gap: 10px;}
+    .section-head h3 i { color: var(--blue); }
+    .section-head p { margin: 8px 0 0; color: var(--muted); font-size: 14px; }
 
     .grid {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 22px;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
     }
 
-    .card {
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 22px;
-      border: 1px solid rgba(219, 227, 234, 0.8);
-    }
-
-    .card h3 {
-      margin: 0 0 16px;
-      color: var(--primary-dark);
-      font-size: 1.2rem;
-    }
-
-    .section-title {
-      margin: 18px 0 12px;
-      font-size: 1rem;
-      color: var(--primary-dark);
-      border-left: 4px solid var(--primary);
-      padding-left: 10px;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-    }
-
-    .form-group.full {
-      grid-column: 1 / -1;
-    }
+    .col-full { grid-column: span 2; }
 
     label {
-      font-size: 0.93rem;
-      font-weight: 700;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      padding: 12px 13px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      font-size: 0.95rem;
-      background: #fff;
-      color: var(--text);
-      outline: none;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
-    }
-
-    textarea {
-      min-height: 96px;
-      resize: vertical;
-    }
-
-    .checklist-group {
-      margin-top: 14px;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-    }
-
-    .checklist-header {
-      background: #f0f7f7;
-      color: var(--primary-dark);
-      font-weight: 700;
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .check-row {
-      display: grid;
-      grid-template-columns: minmax(160px, 1.2fr) repeat(3, 100px) 1.5fr;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 14px;
-      border-bottom: 1px solid #edf2f7;
-    }
-
-    .check-row:last-child {
-      border-bottom: none;
-    }
-
-    .check-label {
-      font-weight: 700;
+      display: block;
+      margin-bottom: 7px;
+      font-weight: 600;
       color: #111827;
+      font-size: 14px;
     }
 
-    .radio-wrap {
+    input, select, textarea {
+      width: 100%;
+      font-family: inherit;
+      font-size: 14px;
+      padding: 12px 13px;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      background: #f9fafb;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+    }
+
+    /* Checklist Items styling */
+    .checklist-item {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .item-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--dark);
       display: flex;
-      justify-content: center;
       align-items: center;
-      gap: 6px;
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
-
-    .radio-wrap input {
-      width: auto;
-      margin: 0;
-      transform: scale(1.05);
-    }
-
-    .remarks-inline input {
-      padding: 10px 11px;
-      font-size: 0.9rem;
-    }
-
-    .legend {
-      display: grid;
-      grid-template-columns: minmax(160px, 1.2fr) repeat(3, 100px) 1.5fr;
       gap: 10px;
-      font-size: 0.85rem;
-      color: var(--muted);
-      padding: 10px 14px;
-      background: #fafcfd;
-      border-bottom: 1px solid var(--border);
-      font-weight: 700;
+      margin-bottom: 12px;
+      grid-column: span 2;
     }
 
-    .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-      margin-top: 12px;
+    .item-title i {
+      color: var(--blue);
+      background: #eff6ff;
+      padding: 8px;
+      border-radius: 8px;
     }
 
-    .metric {
-      background: #f8fbfc;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px;
+    .status-select {
+      font-weight: 600;
     }
+    
+    .status-select.pass { color: var(--green-dark); background: #dcfce7; border-color: #86efac;}
+    .status-select.fail { color: #991b1b; background: #fee2e2; border-color: #fca5a5;}
+    .status-select.na { color: var(--muted); }
 
-    .metric h4 {
-      margin: 0 0 8px;
-      font-size: 0.95rem;
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .metric .value {
-      font-size: 1.7rem;
-      font-weight: 800;
-      color: var(--primary-dark);
-    }
-
-    .status-box {
-      margin-top: 14px;
-      padding: 14px 16px;
-      border-radius: 14px;
-      font-weight: 800;
-      font-size: 1rem;
-    }
-
-    .status-compliant {
-      background: var(--success-bg);
-      color: var(--success-text);
-    }
-
-    .status-warning {
-      background: var(--warning-bg);
-      color: var(--warning-text);
-    }
-
-    .status-danger {
-      background: var(--danger-bg);
-      color: var(--danger-text);
-    }
-
-    .notes-box {
-      margin-top: 14px;
-      padding: 14px;
-      border-radius: 14px;
-      background: #f8fbfc;
-      border: 1px solid var(--border);
-      color: var(--text);
-      line-height: 1.6;
-      white-space: pre-wrap;
-    }
-
-    .action-bar {
+    .toolbar {
       display: flex;
-      gap: 10px;
+      gap: 12px;
       flex-wrap: wrap;
-      margin-top: 18px;
+      margin-top: 20px;
     }
 
-    .footer-note {
-      margin-top: 22px;
+    .btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s;
+      font-family: inherit;
+      color: white;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+    .btn-blue { background: linear-gradient(135deg, var(--blue), #1d4ed8); }
+    .btn-green { background: linear-gradient(135deg, var(--green), var(--green-dark)); }
+    .btn-amber { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    .btn-red { background: linear-gradient(135deg, #ef4444, #dc2626); }
+
+    /* Signature Box */
+    .image-upload {
+      border: 2px dashed var(--blue);
+      padding: 20px;
       text-align: center;
-      color: var(--muted);
-      font-size: 0.92rem;
+      border-radius: 12px;
+      cursor: pointer;
+      position: relative;
+      background: #eff6ff;
+      color: var(--blue);
+      font-weight: 600;
+      margin-top: 10px;
+    }
+    .image-upload img { max-width: 100%; max-height: 80px; display: none; }
+    .image-upload input[type="file"] {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;
     }
 
-    .report-block {
-      border-top: 1px dashed var(--border);
-      margin-top: 18px;
-      padding-top: 18px;
-    }
-
-    .small {
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
-
-    @media (max-width: 1024px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 900px) {
-      .check-row,
-      .legend {
-        grid-template-columns: 1fr;
-      }
-
-      .radio-wrap {
-        justify-content: flex-start;
-      }
-
-      .check-row {
-        padding: 14px;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .form-grid,
-      .summary-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .brand h1 {
-        font-size: 1.6rem;
-      }
-
-      .hero h2 {
-        font-size: 1.25rem;
-      }
-
-      .btn {
-        width: 100%;
-      }
-
-      .nav-actions {
-        width: 100%;
-      }
-    }
-
-    @media print {
-      body {
-        background: #fff;
-      }
-
-      .topbar,
-      .hero,
-      .action-bar,
-      .footer-note {
-        display: none !important;
-      }
-
-      .container {
-        width: 100%;
-        padding: 0;
-      }
-
-      .card {
-        box-shadow: none;
-        border: 1px solid #ccc;
-      }
-
-      input,
-      select,
-      textarea {
-        border: 1px solid #bbb;
-      }
+    @media (max-width: 760px) {
+      .grid, .checklist-item { grid-template-columns: 1fr; }
+      .col-full, .item-title { grid-column: span 1; }
+      .btn { width: 100%; justify-content: center; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="topbar">
+
+  <header class="topbar">
+    <div class="topbar-inner">
       <div class="brand">
-        <h1>PPE Checklist</h1>
-        <p>HSE Digital Toolkit | Personal Protective Equipment Inspection Form</p>
+        <div class="brand-icon"><i class="fa-solid fa-helmet-safety"></i></div>
+        <div class="brand-text">
+          <h1>PPE Checklist</h1>
+          <p>HSE Digital Toolkit • Site Compliance</p>
+        </div>
       </div>
-      <div class="nav-actions">
-        <button class="btn btn-secondary" onclick="goHome()">Home</button>
-        <button class="btn btn-primary" onclick="calculateChecklist()">Update Summary</button>
+      <nav class="nav">
+        <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    
+    <section class="section-card">
+      <div class="section-head">
+        <h3><i class="fa-solid fa-clipboard-list"></i> Inspection Details</h3>
+        <p>Record the location, date, and project information for this PPE compliance check.</p>
       </div>
-    </div>
-
-    <div class="hero">
-      <h2>Advanced PPE Compliance Inspection</h2>
-      <p>
-        Use this checklist to verify PPE availability, condition, fit, and compliance for workers,
-        contractors, and visitors. This tool is built for practical HSE field inspections and reporting.
-      </p>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <h3>Inspection Details</h3>
-
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="inspectionDate">Inspection Date</label>
-            <input type="date" id="inspectionDate" />
-          </div>
-
-          <div class="form-group">
-            <label for="inspectionTime">Inspection Time</label>
-            <input type="time" id="inspectionTime" />
-          </div>
-
-          <div class="form-group">
-            <label for="companyName">Company Name</label>
-            <input type="text" id="companyName" placeholder="Enter company name" />
-          </div>
-
-          <div class="form-group">
-            <label for="siteLocation">Site / Location</label>
-            <input type="text" id="siteLocation" placeholder="Enter site or area" />
-          </div>
-
-          <div class="form-group">
-            <label for="department">Department</label>
-            <input type="text" id="department" placeholder="e.g. Construction / Workshop / Warehouse" />
-          </div>
-
-          <div class="form-group">
-            <label for="inspectorName">Inspector Name</label>
-            <input type="text" id="inspectorName" placeholder="Enter inspector name" />
-          </div>
-
-          <div class="form-group">
-            <label for="workerName">Worker Name</label>
-            <input type="text" id="workerName" placeholder="Enter worker name" />
-          </div>
-
-          <div class="form-group">
-            <label for="workerId">Worker ID / Badge No.</label>
-            <input type="text" id="workerId" placeholder="Enter worker ID" />
-          </div>
-
-          <div class="form-group">
-            <label for="jobTitle">Job Title</label>
-            <input type="text" id="jobTitle" placeholder="e.g. Welder / Electrician / Rigger" />
-          </div>
-
-          <div class="form-group">
-            <label for="shift">Shift</label>
-            <select id="shift">
-              <option value="">Select shift</option>
-              <option>Day Shift</option>
-              <option>Night Shift</option>
-              <option>General Shift</option>
-              <option>Overtime</option>
-            </select>
-          </div>
-
-          <div class="form-group full">
-            <label for="taskDescription">Task / Work Description</label>
-            <textarea id="taskDescription" placeholder="Describe the work activity being performed"></textarea>
-          </div>
+      <div class="grid">
+        <div class="col-full">
+          <label>Project / Company Name</label>
+          <input type="text" id="projectName" placeholder="Enter project details">
         </div>
-
-        <div class="section-title">PPE Checklist Items</div>
-
-        <div class="checklist-group">
-          <div class="checklist-header">Worker Personal Protective Equipment Verification</div>
-
-          <div class="legend">
-            <div>Item</div>
-            <div>Compliant</div>
-            <div>Non-Compliant</div>
-            <div>N/A</div>
-            <div>Remarks</div>
-          </div>
-
-          <div id="checklistContainer"></div>
+        <div>
+          <label>Specific Work Area</label>
+          <input type="text" id="workArea" placeholder="e.g., Block A, Scaffold level 2">
         </div>
-
-        <div class="section-title">General Remarks</div>
-        <div class="form-grid">
-          <div class="form-group full">
-            <label for="generalRemarks">Inspector Remarks / Recommendations</label>
-            <textarea id="generalRemarks" placeholder="Add overall remarks, deficiencies, corrective actions, or observations"></textarea>
-          </div>
-
-          <div class="form-group">
-            <label for="workerSignature">Worker Signature Name</label>
-            <input type="text" id="workerSignature" placeholder="Type worker name" />
-          </div>
-
-          <div class="form-group">
-            <label for="inspectorSignature">Inspector Signature Name</label>
-            <input type="text" id="inspectorSignature" placeholder="Type inspector name" />
-          </div>
+        <div>
+          <label>Date of Inspection</label>
+          <input type="date" id="inspectionDate">
         </div>
+      </div>
+    </section>
 
-        <div class="action-bar">
-          <button class="btn btn-primary" onclick="calculateChecklist()">Calculate Compliance</button>
-          <button class="btn btn-primary" onclick="saveData()">Save Data</button>
-          <button class="btn btn-secondary" onclick="loadData()">Load Saved Data</button>
-          <button class="btn btn-secondary" onclick="downloadPDF()">Download PDF</button>
-          <button class="btn btn-danger" onclick="clearForm()">Clear Form</button>
+    <section class="section-card">
+      <div class="section-head">
+        <h3><i class="fa-solid fa-user-shield"></i> Personal Protective Equipment</h3>
+        <p>Assess compliance for all workers in the designated area. Add remarks for any "Fail" items.</p>
+      </div>
+
+      <div class="checklist-item">
+        <div class="item-title"><i class="fa-solid fa-hard-hat"></i> Head Protection (Hard Hats)</div>
+        <div>
+          <label>Status</label>
+          <select id="status-head" class="status-select" onchange="updateSelectColor(this)">
+            <option value="Select">-- Select --</option>
+            <option value="Pass">Pass (Compliant)</option>
+            <option value="Fail">Fail (Needs Action)</option>
+            <option value="N/A">N/A</option>
+          </select>
+        </div>
+        <div>
+          <label>Remarks / Corrective Action</label>
+          <input type="text" id="remark-head" placeholder="Enter remarks if needed">
         </div>
       </div>
 
-      <div class="card">
-        <h3>Inspection Summary</h3>
-
-        <div class="summary-grid">
-          <div class="metric">
-            <h4>Total Checklist Items</h4>
-            <div class="value" id="totalItems">0</div>
-          </div>
-
-          <div class="metric">
-            <h4>Checked Items</h4>
-            <div class="value" id="checkedItems">0</div>
-          </div>
-
-          <div class="metric">
-            <h4>Compliant Items</h4>
-            <div class="value" id="compliantItems">0</div>
-          </div>
-
-          <div class="metric">
-            <h4>Non-Compliant Items</h4>
-            <div class="value" id="nonCompliantItems">0</div>
-          </div>
-
-          <div class="metric">
-            <h4>N/A Items</h4>
-            <div class="value" id="naItems">0</div>
-          </div>
-
-          <div class="metric">
-            <h4>Compliance Score</h4>
-            <div class="value" id="complianceScore">0%</div>
-          </div>
+      <div class="checklist-item">
+        <div class="item-title"><i class="fa-solid fa-glasses"></i> Eye & Face Protection (Glasses, Shields)</div>
+        <div>
+          <label>Status</label>
+          <select id="status-eye" class="status-select" onchange="updateSelectColor(this)">
+            <option value="Select">-- Select --</option>
+            <option value="Pass">Pass (Compliant)</option>
+            <option value="Fail">Fail (Needs Action)</option>
+            <option value="N/A">N/A</option>
+          </select>
         </div>
-
-        <div id="statusBox" class="status-box status-warning">
-          Status: Awaiting inspection data
-        </div>
-
-        <div class="report-block">
-          <h3 style="margin-top:0;">Auto Report Summary</h3>
-          <div class="notes-box" id="reportSummary">
-No inspection summary available yet.
-Click "Calculate Compliance" after completing the checklist.
-          </div>
-        </div>
-
-        <div class="report-block">
-          <h3 style="margin-top:0;">Corrective Actions Needed</h3>
-          <div class="notes-box" id="actionSummary">
-No actions identified yet.
-          </div>
-        </div>
-
-        <div class="report-block">
-          <h3 style="margin-top:0;">Guidance</h3>
-          <p class="small">
-            Compliance score is calculated from applicable items only. Items marked as N/A are excluded.
-            Non-compliant PPE should be corrected immediately before the task continues where required.
-          </p>
+        <div>
+          <label>Remarks / Corrective Action</label>
+          <input type="text" id="remark-eye" placeholder="Enter remarks if needed">
         </div>
       </div>
-    </div>
 
-    <div class="footer-note">
-      HSE Digital Toolkit | PPE Checklist Module
-    </div>
-  </div>
+      <div class="checklist-item">
+        <div class="item-title"><i class="fa-solid fa-ear-listen"></i> Hearing Protection (Earplugs, Muffs)</div>
+        <div>
+          <label>Status</label>
+          <select id="status-hear" class="status-select" onchange="updateSelectColor(this)">
+            <option value="Select">-- Select --</option>
+            <option value="Pass">Pass (Compliant)</option>
+            <option value="Fail">Fail (Needs Action)</option>
+            <option value="N/A">N/A</option>
+          </select>
+        </div>
+        <div>
+          <label>Remarks / Corrective Action</label>
+          <input type="text" id="remark-hear" placeholder="Enter remarks if needed">
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="item-title"><i class="fa-solid fa-mask-ventilator"></i> Respiratory Protection (Masks)</div>
+        <div>
+          <label>Status</label>
+          <select id="status-resp" class="status-select" onchange="updateSelectColor(this)">
+            <option value="Select">-- Select --</option>
+            <option value="Pass">Pass (Compliant)</option>
+            <option value="Fail">Fail (Needs Action)</option>
+            <option value="N/A">N/A</option>
+          </select>
+        </div>
+        <div>
+          <label>Remarks / Corrective Action</label>
+          <input type="text" id="remark-resp" placeholder="Enter remarks if needed">
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="item-title"><i class="fa-solid fa-mitten"></i> Hand Protection (Gloves)</div>
+        <div>
+          <label>Status</label>
+          <select id="status-hand" class="status-select" onchange="updateSelectColor(this)">
+            <option value="Select">-- Select --</option>
+            <option value="Pass">Pass (Compliant)</option>
+            <option value="Fail">Fail (Needs Action)</option>
+            <option value="N/A">N/A</option>
+          </select>
+        </div>
+        <div>
+          <label>Remarks / Corrective Action</label>
+          <input type="text" id="remark-hand" placeholder="Enter remarks if needed">
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="item-title"><i class="fa-solid fa-vest"></i> Body Protection (Hi-Vis, Coveralls)</div>
+        <div>
+          <label>Status</label>
+          <select id="status-body" class="status-select" onchange="updateSelectColor(this)">
+            <option value="Select">-- Select --</option>
+            <option value="Pass">Pass (Compliant)</option>
+            <option value="Fail">Fail (Needs Action)</option>
+            <option value="N/A">N/A</option>
+          </select>
+        </div>
+        <div>
+          <label>Remarks / Corrective Action</label>
+          <input type="text" id="remark-body" placeholder="Enter remarks if needed">
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="item-title"><i class="fa-solid fa-shoe-prints"></i> Foot Protection (Safety Boots)</div>
+        <div>
+          <label>Status</label>
+          <select id="status-foot" class="status-select" onchange="updateSelectColor(this)">
+            <option value="Select">-- Select --</option>
+            <option value="Pass">Pass (Compliant)</option>
+            <option value="Fail">Fail (Needs Action)</option>
+            <option value="N/A">N/A</option>
+          </select>
+        </div>
+        <div>
+          <label>Remarks / Corrective Action</label>
+          <input type="text" id="remark-foot" placeholder="Enter remarks if needed">
+        </div>
+      </div>
+
+      <div class="checklist-item">
+        <div class="item-title"><i class="fa-solid fa-person-falling"></i> Fall Protection (Harnesses)</div>
+        <div>
+          <label>Status</label>
+          <select id="status-fall" class="status-select" onchange="updateSelectColor(this)">
+            <option value="Select">-- Select --</option>
+            <option value="Pass">Pass (Compliant)</option>
+            <option value="Fail">Fail (Needs Action)</option>
+            <option value="N/A">N/A</option>
+          </select>
+        </div>
+        <div>
+          <label>Remarks / Corrective Action</label>
+          <input type="text" id="remark-fall" placeholder="Enter remarks if needed">
+        </div>
+      </div>
+
+    </section>
+
+    <section class="section-card">
+      <div class="section-head">
+        <h3><i class="fa-solid fa-pen-nib"></i> Sign-Off & Actions</h3>
+      </div>
+      <div class="grid">
+        <div class="col-full">
+          <label>General Observations & Final Comments</label>
+          <textarea id="generalComments" rows="3" placeholder="Summarize overall PPE compliance on site..."></textarea>
+        </div>
+        <div>
+          <label>Inspector Name & Job Title</label>
+          <input type="text" id="inspectorName" placeholder="e.g., Umair Pasha (HSE Officer)">
+        </div>
+        <div>
+          <label>Assessor Signature (Upload Image)</label>
+          <div class="image-upload" id="sigUploadBox">
+            <span id="sigText"><i class="fa-solid fa-upload"></i> Tap to attach signature</span>
+            <img id="sigImg" alt="Signature">
+            <input type="file" accept="image/*" onchange="previewSignature(event)">
+          </div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <button class="btn btn-blue" onclick="saveData()"><i class="fa-solid fa-floppy-disk"></i> Save Data</button>
+        <button class="btn btn-green" onclick="loadData()"><i class="fa-solid fa-rotate"></i> Load Data</button>
+        <button class="btn btn-amber" onclick="generatePDF()"><i class="fa-solid fa-file-pdf"></i> Download PDF</button>
+        <button class="btn btn-red" onclick="clearForm()"><i class="fa-solid fa-trash"></i> Clear Form</button>
+      </div>
+    </section>
+
+  </main>
 
   <script>
-    const checklistItems = [
-      "Safety Helmet / Hard Hat",
-      "Safety Glasses / Goggles",
-      "Face Shield",
-      "Hearing Protection",
-      "Respiratory Protection",
-      "Protective Gloves",
-      "Safety Shoes / Boots",
-      "High Visibility Vest / Clothing",
-      "Coverall / Protective Clothing",
-      "Fall Protection Harness",
-      "Welding Shield / PPE",
-      "Chemical Protective PPE",
-      "Life Jacket",
-      "Dust Mask",
-      "Hand Protection Fit and Condition"
-    ];
+    const STORAGE_KEY = "hsePPEChecklistData";
 
-    function createChecklistRows() {
-      const container = document.getElementById("checklistContainer");
-      container.innerHTML = "";
-
-      checklistItems.forEach((item, index) => {
-        const row = document.createElement("div");
-        row.className = "check-row";
-
-        row.innerHTML = `
-          <div class="check-label">${item}</div>
-
-          <label class="radio-wrap">
-            <input type="radio" name="item_${index}" value="compliant" />
-            Yes
-          </label>
-
-          <label class="radio-wrap">
-            <input type="radio" name="item_${index}" value="non-compliant" />
-            No
-          </label>
-
-          <label class="radio-wrap">
-            <input type="radio" name="item_${index}" value="na" />
-            N/A
-          </label>
-
-          <div class="remarks-inline">
-            <input type="text" id="remark_${index}" placeholder="Remarks for ${item}" />
-          </div>
-        `;
-
-        container.appendChild(row);
-      });
+    // Dynamic Select Styling
+    function updateSelectColor(selectObj) {
+      selectObj.classList.remove("pass", "fail", "na");
+      if(selectObj.value === "Pass") selectObj.classList.add("pass");
+      if(selectObj.value === "Fail") selectObj.classList.add("fail");
+      if(selectObj.value === "N/A") selectObj.classList.add("na");
     }
 
-    function getSelectedValue(name) {
-      const selected = document.querySelector(`input[name="${name}"]:checked`);
-      return selected ? selected.value : "";
-    }
-
-    function calculateChecklist() {
-      const total = checklistItems.length;
-      let checked = 0;
-      let compliant = 0;
-      let nonCompliant = 0;
-      let na = 0;
-      let applicableItems = 0;
-
-      const nonCompliantDetails = [];
-      const compliantDetails = [];
-      const naDetails = [];
-
-      checklistItems.forEach((item, index) => {
-        const value = getSelectedValue(`item_${index}`);
-        const remark = document.getElementById(`remark_${index}`).value.trim();
-
-        if (value) {
-          checked++;
+    // Image Preview for Signature
+    function previewSignature(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('sigImg').src = e.target.result;
+          document.getElementById('sigImg').style.display = 'inline-block';
+          document.getElementById('sigText').style.display = 'none';
         }
-
-        if (value === "compliant") {
-          compliant++;
-          applicableItems++;
-          if (remark) {
-            compliantDetails.push(`${item}: ${remark}`);
-          }
-        } else if (value === "non-compliant") {
-          nonCompliant++;
-          applicableItems++;
-          nonCompliantDetails.push(
-            remark ? `${item} - ${remark}` : `${item} - Corrective action required`
-          );
-        } else if (value === "na") {
-          na++;
-          naDetails.push(item);
-        }
-      });
-
-      const score = applicableItems > 0
-        ? Math.round((compliant / applicableItems) * 100)
-        : 0;
-
-      document.getElementById("totalItems").textContent = total;
-      document.getElementById("checkedItems").textContent = checked;
-      document.getElementById("compliantItems").textContent = compliant;
-      document.getElementById("nonCompliantItems").textContent = nonCompliant;
-      document.getElementById("naItems").textContent = na;
-      document.getElementById("complianceScore").textContent = `${score}%`;
-
-      updateStatus(score, nonCompliant, checked, total);
-      updateReport(score, compliant, nonCompliant, na, checked, total, nonCompliantDetails, naDetails);
-    }
-
-    function updateStatus(score, nonCompliant, checked, total) {
-      const statusBox = document.getElementById("statusBox");
-      statusBox.className = "status-box";
-
-      if (checked === 0) {
-        statusBox.classList.add("status-warning");
-        statusBox.textContent = "Status: Awaiting inspection data";
-        return;
-      }
-
-      if (nonCompliant === 0 && score >= 90) {
-        statusBox.classList.add("status-compliant");
-        statusBox.textContent = "Status: PPE Compliant";
-      } else if (nonCompliant <= 3 && score >= 70) {
-        statusBox.classList.add("status-warning");
-        statusBox.textContent = "Status: Improvement Required";
-      } else {
-        statusBox.classList.add("status-danger");
-        statusBox.textContent = "Status: PPE Non-Compliant / Immediate Action Required";
+        reader.readAsDataURL(file);
       }
     }
 
-    function updateReport(score, compliant, nonCompliant, na, checked, total, nonCompliantDetails, naDetails) {
-      const companyName = document.getElementById("companyName").value.trim() || "Not provided";
-      const siteLocation = document.getElementById("siteLocation").value.trim() || "Not provided";
-      const department = document.getElementById("department").value.trim() || "Not provided";
-      const inspectorName = document.getElementById("inspectorName").value.trim() || "Not provided";
-      const workerName = document.getElementById("workerName").value.trim() || "Not provided";
-      const workerId = document.getElementById("workerId").value.trim() || "Not provided";
-      const jobTitle = document.getElementById("jobTitle").value.trim() || "Not provided";
-      const shift = document.getElementById("shift").value || "Not provided";
-      const inspectionDate = document.getElementById("inspectionDate").value || "Not provided";
-      const inspectionTime = document.getElementById("inspectionTime").value || "Not provided";
-      const taskDescription = document.getElementById("taskDescription").value.trim() || "Not provided";
-      const generalRemarks = document.getElementById("generalRemarks").value.trim() || "No general remarks added.";
-
-      let statusText = "Awaiting inspection data";
-      if (checked > 0) {
-        if (nonCompliant === 0 && score >= 90) {
-          statusText = "PPE Compliant";
-        } else if (nonCompliant <= 3 && score >= 70) {
-          statusText = "Improvement Required";
-        } else {
-          statusText = "PPE Non-Compliant / Immediate Action Required";
-        }
-      }
-
-      const reportText = `
-Company: ${companyName}
-Site / Location: ${siteLocation}
-Department: ${department}
-Inspection Date: ${inspectionDate}
-Inspection Time: ${inspectionTime}
-Inspector: ${inspectorName}
-Worker Name: ${workerName}
-Worker ID: ${workerId}
-Job Title: ${jobTitle}
-Shift: ${shift}
-
-Task Description:
-${taskDescription}
-
-Inspection Status: ${statusText}
-Checklist Items: ${total}
-Checked Items: ${checked}
-Compliant Items: ${compliant}
-Non-Compliant Items: ${nonCompliant}
-N/A Items: ${na}
-Compliance Score: ${score}%
-
-General Remarks:
-${generalRemarks}
-      `.trim();
-
-      document.getElementById("reportSummary").textContent = reportText;
-
-      let actionsText = "No actions identified yet.";
-
-      if (nonCompliantDetails.length > 0) {
-        actionsText = "The following items need corrective action:\n\n";
-        nonCompliantDetails.forEach((item, index) => {
-          actionsText += `${index + 1}. ${item}\n`;
-        });
-
-        actionsText += "\nRecommended Action:\n";
-        actionsText += "- Replace damaged or unsuitable PPE.\n";
-        actionsText += "- Ensure correct fit and worker training.\n";
-        actionsText += "- Re-inspect before work continues.\n";
-      } else if (checked > 0) {
-        actionsText = "No non-compliant PPE items were identified. Continue monitoring and maintain inspection records.";
-      }
-
-      if (naDetails.length > 0) {
-        actionsText += `\n\nItems Marked N/A:\n- ${naDetails.join("\n- ")}`;
-      }
-
-      document.getElementById("actionSummary").textContent = actionsText.trim();
+    // Helper: Get Values safely
+    function getVal(id) { return document.getElementById(id).value.trim(); }
+    function setVal(id, val) { 
+      const el = document.getElementById(id);
+      el.value = val || ""; 
+      if(el.tagName === "SELECT") updateSelectColor(el);
     }
 
+    // Save Data to LocalStorage
     function saveData() {
       const data = {
-        inspectionDate: document.getElementById("inspectionDate").value,
-        inspectionTime: document.getElementById("inspectionTime").value,
-        companyName: document.getElementById("companyName").value,
-        siteLocation: document.getElementById("siteLocation").value,
-        department: document.getElementById("department").value,
-        inspectorName: document.getElementById("inspectorName").value,
-        workerName: document.getElementById("workerName").value,
-        workerId: document.getElementById("workerId").value,
-        jobTitle: document.getElementById("jobTitle").value,
-        shift: document.getElementById("shift").value,
-        taskDescription: document.getElementById("taskDescription").value,
-        generalRemarks: document.getElementById("generalRemarks").value,
-        workerSignature: document.getElementById("workerSignature").value,
-        inspectorSignature: document.getElementById("inspectorSignature").value,
-        checklist: checklistItems.map((_, index) => ({
-          value: getSelectedValue(`item_${index}`),
-          remark: document.getElementById(`remark_${index}`).value
-        }))
+        projectName: getVal("projectName"),
+        workArea: getVal("workArea"),
+        inspectionDate: getVal("inspectionDate"),
+        
+        statusHead: getVal("status-head"), remarkHead: getVal("remark-head"),
+        statusEye: getVal("status-eye"), remarkEye: getVal("remark-eye"),
+        statusHear: getVal("status-hear"), remarkHear: getVal("remark-hear"),
+        statusResp: getVal("status-resp"), remarkResp: getVal("remark-resp"),
+        statusHand: getVal("status-hand"), remarkHand: getVal("remark-hand"),
+        statusBody: getVal("status-body"), remarkBody: getVal("remark-body"),
+        statusFoot: getVal("status-foot"), remarkFoot: getVal("remark-foot"),
+        statusFall: getVal("status-fall"), remarkFall: getVal("remark-fall"),
+
+        generalComments: getVal("generalComments"),
+        inspectorName: getVal("inspectorName"),
+        sigImgData: document.getElementById('sigImg').src // Saves base64 image data
       };
 
-      localStorage.setItem("ppeChecklistData", JSON.stringify(data));
-      alert("PPE checklist data saved successfully.");
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      alert("PPE Checklist data saved locally!");
     }
 
+    // Load Data from LocalStorage
     function loadData() {
-      const raw = localStorage.getItem("ppeChecklistData");
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) { alert("No saved data found."); return; }
+      
+      const data = JSON.parse(raw);
+      setVal("projectName", data.projectName);
+      setVal("workArea", data.workArea);
+      setVal("inspectionDate", data.inspectionDate);
 
-      if (!raw) {
-        alert("No saved PPE checklist data found.");
-        return;
-      }
+      setVal("status-head", data.statusHead); setVal("remark-head", data.remarkHead);
+      setVal("status-eye", data.statusEye); setVal("remark-eye", data.remarkEye);
+      setVal("status-hear", data.statusHear); setVal("remark-hear", data.remarkHear);
+      setVal("status-resp", data.statusResp); setVal("remark-resp", data.remarkResp);
+      setVal("status-hand", data.statusHand); setVal("remark-hand", data.remarkHand);
+      setVal("status-body", data.statusBody); setVal("remark-body", data.remarkBody);
+      setVal("status-foot", data.statusFoot); setVal("remark-foot", data.remarkFoot);
+      setVal("status-fall", data.statusFall); setVal("remark-fall", data.remarkFall);
 
-      try {
-        const data = JSON.parse(raw);
+      setVal("generalComments", data.generalComments);
+      setVal("inspectorName", data.inspectorName);
 
-        document.getElementById("inspectionDate").value = data.inspectionDate || "";
-        document.getElementById("inspectionTime").value = data.inspectionTime || "";
-        document.getElementById("companyName").value = data.companyName || "";
-        document.getElementById("siteLocation").value = data.siteLocation || "";
-        document.getElementById("department").value = data.department || "";
-        document.getElementById("inspectorName").value = data.inspectorName || "";
-        document.getElementById("workerName").value = data.workerName || "";
-        document.getElementById("workerId").value = data.workerId || "";
-        document.getElementById("jobTitle").value = data.jobTitle || "";
-        document.getElementById("shift").value = data.shift || "";
-        document.getElementById("taskDescription").value = data.taskDescription || "";
-        document.getElementById("generalRemarks").value = data.generalRemarks || "";
-        document.getElementById("workerSignature").value = data.workerSignature || "";
-        document.getElementById("inspectorSignature").value = data.inspectorSignature || "";
-
-        if (Array.isArray(data.checklist)) {
-          data.checklist.forEach((item, index) => {
-            if (item.value) {
-              const radio = document.querySelector(`input[name="item_${index}"][value="${item.value}"]`);
-              if (radio) {
-                radio.checked = true;
-              }
-            }
-
-            const remarkInput = document.getElementById(`remark_${index}`);
-            if (remarkInput) {
-              remarkInput.value = item.remark || "";
-            }
-          });
-        }
-
-        calculateChecklist();
-        alert("Saved PPE checklist data loaded successfully.");
-      } catch (error) {
-        alert("Saved data could not be loaded.");
-        console.error(error);
+      if (data.sigImgData && data.sigImgData !== window.location.href) {
+        document.getElementById('sigImg').src = data.sigImgData;
+        document.getElementById('sigImg').style.display = 'inline-block';
+        document.getElementById('sigText').style.display = 'none';
       }
     }
 
+    // Clear Form
     function clearForm() {
-      const confirmed = confirm("Are you sure you want to clear the entire PPE checklist form?");
-      if (!confirmed) return;
-
-      document.querySelectorAll("input").forEach(input => {
-        if (input.type === "radio") {
-          input.checked = false;
-        } else {
-          input.value = "";
-        }
+      if(!confirm("Clear all fields?")) return;
+      const inputs = document.querySelectorAll('input[type="text"], input[type="date"], textarea');
+      inputs.forEach(input => input.value = '');
+      
+      const selects = document.querySelectorAll('select');
+      selects.forEach(select => {
+        select.value = 'Select';
+        updateSelectColor(select);
       });
 
-      document.querySelectorAll("textarea").forEach(textarea => {
-        textarea.value = "";
+      document.getElementById('sigImg').src = '';
+      document.getElementById('sigImg').style.display = 'none';
+      document.getElementById('sigText').style.display = 'inline-block';
+      localStorage.removeItem(STORAGE_KEY);
+    }
+
+    // Generate PDF using jsPDF
+    function generatePDF() {
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF("p", "mm", "a4");
+      
+      // Header Banner
+      pdf.setFillColor(37, 99, 235); // Blue
+      pdf.rect(0, 0, 210, 28, "F");
+      pdf.setTextColor(255, 255, 255);
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(18);
+      pdf.text("PPE Inspection Report", 14, 16);
+      pdf.setFontSize(10);
+      pdf.setFont("helvetica", "normal");
+      pdf.text("HSE Digital Toolkit", 14, 23);
+
+      pdf.setTextColor(0, 0, 0);
+      let y = 40;
+
+      // Part 1: Details
+      pdf.setFontSize(12);
+      pdf.setFont("helvetica", "bold");
+      pdf.text("Inspection Details", 14, y);
+      y += 8;
+      pdf.setFontSize(10);
+      pdf.setFont("helvetica", "normal");
+      pdf.text(`Project: ${getVal("projectName") || "-"}`, 14, y);
+      pdf.text(`Date: ${getVal("inspectionDate") || "-"}`, 110, y);
+      y += 6;
+      pdf.text(`Area: ${getVal("workArea") || "-"}`, 14, y);
+      pdf.text(`Inspector: ${getVal("inspectorName") || "-"}`, 110, y);
+      
+      y += 15;
+
+      // Part 2: Checklist Table Header
+      pdf.setFontSize(12);
+      pdf.setFont("helvetica", "bold");
+      pdf.text("PPE Compliance Checklist", 14, y);
+      y += 8;
+      
+      pdf.setFillColor(240, 240, 240);
+      pdf.rect(14, y, 182, 8, "F");
+      pdf.setFontSize(9);
+      pdf.text("Category", 16, y + 5);
+      pdf.text("Status", 75, y + 5);
+      pdf.text("Remarks / Actions", 105, y + 5);
+      y += 8;
+
+      // Table Rows
+      const categories = [
+        { name: "Head Protection", stat: "status-head", rem: "remark-head" },
+        { name: "Eye/Face Protection", stat: "status-eye", rem: "remark-eye" },
+        { name: "Hearing Protection", stat: "status-hear", rem: "remark-hear" },
+        { name: "Respiratory Protection", stat: "status-resp", rem: "remark-resp" },
+        { name: "Hand Protection", stat: "status-hand", rem: "remark-hand" },
+        { name: "Body Protection", stat: "status-body", rem: "remark-body" },
+        { name: "Foot Protection", stat: "status-foot", rem: "remark-foot" },
+        { name: "Fall Protection", stat: "status-fall", rem: "remark-fall" }
+      ];
+
+      pdf.setFont("helvetica", "normal");
+      categories.forEach(item => {
+        let statVal = getVal(item.stat);
+        statVal = statVal === "Select" ? "-" : statVal;
+        
+        pdf.text(item.name, 16, y + 5);
+        
+        // Color code status text in PDF
+        if(statVal === "Pass") pdf.setTextColor(11, 93, 87);
+        else if(statVal === "Fail") pdf.setTextColor(153, 27, 27);
+        else pdf.setTextColor(100, 100, 100);
+        
+        pdf.text(statVal, 75, y + 5);
+        pdf.setTextColor(0, 0, 0); // reset color
+        
+        // Handle long remarks wrapping
+        let remarkLines = pdf.splitTextToSize(getVal(item.rem) || "-", 90);
+        pdf.text(remarkLines, 105, y + 5);
+        
+        y += Math.max(10, remarkLines.length * 5 + 3);
+        pdf.setDrawColor(220, 220, 220);
+        pdf.line(14, y - 2, 196, y - 2);
       });
 
-      document.querySelectorAll("select").forEach(select => {
-        select.selectedIndex = 0;
-      });
+      y += 10;
 
-      document.getElementById("totalItems").textContent = "0";
-      document.getElementById("checkedItems").textContent = "0";
-      document.getElementById("compliantItems").textContent = "0";
-      document.getElementById("nonCompliantItems").textContent = "0";
-      document.getElementById("naItems").textContent = "0";
-      document.getElementById("complianceScore").textContent = "0%";
+      // Part 3: Sign-Off
+      if (y > 250) { pdf.addPage(); y = 20; }
+      
+      pdf.setFontSize(12);
+      pdf.setFont("helvetica", "bold");
+      pdf.text("General Comments", 14, y);
+      y += 6;
+      pdf.setFontSize(10);
+      pdf.setFont("helvetica", "normal");
+      
+      let comments = pdf.splitTextToSize(getVal("generalComments") || "-", 182);
+      pdf.text(comments, 14, y);
+      y += comments.length * 6 + 15;
 
-      const statusBox = document.getElementById("statusBox");
-      statusBox.className = "status-box status-warning";
-      statusBox.textContent = "Status: Awaiting inspection data";
+      pdf.setFont("helvetica", "bold");
+      pdf.text("Assessor Signature:", 14, y);
+      
+      const sigImgSrc = document.getElementById('sigImg').src;
+      if (sigImgSrc && sigImgSrc.startsWith("data:image")) {
+        // Draw the uploaded signature image
+        pdf.addImage(sigImgSrc, 'JPEG', 14, y + 5, 40, 20);
+      } else {
+        pdf.setFont("helvetica", "normal");
+        pdf.text("No signature attached.", 14, y + 15);
+      }
 
-      document.getElementById("reportSummary").textContent =
-`No inspection summary available yet.
-Click "Calculate Compliance" after completing the checklist.`;
-
-      document.getElementById("actionSummary").textContent = "No actions identified yet.";
+      pdf.save("PPE_Checklist_Report.pdf");
     }
-
-    function downloadPDF() {
-      calculateChecklist();
-      window.print();
-    }
-
-    function goHome() {
-      window.location.href = "index.html";
-    }
-
-    function setDefaultDateTime() {
-      const now = new Date();
-      const date = now.toISOString().split("T")[0];
-
-      const hours = String(now.getHours()).padStart(2, "0");
-      const minutes = String(now.getMinutes()).padStart(2, "0");
-      const time = `${hours}:${minutes}`;
-
-      document.getElementById("inspectionDate").value = date;
-      document.getElementById("inspectionTime").value = time;
-    }
-
-    createChecklistRows();
-    setDefaultDateTime();
-    calculateChecklist();
   </script>
 </body>
 </html>
