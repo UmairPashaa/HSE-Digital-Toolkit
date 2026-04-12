@@ -3,30 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Risk Assessment | HSE Digital Toolkit</title>
+  <title>Advanced Risk Assessment | HSE Digital Toolkit</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 
   <style>
     :root {
-      --bg: #edf5f1;
+      --bg: #eef5f1;
       --white: #ffffff;
       --dark: #0f172a;
       --green: #0f766e;
       --green-dark: #0b5d57;
       --lime: #84cc16;
-      --yellow: #f59e0b;
-      --red: #dc2626;
       --blue: #2563eb;
+      --amber: #f59e0b;
+      --red: #dc2626;
       --muted: #6b7280;
-      --border: #dbe4dd;
-      --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-      --radius: 18px;
+      --border: #d9e5de;
+      --shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+      --radius: 20px;
+      --low: #dcfce7;
+      --medium: #fef3c7;
+      --high: #fed7aa;
+      --extreme: #fecaca;
     }
 
     * {
@@ -39,7 +44,7 @@
       font-family: "Poppins", sans-serif;
       color: #1f2937;
       background:
-        linear-gradient(rgba(255,255,255,0.78), rgba(255,255,255,0.86)),
+        linear-gradient(rgba(255,255,255,0.80), rgba(255,255,255,0.88)),
         repeating-linear-gradient(
           45deg,
           rgba(15,118,110,0.03),
@@ -63,9 +68,9 @@
     }
 
     .topbar-inner {
-      max-width: 1300px;
+      max-width: 1350px;
       margin: 0 auto;
-      padding: 16px 20px;
+      padding: 15px 20px;
       display: flex;
       justify-content: space-between;
       gap: 16px;
@@ -75,12 +80,12 @@
 
     .brand {
       display: flex;
-      align-items: center;
       gap: 14px;
+      align-items: center;
       color: white;
     }
 
-    .brand-badge {
+    .brand-icon {
       width: 54px;
       height: 54px;
       border-radius: 14px;
@@ -89,12 +94,12 @@
       align-items: center;
       justify-content: center;
       font-size: 24px;
-      box-shadow: 0 12px 25px rgba(132, 204, 22, 0.2);
+      box-shadow: 0 10px 24px rgba(132, 204, 22, 0.22);
     }
 
     .brand-text h1 {
       margin: 0;
-      font-size: 24px;
+      font-size: 23px;
       line-height: 1.1;
     }
 
@@ -125,19 +130,19 @@
     }
 
     .hero {
-      max-width: 1300px;
+      max-width: 1350px;
       margin: 0 auto;
-      padding: 28px 20px 10px;
+      padding: 26px 20px 10px;
     }
 
     .hero-box {
       border-radius: 28px;
-      padding: 34px 28px;
+      padding: 34px 30px;
       color: white;
       box-shadow: var(--shadow);
       background:
-        linear-gradient(135deg, rgba(15,118,110,0.94), rgba(11,93,87,0.92)),
-        url("https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=1200&q=80") center/cover;
+        linear-gradient(135deg, rgba(15,118,110,0.95), rgba(11,93,87,0.92)),
+        url("https://images.unsplash.com/photo-1581092919535-7146ff1a590e?auto=format&fit=crop&w=1400&q=80") center/cover;
       position: relative;
       overflow: hidden;
     }
@@ -146,14 +151,13 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(90deg, rgba(15,118,110,0.95), rgba(15,118,110,0.72), rgba(15,118,110,0.2));
-      pointer-events: none;
+      background: linear-gradient(90deg, rgba(15,118,110,0.96), rgba(15,118,110,0.75), rgba(15,118,110,0.22));
     }
 
     .hero-content {
       position: relative;
       z-index: 1;
-      max-width: 860px;
+      max-width: 850px;
     }
 
     .hero-tag {
@@ -162,8 +166,8 @@
       gap: 8px;
       padding: 8px 14px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.18);
       font-size: 13px;
       margin-bottom: 12px;
     }
@@ -176,25 +180,25 @@
 
     .hero-content p {
       margin: 0;
-      color: #ecfeff;
-      line-height: 1.8;
       font-size: 15px;
+      line-height: 1.8;
+      color: #ecfeff;
     }
 
-    .page-wrap {
-      max-width: 1300px;
+    .page {
+      max-width: 1350px;
       margin: 0 auto;
-      padding: 18px 20px 34px;
+      padding: 18px 20px 32px;
     }
 
-    .quick-stats {
+    .stats {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 18px;
       margin-bottom: 18px;
     }
 
-    .stat-card {
+    .stat {
       background: var(--white);
       border-radius: 18px;
       padding: 20px;
@@ -204,28 +208,29 @@
       overflow: hidden;
     }
 
-    .stat-card::before {
+    .stat::before {
       content: "";
       position: absolute;
-      inset: 0 auto auto 0;
+      left: 0;
+      top: 0;
       width: 100%;
       height: 5px;
       background: linear-gradient(90deg, var(--green), var(--lime));
     }
 
-    .stat-card i {
+    .stat i {
       font-size: 22px;
       color: var(--green);
       margin-bottom: 10px;
     }
 
-    .stat-card h3 {
+    .stat h3 {
       margin: 0;
       font-size: 28px;
       color: var(--dark);
     }
 
-    .stat-card p {
+    .stat p {
       margin: 6px 0 0;
       color: var(--muted);
       font-size: 14px;
@@ -258,7 +263,7 @@
     .section-head p {
       margin: 8px 0 0;
       color: var(--muted);
-      max-width: 820px;
+      max-width: 860px;
       line-height: 1.7;
       font-size: 14px;
     }
@@ -324,7 +329,7 @@
       line-height: 1.5;
     }
 
-    .action-row {
+    .toolbar {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
@@ -333,7 +338,7 @@
 
     .btn {
       width: auto;
-      min-width: 170px;
+      min-width: 165px;
       border: none;
       cursor: pointer;
       font-weight: 600;
@@ -382,7 +387,7 @@
 
     table {
       width: 100%;
-      min-width: 1400px;
+      min-width: 1600px;
       border-collapse: collapse;
       background: white;
     }
@@ -402,10 +407,10 @@
       font-size: 13px;
     }
 
-    .level-low { background: #dcfce7; }
-    .level-medium { background: #fef3c7; }
-    .level-high { background: #fed7aa; }
-    .level-extreme { background: #fecaca; }
+    .level-low { background: var(--low); }
+    .level-medium { background: var(--medium); }
+    .level-high { background: var(--high); }
+    .level-extreme { background: var(--extreme); }
 
     .inline-btn {
       width: auto;
@@ -450,15 +455,84 @@
     }
 
     .sum-total { background: #e0f2fe; }
-    .sum-low { background: #dcfce7; }
-    .sum-medium { background: #fef3c7; }
-    .sum-high { background: #fed7aa; }
-    .sum-extreme { background: #fecaca; }
+    .sum-low { background: var(--low); }
+    .sum-medium { background: var(--medium); }
+    .sum-high { background: var(--high); }
+    .sum-extreme { background: var(--extreme); }
 
-    .priority-grid {
+    .matrix-layout {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .matrix-box {
+      background: #fbfefc;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .matrix-box h4,
+    .chart-box h4 {
+      margin: 0 0 12px;
+      font-size: 20px;
+      color: var(--dark);
+    }
+
+    .risk-matrix {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 100%;
+    }
+
+    .risk-matrix th,
+    .risk-matrix td {
+      text-align: center;
+      padding: 12px 8px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .rm-low { background: var(--low); }
+    .rm-medium { background: var(--medium); }
+    .rm-high { background: var(--high); }
+    .rm-extreme { background: var(--extreme); }
+
+    .rm-active {
+      outline: 4px solid #111827;
+      outline-offset: -4px;
+      box-shadow: inset 0 0 0 9999px rgba(255,255,255,0.18);
+    }
+
+    .chart-box {
+      background: #fbfefc;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+    }
+
+    .suggestion-box {
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 14px;
+    }
+
+    .suggestion-box h4 {
+      margin: 0 0 10px;
+      font-size: 18px;
+      color: var(--dark);
+    }
+
+    .suggestion-box p {
+      margin: 0;
+      color: #374151;
+      line-height: 1.8;
+      font-size: 14px;
+      white-space: pre-wrap;
     }
 
     .priority-card {
@@ -466,6 +540,7 @@
       border-radius: 18px;
       padding: 18px;
       background: #fbfefc;
+      margin-bottom: 18px;
     }
 
     .priority-card h4 {
@@ -481,10 +556,14 @@
       margin: 22px 0 6px;
     }
 
-    @media (max-width: 1100px) {
-      .quick-stats,
+    @media (max-width: 1150px) {
+      .stats,
       .summary-box {
         grid-template-columns: repeat(2, 1fr);
+      }
+
+      .matrix-layout {
+        grid-template-columns: 1fr;
       }
 
       .col-8,
@@ -496,7 +575,7 @@
     }
 
     @media (max-width: 760px) {
-      .quick-stats,
+      .stats,
       .summary-box {
         grid-template-columns: 1fr;
       }
@@ -517,20 +596,27 @@
       .btn {
         width: 100%;
       }
+
+      .section-card {
+        padding: 18px;
+      }
+
+      .hero-box {
+        padding: 26px 20px;
+      }
     }
   </style>
 </head>
 <body>
-
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
-        <div class="brand-badge">
+        <div class="brand-icon">
           <i class="fa-solid fa-triangle-exclamation"></i>
         </div>
         <div class="brand-text">
-          <h1>Risk Assessment</h1>
-          <p>HSE Digital Toolkit • NEBOSH-style structure</p>
+          <h1>Advanced Risk Assessment</h1>
+          <p>HSE Digital Toolkit • Professional digital form</p>
         </div>
       </div>
 
@@ -549,38 +635,38 @@
       <div class="hero-content">
         <div class="hero-tag">
           <i class="fa-solid fa-shield-halved"></i>
-          Professional Risk Assessment Workspace
+          NEBOSH-style structured assessment page
         </div>
-        <h2>Build a Complete Site Risk Assessment Report</h2>
+        <h2>Prepare a Professional Risk Assessment Report</h2>
         <p>
-          Fill background details, add multiple hazards, prioritise three actions,
-          and prepare review and communication notes in one structured page.
+          Complete the background section, add hazards, assess risk, justify priority actions,
+          review findings, and download a clean PDF report in one page.
         </p>
       </div>
     </div>
   </section>
 
-  <main class="page-wrap">
-    <section class="quick-stats">
-      <div class="stat-card">
+  <main class="page">
+    <section class="stats">
+      <div class="stat">
         <i class="fa-solid fa-building"></i>
         <h3>4 Parts</h3>
-        <p>Background, Risk Table, Priority Actions, Review</p>
+        <p>Background, hazards, priority actions, review</p>
       </div>
-      <div class="stat-card">
+      <div class="stat">
         <i class="fa-solid fa-file-pdf"></i>
         <h3>PDF</h3>
-        <p>Download structured report after completing data</p>
+        <p>Structured downloadable assessment report</p>
       </div>
-      <div class="stat-card">
-        <i class="fa-solid fa-floppy-disk"></i>
-        <h3>Save</h3>
-        <p>Store your progress in browser local storage</p>
+      <div class="stat">
+        <i class="fa-solid fa-brain"></i>
+        <h3>Smart</h3>
+        <p>Action suggestions based on hazard and risk level</p>
       </div>
-      <div class="stat-card">
+      <div class="stat">
         <i class="fa-solid fa-mobile-screen-button"></i>
-        <h3>Mobile Ready</h3>
-        <p>Responsive layout for phone and field use</p>
+        <h3>Mobile</h3>
+        <p>Responsive layout for field and site use</p>
       </div>
     </section>
 
@@ -590,7 +676,7 @@
           <div class="part-badge"><i class="fa-solid fa-1"></i> Part 1: Background</div>
           <h3>Organisation and Assessment Background</h3>
           <p>
-            Enter the key details about the organisation, site, work area, and how the assessment was carried out.
+            Record the organisation details, site location, work area, and how the assessment was carried out. This follows the same overall structure as the uploaded assessment format. :contentReference[oaicite:1]{index=1}
           </p>
         </div>
       </div>
@@ -618,7 +704,7 @@
 
         <div class="col-4">
           <label for="scope">Scope of Risk Assessment</label>
-          <input type="text" id="scope" placeholder="Example: Warehouse operations">
+          <input type="text" id="scope" placeholder="Example: Production floor operations">
         </div>
 
         <div class="col-12">
@@ -627,20 +713,20 @@
         </div>
 
         <div class="col-12">
-          <label for="areaDescription">Description of the Area Included in the Assessment</label>
-          <textarea id="areaDescription" placeholder="Describe the work area covered in this assessment"></textarea>
+          <label for="areaDescription">Description of the Area Included in the Risk Assessment</label>
+          <textarea id="areaDescription" placeholder="Describe the specific work area covered by this assessment"></textarea>
         </div>
 
         <div class="col-12">
           <label for="otherInfo">Other Relevant Information</label>
-          <textarea id="otherInfo" placeholder="Add any relevant information such as shift timing, visitors, contractors, vulnerable groups, etc."></textarea>
+          <textarea id="otherInfo" placeholder="Include contractors, visitors, shift patterns, vulnerable groups, special conditions, etc."></textarea>
         </div>
 
         <div class="col-12">
           <label for="assessmentMethod">Outline How the Risk Assessment Was Carried Out</label>
-          <textarea id="assessmentMethod" placeholder="Include sources consulted, who you spoke to, and how hazards, existing controls, and further actions were identified"></textarea>
+          <textarea id="assessmentMethod" placeholder="Include sources of information, who you spoke to, how hazards were identified, what controls were already in place, and what further actions were required"></textarea>
           <div class="helper">
-            Example: documents reviewed, people consulted, observations made, inspections, incident history, equipment checks.
+            Example: site inspection, policy review, worker interviews, equipment checks, incident records, maintenance logs.
           </div>
         </div>
       </div>
@@ -650,9 +736,9 @@
       <div class="section-head">
         <div>
           <div class="part-badge"><i class="fa-solid fa-2"></i> Part 2: Risk Assessment</div>
-          <h3>Hazard Register and Action Table</h3>
+          <h3>Hazard Assessment and Risk Matrix</h3>
           <p>
-            Add each hazard one by one. The tool calculates the risk score using severity × likelihood and shows a risk level.
+            Add each hazard, assess severity and likelihood, review smart action guidance, and build the assessment table.
           </p>
         </div>
       </div>
@@ -660,7 +746,7 @@
       <div class="grid">
         <div class="col-4">
           <label for="hazardCategory">Hazard Category</label>
-          <select id="hazardCategory">
+          <select id="hazardCategory" onchange="refreshLiveGuidance()">
             <option value="Physical">Physical</option>
             <option value="Chemical">Chemical</option>
             <option value="Biological">Biological</option>
@@ -678,37 +764,37 @@
 
         <div class="col-8">
           <label for="hazardTitle">Hazard</label>
-          <input type="text" id="hazardTitle" placeholder="Example: Slippery floor near loading area">
+          <input type="text" id="hazardTitle" placeholder="Example: Unguarded edge near roof access" oninput="refreshLiveGuidance()">
         </div>
 
         <div class="col-12">
           <label for="whoHarmed">Who Might Be Harmed and How?</label>
-          <textarea id="whoHarmed" placeholder="Example: Warehouse workers and visitors may slip and suffer fractures or sprains"></textarea>
+          <textarea id="whoHarmed" placeholder="Example: Maintenance workers and contractors may fall from height and suffer serious injury or fatality"></textarea>
         </div>
 
         <div class="col-6">
           <label for="existingControls">What Are You Already Doing?</label>
-          <textarea id="existingControls" placeholder="Existing control measures already in place"></textarea>
+          <textarea id="existingControls" placeholder="Existing controls already in place"></textarea>
         </div>
 
         <div class="col-6">
           <label for="furtherActions">What Further Controls / Actions Are Required?</label>
-          <textarea id="furtherActions" placeholder="Additional action required to reduce risk"></textarea>
+          <textarea id="furtherActions" placeholder="Additional controls or actions required"></textarea>
         </div>
 
         <div class="col-3">
           <label for="timescale">Timescale</label>
-          <input type="text" id="timescale" placeholder="Example: Within 7 days">
+          <input type="text" id="timescale" placeholder="Example: Immediately / within 7 days">
         </div>
 
         <div class="col-3">
           <label for="responsibleJob">Responsible Person's Job Title</label>
-          <input type="text" id="responsibleJob" placeholder="Example: HSE Officer">
+          <input type="text" id="responsibleJob" placeholder="Example: Site Supervisor">
         </div>
 
         <div class="col-3">
           <label for="severity">Severity (1-5)</label>
-          <select id="severity">
+          <select id="severity" onchange="refreshLiveGuidance()">
             <option value="1">1 - Insignificant</option>
             <option value="2">2 - Minor Injury</option>
             <option value="3">3 - Moderate Injury</option>
@@ -719,7 +805,7 @@
 
         <div class="col-3">
           <label for="likelihood">Likelihood (1-5)</label>
-          <select id="likelihood">
+          <select id="likelihood" onchange="refreshLiveGuidance()">
             <option value="1">1 - Rare</option>
             <option value="2">2 - Unlikely</option>
             <option value="3">3 - Possible</option>
@@ -729,7 +815,46 @@
         </div>
       </div>
 
-      <div class="action-row">
+      <div class="matrix-layout" style="margin-top:20px;">
+        <div class="matrix-box">
+          <h4>Live 5x5 Risk Matrix</h4>
+          <table class="risk-matrix">
+            <thead>
+              <tr>
+                <th>Likelihood \ Severity</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+              </tr>
+            </thead>
+            <tbody id="riskMatrixBody"></tbody>
+          </table>
+          <div class="helper">
+            The selected severity and likelihood are highlighted in the matrix.
+          </div>
+        </div>
+
+        <div class="chart-box">
+          <h4>Risk Summary Chart</h4>
+          <canvas id="riskSummaryChart"></canvas>
+          <div class="helper">
+            This chart updates automatically as you add hazards to the table.
+          </div>
+        </div>
+      </div>
+
+      <div class="suggestion-box">
+        <h4>Smart Action Suggestions</h4>
+        <p id="smartSuggestionText">Select a hazard category, severity, and likelihood to view guidance.</p>
+      </div>
+
+      <div class="toolbar">
+        <button class="btn btn-blue" onclick="applySuggestionToActions()">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          Use Suggestion
+        </button>
         <button class="btn btn-primary" onclick="saveHazard()">
           <i class="fa-solid fa-plus"></i>
           Save Hazard
@@ -797,7 +922,7 @@
           <div class="part-badge"><i class="fa-solid fa-3"></i> Part 3: Prioritise 3 Actions</div>
           <h3>Justification for Three Priority Actions</h3>
           <p>
-            Select the top three actions from the risk assessment and justify why they should be prioritised.
+            This section follows the same idea as the uploaded structure: overall arguments, then three selected actions with legal, severity/likelihood, and effectiveness justification. :contentReference[oaicite:2]{index=2}
           </p>
         </div>
       </div>
@@ -809,70 +934,68 @@
         </div>
       </div>
 
-      <div class="priority-grid">
-        <div class="priority-card">
-          <h4>Priority Action 1</h4>
-          <div class="grid">
-            <div class="col-12">
-              <label for="action1Title">Action</label>
-              <input type="text" id="action1Title" placeholder="Enter action taken from the risk assessment table">
-            </div>
-            <div class="col-12">
-              <label for="action1Legal">Specific Legal Arguments</label>
-              <textarea id="action1Legal" placeholder="Enter specific legal arguments"></textarea>
-            </div>
-            <div class="col-12">
-              <label for="action1LikelihoodSeverity">Consideration of Likelihood and Severity</label>
-              <textarea id="action1LikelihoodSeverity" placeholder="Include injury/ill-health type, number at risk, frequency, and how widespread the risk is"></textarea>
-            </div>
-            <div class="col-12">
-              <label for="action1Effectiveness">How Effective the Action Is Likely to Be</label>
-              <textarea id="action1Effectiveness" placeholder="Include intended impact, timescale justification, and whether the action fully controls the risk"></textarea>
-            </div>
+      <div class="priority-card">
+        <h4>Priority Action 1</h4>
+        <div class="grid">
+          <div class="col-12">
+            <label for="action1Title">Action</label>
+            <input type="text" id="action1Title" placeholder="Enter action taken from the risk assessment table">
+          </div>
+          <div class="col-12">
+            <label for="action1Legal">Specific Legal Arguments</label>
+            <textarea id="action1Legal"></textarea>
+          </div>
+          <div class="col-12">
+            <label for="action1LikelihoodSeverity">Consideration of Likelihood and Severity</label>
+            <textarea id="action1LikelihoodSeverity"></textarea>
+          </div>
+          <div class="col-12">
+            <label for="action1Effectiveness">How Effective the Action Is Likely to Be</label>
+            <textarea id="action1Effectiveness"></textarea>
           </div>
         </div>
+      </div>
 
-        <div class="priority-card">
-          <h4>Priority Action 2</h4>
-          <div class="grid">
-            <div class="col-12">
-              <label for="action2Title">Action</label>
-              <input type="text" id="action2Title" placeholder="Enter action taken from the risk assessment table">
-            </div>
-            <div class="col-12">
-              <label for="action2Legal">Specific Legal Arguments</label>
-              <textarea id="action2Legal" placeholder="Enter specific legal arguments"></textarea>
-            </div>
-            <div class="col-12">
-              <label for="action2LikelihoodSeverity">Consideration of Likelihood and Severity</label>
-              <textarea id="action2LikelihoodSeverity" placeholder="Include injury/ill-health type, number at risk, frequency, and how widespread the risk is"></textarea>
-            </div>
-            <div class="col-12">
-              <label for="action2Effectiveness">How Effective the Action Is Likely to Be</label>
-              <textarea id="action2Effectiveness" placeholder="Include intended impact, timescale justification, and whether the action fully controls the risk"></textarea>
-            </div>
+      <div class="priority-card">
+        <h4>Priority Action 2</h4>
+        <div class="grid">
+          <div class="col-12">
+            <label for="action2Title">Action</label>
+            <input type="text" id="action2Title" placeholder="Enter action taken from the risk assessment table">
+          </div>
+          <div class="col-12">
+            <label for="action2Legal">Specific Legal Arguments</label>
+            <textarea id="action2Legal"></textarea>
+          </div>
+          <div class="col-12">
+            <label for="action2LikelihoodSeverity">Consideration of Likelihood and Severity</label>
+            <textarea id="action2LikelihoodSeverity"></textarea>
+          </div>
+          <div class="col-12">
+            <label for="action2Effectiveness">How Effective the Action Is Likely to Be</label>
+            <textarea id="action2Effectiveness"></textarea>
           </div>
         </div>
+      </div>
 
-        <div class="priority-card">
-          <h4>Priority Action 3</h4>
-          <div class="grid">
-            <div class="col-12">
-              <label for="action3Title">Action</label>
-              <input type="text" id="action3Title" placeholder="Enter action taken from the risk assessment table">
-            </div>
-            <div class="col-12">
-              <label for="action3Legal">Specific Legal Arguments</label>
-              <textarea id="action3Legal" placeholder="Enter specific legal arguments"></textarea>
-            </div>
-            <div class="col-12">
-              <label for="action3LikelihoodSeverity">Consideration of Likelihood and Severity</label>
-              <textarea id="action3LikelihoodSeverity" placeholder="Include injury/ill-health type, number at risk, frequency, and how widespread the risk is"></textarea>
-            </div>
-            <div class="col-12">
-              <label for="action3Effectiveness">How Effective the Action Is Likely to Be</label>
-              <textarea id="action3Effectiveness" placeholder="Include intended impact, timescale justification, and whether the action fully controls the risk"></textarea>
-            </div>
+      <div class="priority-card">
+        <h4>Priority Action 3</h4>
+        <div class="grid">
+          <div class="col-12">
+            <label for="action3Title">Action</label>
+            <input type="text" id="action3Title" placeholder="Enter action taken from the risk assessment table">
+          </div>
+          <div class="col-12">
+            <label for="action3Legal">Specific Legal Arguments</label>
+            <textarea id="action3Legal"></textarea>
+          </div>
+          <div class="col-12">
+            <label for="action3LikelihoodSeverity">Consideration of Likelihood and Severity</label>
+            <textarea id="action3LikelihoodSeverity"></textarea>
+          </div>
+          <div class="col-12">
+            <label for="action3Effectiveness">How Effective the Action Is Likely to Be</label>
+            <textarea id="action3Effectiveness"></textarea>
           </div>
         </div>
       </div>
@@ -884,7 +1007,7 @@
           <div class="part-badge"><i class="fa-solid fa-4"></i> Part 4: Review, Communicate and Check</div>
           <h3>Review and Follow-up</h3>
           <p>
-            Add how and when the assessment will be reviewed, who needs to know the findings, and how follow-up will be checked.
+            Add how findings will be reviewed, shared, and checked after actions are assigned and completed.
           </p>
         </div>
       </div>
@@ -892,17 +1015,17 @@
       <div class="grid">
         <div class="col-12">
           <label for="reviewDateReasoning">Planned Review Date / Period and Reasoning</label>
-          <textarea id="reviewDateReasoning" placeholder="Enter planned review date or period with reasons"></textarea>
+          <textarea id="reviewDateReasoning"></textarea>
         </div>
 
         <div class="col-12">
           <label for="communicationPlan">How the Findings Will Be Communicated and Who Needs to Know</label>
-          <textarea id="communicationPlan" placeholder="Explain who should receive the findings and how the information will be shared"></textarea>
+          <textarea id="communicationPlan"></textarea>
         </div>
 
         <div class="col-12">
           <label for="followUpPlan">How You Will Follow Up on the Risk Assessment</label>
-          <textarea id="followUpPlan" placeholder="Explain how you will check that actions have been completed and remain effective"></textarea>
+          <textarea id="followUpPlan"></textarea>
         </div>
       </div>
     </section>
@@ -912,12 +1035,12 @@
         <div>
           <h3>Actions</h3>
           <p>
-            Save your data in the browser, clear the page, or download a PDF report.
+            Save your work in the browser, restore it later, download the report as PDF, or clear everything.
           </p>
         </div>
       </div>
 
-      <div class="action-row">
+      <div class="toolbar">
         <button class="btn btn-blue" onclick="saveAllData()">
           <i class="fa-solid fa-floppy-disk"></i>
           Save Data
@@ -937,15 +1060,14 @@
       </div>
     </section>
 
-    <p class="footer-note">
-      HSE Digital Toolkit • Risk Assessment Workspace
-    </p>
+    <p class="footer-note">HSE Digital Toolkit • Advanced Risk Assessment Page</p>
   </main>
 
   <script>
-    const STORAGE_KEY = "hseRiskAssessmentDataV1";
+    const STORAGE_KEY = "hseRiskAssessmentAdvancedV2";
     let hazards = [];
     let editingHazardIndex = -1;
+    let riskChart = null;
 
     function getRiskLevel(score) {
       if (score <= 4) return "Low";
@@ -976,6 +1098,98 @@
 
     function setFieldValue(id, value) {
       document.getElementById(id).value = value || "";
+    }
+
+    function buildRiskMatrix() {
+      const tbody = document.getElementById("riskMatrixBody");
+      const selectedSeverity = parseInt(document.getElementById("severity").value, 10);
+      const selectedLikelihood = parseInt(document.getElementById("likelihood").value, 10);
+
+      let rows = "";
+
+      for (let likelihood = 5; likelihood >= 1; likelihood--) {
+        rows += `<tr><th>${likelihood}</th>`;
+
+        for (let severity = 1; severity <= 5; severity++) {
+          const score = severity * likelihood;
+          const level = getRiskLevel(score);
+          let cls = "";
+
+          if (level === "Low") cls = "rm-low";
+          else if (level === "Medium") cls = "rm-medium";
+          else if (level === "High") cls = "rm-high";
+          else cls = "rm-extreme";
+
+          const active = (selectedSeverity === severity && selectedLikelihood === likelihood) ? " rm-active" : "";
+          rows += `<td class="${cls}${active}">${score}<br><small>${level}</small></td>`;
+        }
+
+        rows += `</tr>`;
+      }
+
+      tbody.innerHTML = rows;
+    }
+
+    function getSmartSuggestion(category, score, level, hazardTitle) {
+      const hazardText = hazardTitle ? `Hazard identified: ${hazardTitle}.` : "Hazard identified.";
+      const base = `${hazardText}\nRisk level: ${level} (score ${score}).`;
+
+      const categoryGuidance = {
+        "Physical": "Inspect the work area, remove unsafe conditions, improve guarding, signage, barriers, housekeeping, and supervision.",
+        "Chemical": "Review chemical handling, ensure correct storage, labelling, SDS availability, ventilation, spill control, and suitable PPE.",
+        "Biological": "Strengthen hygiene controls, sanitation, exposure control, waste handling, vaccination arrangements where needed, and worker awareness.",
+        "Ergonomic": "Review workstation design, reduce repetitive strain, improve posture, lifting technique, equipment suitability, and task rotation.",
+        "Psychosocial": "Review workload, communication, fatigue, stress factors, role clarity, management support, and reporting channels.",
+        "Electrical": "Isolate power where necessary, inspect cables and equipment, prevent unauthorized access, use trained persons, and test protective devices.",
+        "Fire": "Review ignition sources, housekeeping, flammable storage, fire detection, extinguishers, escape routes, drills, and emergency response.",
+        "Work at Height": "Use safer access methods, install edge protection, inspect ladders/scaffolds, control permits, and ensure competent supervision.",
+        "Manual Handling": "Avoid manual lifting where possible, use handling aids, reduce load size, improve training, and redesign movement routes.",
+        "Vehicle / Traffic": "Separate vehicles and pedestrians, improve routes, reversing controls, speed control, visibility, banksmen, and signage.",
+        "Housekeeping": "Remove obstructions, clean spills quickly, improve storage, waste control, inspection frequency, and worker responsibility.",
+        "Other": "Review the task, identify root causes, apply hierarchy of controls, and assign suitable responsibility and timescales."
+      };
+
+      let priorityGuidance = "";
+      if (level === "Low") {
+        priorityGuidance = "Maintain current controls, continue monitoring, and confirm that standards remain effective.";
+      } else if (level === "Medium") {
+        priorityGuidance = "Improve controls in the short term, increase supervision, and confirm that workers understand safe arrangements.";
+      } else if (level === "High") {
+        priorityGuidance = "Take prompt corrective action, strengthen engineering or administrative controls, and closely monitor implementation.";
+      } else {
+        priorityGuidance = "Immediate action is required. Consider stopping the task until strong controls are implemented and verified.";
+      }
+
+      return `${base}\n\nSuggested approach:\n${categoryGuidance[category] || categoryGuidance["Other"]}\n\nPriority advice:\n${priorityGuidance}`;
+    }
+
+    function refreshLiveGuidance() {
+      buildRiskMatrix();
+
+      const category = document.getElementById("hazardCategory").value;
+      const hazardTitle = getFieldValue("hazardTitle");
+      const severity = parseInt(document.getElementById("severity").value, 10);
+      const likelihood = parseInt(document.getElementById("likelihood").value, 10);
+      const score = severity * likelihood;
+      const level = getRiskLevel(score);
+
+      document.getElementById("smartSuggestionText").textContent =
+        getSmartSuggestion(category, score, level, hazardTitle);
+    }
+
+    function applySuggestionToActions() {
+      const category = document.getElementById("hazardCategory").value;
+      const hazardTitle = getFieldValue("hazardTitle");
+      const severity = parseInt(document.getElementById("severity").value, 10);
+      const likelihood = parseInt(document.getElementById("likelihood").value, 10);
+      const score = severity * likelihood;
+      const level = getRiskLevel(score);
+
+      const suggestion = getSmartSuggestion(category, score, level, hazardTitle);
+
+      const current = getFieldValue("furtherActions");
+      const newText = current ? `${current}\n\n${suggestion}` : suggestion;
+      setFieldValue("furtherActions", newText);
     }
 
     function saveHazard() {
@@ -1025,10 +1239,11 @@
       clearHazardForm();
       renderHazardTable();
       updateSummary();
+      updateRiskChart();
     }
 
     function clearHazardForm() {
-      setFieldValue("hazardCategory", "Physical");
+      document.getElementById("hazardCategory").value = "Physical";
       setFieldValue("hazardTitle", "");
       setFieldValue("whoHarmed", "");
       setFieldValue("existingControls", "");
@@ -1038,6 +1253,7 @@
       document.getElementById("severity").value = "1";
       document.getElementById("likelihood").value = "1";
       editingHazardIndex = -1;
+      refreshLiveGuidance();
     }
 
     function editHazard(index) {
@@ -1052,16 +1268,16 @@
       document.getElementById("severity").value = String(item.severity);
       document.getElementById("likelihood").value = String(item.likelihood);
       editingHazardIndex = index;
+      refreshLiveGuidance();
       window.scrollTo({ top: document.getElementById("part2").offsetTop - 80, behavior: "smooth" });
     }
 
     function deleteHazard(index) {
       hazards.splice(index, 1);
-      if (editingHazardIndex === index) {
-        clearHazardForm();
-      }
+      if (editingHazardIndex === index) clearHazardForm();
       renderHazardTable();
       updateSummary();
+      updateRiskChart();
     }
 
     function renderHazardTable() {
@@ -1091,24 +1307,69 @@
       `).join("");
     }
 
-    function updateSummary() {
-      let low = 0;
-      let medium = 0;
-      let high = 0;
-      let extreme = 0;
-
+    function getSummaryCounts() {
+      let low = 0, medium = 0, high = 0, extreme = 0;
       hazards.forEach(item => {
         if (item.riskLevel === "Low") low++;
         else if (item.riskLevel === "Medium") medium++;
         else if (item.riskLevel === "High") high++;
         else extreme++;
       });
+      return { total: hazards.length, low, medium, high, extreme };
+    }
 
-      document.getElementById("totalHazards").textContent = hazards.length;
-      document.getElementById("lowCount").textContent = low;
-      document.getElementById("mediumCount").textContent = medium;
-      document.getElementById("highCount").textContent = high;
-      document.getElementById("extremeCount").textContent = extreme;
+    function updateSummary() {
+      const counts = getSummaryCounts();
+      document.getElementById("totalHazards").textContent = counts.total;
+      document.getElementById("lowCount").textContent = counts.low;
+      document.getElementById("mediumCount").textContent = counts.medium;
+      document.getElementById("highCount").textContent = counts.high;
+      document.getElementById("extremeCount").textContent = counts.extreme;
+    }
+
+    function updateRiskChart() {
+      const counts = getSummaryCounts();
+      const ctx = document.getElementById("riskSummaryChart").getContext("2d");
+
+      if (riskChart) {
+        riskChart.destroy();
+      }
+
+      riskChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: ["Low", "Medium", "High", "Extreme"],
+          datasets: [{
+            label: "Number of Hazards",
+            data: [counts.low, counts.medium, counts.high, counts.extreme],
+            backgroundColor: [
+              "rgba(34, 197, 94, 0.75)",
+              "rgba(245, 158, 11, 0.75)",
+              "rgba(249, 115, 22, 0.75)",
+              "rgba(239, 68, 68, 0.75)"
+            ],
+            borderColor: [
+              "rgba(34, 197, 94, 1)",
+              "rgba(245, 158, 11, 1)",
+              "rgba(249, 115, 22, 1)",
+              "rgba(239, 68, 68, 1)"
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { precision: 0 }
+            }
+          }
+        }
+      });
     }
 
     function collectFormData() {
@@ -1124,7 +1385,7 @@
           otherInfo: getFieldValue("otherInfo"),
           assessmentMethod: getFieldValue("assessmentMethod")
         },
-        hazards: hazards,
+        hazards,
         priorities: {
           generalArguments: getFieldValue("generalArguments"),
           action1Title: getFieldValue("action1Title"),
@@ -1186,6 +1447,8 @@
 
       renderHazardTable();
       updateSummary();
+      updateRiskChart();
+      refreshLiveGuidance();
     }
 
     function saveAllData() {
@@ -1211,9 +1474,7 @@
     }
 
     function clearAllData() {
-      if (!confirm("Are you sure you want to clear all form data and hazards?")) {
-        return;
-      }
+      if (!confirm("Are you sure you want to clear all form data and hazards?")) return;
 
       localStorage.removeItem(STORAGE_KEY);
       hazards = [];
@@ -1231,11 +1492,11 @@
       clearHazardForm();
       renderHazardTable();
       updateSummary();
+      updateRiskChart();
     }
 
     function addWrappedText(pdf, text, x, y, maxWidth, lineHeight, pageBottom) {
       const lines = pdf.splitTextToSize(text || "-", maxWidth);
-
       for (const line of lines) {
         if (y > pageBottom) {
           pdf.addPage();
@@ -1244,8 +1505,18 @@
         pdf.text(line, x, y);
         y += lineHeight;
       }
-
       return y;
+    }
+
+    function addSectionTitle(pdf, title, y) {
+      pdf.setFillColor(15, 118, 110);
+      pdf.roundedRect(12, y - 4, 186, 8, 2, 2, "F");
+      pdf.setTextColor(255, 255, 255);
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(11);
+      pdf.text(title, 15, y + 1.5);
+      pdf.setTextColor(0, 0, 0);
+      return y + 10;
     }
 
     async function downloadPDF() {
@@ -1253,46 +1524,47 @@
       const { jsPDF } = window.jspdf;
       const pdf = new jsPDF("p", "mm", "a4");
 
-      let y = 14;
-      const line = 5;
+      let y = 16;
       const pageBottom = 280;
+      const line = 5;
 
+      pdf.setFillColor(15, 23, 42);
+      pdf.rect(0, 0, 210, 28, "F");
+      pdf.setTextColor(255, 255, 255);
       pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(16);
-      pdf.text("HSE Risk Assessment Report", 14, y);
-      y += 8;
+      pdf.setFontSize(18);
+      pdf.text("HSE Risk Assessment Report", 14, 16);
+      pdf.setFontSize(10);
+      pdf.setFont("helvetica", "normal");
+      pdf.text("Generated from HSE Digital Toolkit", 14, 23);
 
+      pdf.setTextColor(0, 0, 0);
+      y = 36;
+
+      y = addSectionTitle(pdf, "Part 1: Background", y);
       pdf.setFont("helvetica", "normal");
       pdf.setFontSize(10);
-      y = addWrappedText(pdf, `Organisation: ${data.background.orgName || "-"}`, 14, y, 180, line, pageBottom);
-      y = addWrappedText(pdf, `Site Location: ${data.background.siteLocation || "-"}`, 14, y, 180, line, pageBottom);
-      y = addWrappedText(pdf, `Number of Workers: ${data.background.workers || "-"}`, 14, y, 180, line, pageBottom);
-      y = addWrappedText(pdf, `Date of Assessment: ${data.background.assessmentDate || "-"}`, 14, y, 180, line, pageBottom);
-      y = addWrappedText(pdf, `Scope of Assessment: ${data.background.scope || "-"}`, 14, y, 180, line, pageBottom);
-      y += 3;
 
-      pdf.setFont("helvetica", "bold");
-      pdf.text("Part 1: Background", 14, y);
-      y += 6;
-      pdf.setFont("helvetica", "normal");
-      y = addWrappedText(pdf, `General Description: ${data.background.orgDescription || "-"}`, 14, y, 180, line, pageBottom);
-      y = addWrappedText(pdf, `Area Included: ${data.background.areaDescription || "-"}`, 14, y, 180, line, pageBottom);
-      y = addWrappedText(pdf, `Other Relevant Information: ${data.background.otherInfo || "-"}`, 14, y, 180, line, pageBottom);
-      y = addWrappedText(pdf, `Assessment Method: ${data.background.assessmentMethod || "-"}`, 14, y, 180, line, pageBottom);
+      y = addWrappedText(pdf, `Organisation: ${data.background.orgName || "-"}`, 14, y, 182, line, pageBottom);
+      y = addWrappedText(pdf, `Site Location: ${data.background.siteLocation || "-"}`, 14, y, 182, line, pageBottom);
+      y = addWrappedText(pdf, `Number of Workers: ${data.background.workers || "-"}`, 14, y, 182, line, pageBottom);
+      y = addWrappedText(pdf, `Date of Assessment: ${data.background.assessmentDate || "-"}`, 14, y, 182, line, pageBottom);
+      y = addWrappedText(pdf, `Scope of Assessment: ${data.background.scope || "-"}`, 14, y, 182, line, pageBottom);
+      y = addWrappedText(pdf, `General Description: ${data.background.orgDescription || "-"}`, 14, y, 182, line, pageBottom);
+      y = addWrappedText(pdf, `Area Included: ${data.background.areaDescription || "-"}`, 14, y, 182, line, pageBottom);
+      y = addWrappedText(pdf, `Other Relevant Information: ${data.background.otherInfo || "-"}`, 14, y, 182, line, pageBottom);
+      y = addWrappedText(pdf, `Assessment Method: ${data.background.assessmentMethod || "-"}`, 14, y, 182, line, pageBottom);
       y += 4;
 
-      if (y > 240) {
+      if (y > 225) {
         pdf.addPage();
         y = 15;
       }
 
-      pdf.setFont("helvetica", "bold");
-      pdf.text("Part 2: Risk Assessment", 14, y);
-      y += 6;
-      pdf.setFont("helvetica", "normal");
+      y = addSectionTitle(pdf, "Part 2: Risk Assessment", y);
 
       if (data.hazards.length === 0) {
-        y = addWrappedText(pdf, "No hazards added.", 14, y, 180, line, pageBottom);
+        y = addWrappedText(pdf, "No hazards added.", 14, y, 182, line, pageBottom);
       } else {
         data.hazards.forEach((item, index) => {
           if (y > 240) {
@@ -1300,18 +1572,20 @@
             y = 15;
           }
 
+          pdf.setFillColor(240, 249, 255);
+          pdf.roundedRect(12, y - 2, 186, 7, 2, 2, "F");
           pdf.setFont("helvetica", "bold");
-          pdf.text(`Hazard ${index + 1}`, 14, y);
-          y += 5;
+          pdf.text(`Hazard ${index + 1}`, 15, y + 2);
+          y += 10;
           pdf.setFont("helvetica", "normal");
 
-          y = addWrappedText(pdf, `Category & Hazard: ${item.hazardCategory} - ${item.hazardTitle}`, 14, y, 180, line, pageBottom);
-          y = addWrappedText(pdf, `Who Might Be Harmed and How: ${item.whoHarmed}`, 14, y, 180, line, pageBottom);
-          y = addWrappedText(pdf, `Existing Controls: ${item.existingControls || "-"}`, 14, y, 180, line, pageBottom);
-          y = addWrappedText(pdf, `Further Actions: ${item.furtherActions || "-"}`, 14, y, 180, line, pageBottom);
-          y = addWrappedText(pdf, `Timescale: ${item.timescale || "-"}`, 14, y, 180, line, pageBottom);
-          y = addWrappedText(pdf, `Responsible Job Title: ${item.responsibleJob || "-"}`, 14, y, 180, line, pageBottom);
-          y = addWrappedText(pdf, `Severity: ${item.severity} | Likelihood: ${item.likelihood} | Score: ${item.riskScore} | Level: ${item.riskLevel}`, 14, y, 180, line, pageBottom);
+          y = addWrappedText(pdf, `Hazard Category and Hazard: ${item.hazardCategory} - ${item.hazardTitle}`, 14, y, 182, line, pageBottom);
+          y = addWrappedText(pdf, `Who Might Be Harmed and How: ${item.whoHarmed}`, 14, y, 182, line, pageBottom);
+          y = addWrappedText(pdf, `What Are You Already Doing: ${item.existingControls || "-"}`, 14, y, 182, line, pageBottom);
+          y = addWrappedText(pdf, `What Further Controls / Actions Are Required: ${item.furtherActions || "-"}`, 14, y, 182, line, pageBottom);
+          y = addWrappedText(pdf, `Timescales: ${item.timescale || "-"}`, 14, y, 182, line, pageBottom);
+          y = addWrappedText(pdf, `Responsible Job Title: ${item.responsibleJob || "-"}`, 14, y, 182, line, pageBottom);
+          y = addWrappedText(pdf, `Severity: ${item.severity} | Likelihood: ${item.likelihood} | Score: ${item.riskScore} | Level: ${item.riskLevel}`, 14, y, 182, line, pageBottom);
           y += 3;
         });
       }
@@ -1321,11 +1595,8 @@
         y = 15;
       }
 
-      pdf.setFont("helvetica", "bold");
-      pdf.text("Part 3: Prioritise 3 Actions", 14, y);
-      y += 6;
-      pdf.setFont("helvetica", "normal");
-      y = addWrappedText(pdf, `General Arguments: ${data.priorities.generalArguments || "-"}`, 14, y, 180, line, pageBottom);
+      y = addSectionTitle(pdf, "Part 3: Priority Actions", y);
+      y = addWrappedText(pdf, `General Arguments: ${data.priorities.generalArguments || "-"}`, 14, y, 182, line, pageBottom);
 
       const priorityActions = [
         {
@@ -1356,37 +1627,39 @@
           pdf.addPage();
           y = 15;
         }
+
+        pdf.setFillColor(250, 245, 255);
+        pdf.roundedRect(12, y - 2, 186, 7, 2, 2, "F");
         pdf.setFont("helvetica", "bold");
-        pdf.text(action.label, 14, y);
-        y += 5;
+        pdf.text(action.label, 15, y + 2);
+        y += 10;
         pdf.setFont("helvetica", "normal");
-        y = addWrappedText(pdf, `Action: ${action.title || "-"}`, 14, y, 180, line, pageBottom);
-        y = addWrappedText(pdf, `Specific Legal Arguments: ${action.legal || "-"}`, 14, y, 180, line, pageBottom);
-        y = addWrappedText(pdf, `Likelihood and Severity: ${action.ls || "-"}`, 14, y, 180, line, pageBottom);
-        y = addWrappedText(pdf, `Effectiveness: ${action.eff || "-"}`, 14, y, 180, line, pageBottom);
+
+        y = addWrappedText(pdf, `Action: ${action.title || "-"}`, 14, y, 182, line, pageBottom);
+        y = addWrappedText(pdf, `Specific Legal Arguments: ${action.legal || "-"}`, 14, y, 182, line, pageBottom);
+        y = addWrappedText(pdf, `Likelihood and Severity: ${action.ls || "-"}`, 14, y, 182, line, pageBottom);
+        y = addWrappedText(pdf, `Effectiveness: ${action.eff || "-"}`, 14, y, 182, line, pageBottom);
         y += 3;
       });
 
-      if (y > 230) {
+      if (y > 225) {
         pdf.addPage();
         y = 15;
       }
 
-      pdf.setFont("helvetica", "bold");
-      pdf.text("Part 4: Review, Communicate and Check", 14, y);
-      y += 6;
-      pdf.setFont("helvetica", "normal");
-      y = addWrappedText(pdf, `Planned Review Date / Period and Reasoning: ${data.review.reviewDateReasoning || "-"}`, 14, y, 180, line, pageBottom);
-      y = addWrappedText(pdf, `Communication Plan: ${data.review.communicationPlan || "-"}`, 14, y, 180, line, pageBottom);
-      y = addWrappedText(pdf, `Follow-up Plan: ${data.review.followUpPlan || "-"}`, 14, y, 180, line, pageBottom);
+      y = addSectionTitle(pdf, "Part 4: Review, Communicate and Check", y);
+      y = addWrappedText(pdf, `Planned Review Date / Period and Reasoning: ${data.review.reviewDateReasoning || "-"}`, 14, y, 182, line, pageBottom);
+      y = addWrappedText(pdf, `How Findings Will Be Communicated: ${data.review.communicationPlan || "-"}`, 14, y, 182, line, pageBottom);
+      y = addWrappedText(pdf, `Follow-up Plan: ${data.review.followUpPlan || "-"}`, 14, y, 182, line, pageBottom);
 
-      pdf.save("HSE_Risk_Assessment_Report.pdf");
+      pdf.save("HSE_Advanced_Risk_Assessment_Report.pdf");
     }
 
-    renderHazardTable();
-    updateSummary();
-
     window.addEventListener("load", () => {
+      buildRiskMatrix();
+      updateRiskChart();
+      refreshLiveGuidance();
+
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         try {
