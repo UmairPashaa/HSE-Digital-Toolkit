@@ -1,147 +1,929 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HSE Digital Toolkit</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HSE Digital Toolkit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-<style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #0f172a;
-  color: white;
-}
+  <style>
+    :root {
+      --bg: #eef4f1;
+      --white: #ffffff;
+      --dark: #0f172a;
+      --green: #0f766e;
+      --green-dark: #0b5d57;
+      --lime: #84cc16;
+      --yellow: #facc15;
+      --red: #dc2626;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #dbe4dd;
+      --shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+    }
 
-/* HEADER */
-header {
-  padding: 20px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
 
-header h1 {
-  margin: 0;
-  font-size: 24px;
-}
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background:
+        linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255,0.82)),
+        repeating-linear-gradient(
+          45deg,
+          rgba(15,118,110,0.03),
+          rgba(15,118,110,0.03) 12px,
+          rgba(132,204,22,0.03) 12px,
+          rgba(132,204,22,0.03) 24px
+        );
+      color: var(--text);
+    }
 
-nav a {
-  color: #94a3b8;
-  margin-left: 20px;
-  text-decoration: none;
-}
+    a {
+      text-decoration: none;
+    }
 
-/* HERO */
-.hero {
-  text-align: center;
-  padding: 60px 20px;
-}
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 3px solid var(--lime);
+    }
 
-.hero h2 {
-  font-size: 40px;
-  margin-bottom: 10px;
-}
+    .topbar-inner {
+      max-width: 1250px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
 
-.hero p {
-  color: #94a3b8;
-}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: white;
+    }
 
-/* TOOL GRID */
-.tools {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
-  gap: 20px;
-  padding: 40px;
-}
+    .brand-badge {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--green), var(--lime));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: white;
+      box-shadow: 0 10px 20px rgba(132, 204, 22, 0.25);
+    }
 
-/* CARD */
-.card {
-  background: #1e293b;
-  padding: 25px;
-  border-radius: 15px;
-  transition: 0.3s;
-}
+    .brand-text h1 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.1;
+    }
 
-.card:hover {
-  transform: translateY(-5px);
-  background: #334155;
-}
+    .brand-text p {
+      margin: 4px 0 0;
+      font-size: 12px;
+      color: #cbd5e1;
+    }
 
-.card h3 {
-  margin-top: 0;
-}
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
-.card p {
-  color: #94a3b8;
-}
+    .nav a {
+      color: white;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      transition: 0.25s ease;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
 
-.card a {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 10px 15px;
-  background: #3b82f6;
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-}
+    .nav a:hover {
+      background: rgba(132, 204, 22, 0.15);
+      border-color: rgba(132, 204, 22, 0.45);
+    }
 
-/* FOOTER */
-footer {
-  text-align: center;
-  padding: 20px;
-  color: #94a3b8;
-}
-</style>
+    .hero {
+      max-width: 1250px;
+      margin: 0 auto;
+      padding: 34px 20px 18px;
+    }
+
+    .hero-box {
+      background:
+        linear-gradient(135deg, rgba(15,118,110,0.95), rgba(11,93,87,0.92)),
+        url("https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=80") center/cover;
+      color: white;
+      border-radius: 28px;
+      padding: 38px 30px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-box::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(15,118,110,0.92), rgba(15,118,110,0.72), rgba(15,118,110,0.18));
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+
+    .hero-content h2 {
+      margin: 0 0 14px;
+      font-size: 42px;
+      line-height: 1.15;
+    }
+
+    .hero-content p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.8;
+      color: #ecfeff;
+    }
+
+    .hero-actions {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 18px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: 0.25s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--lime);
+      color: #17340a;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      background: #a3e635;
+    }
+
+    .btn-outline {
+      background: rgba(255,255,255,0.12);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.24);
+    }
+
+    .btn-outline:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.18);
+    }
+
+    .section {
+      max-width: 1250px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .section-head h3 {
+      margin: 0;
+      font-size: 30px;
+      color: var(--dark);
+    }
+
+    .section-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      max-width: 700px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-top: 10px;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--green), var(--lime));
+    }
+
+    .stat-card i {
+      font-size: 24px;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+
+    .stat-card h4 {
+      margin: 0;
+      font-size: 28px;
+      color: var(--dark);
+    }
+
+    .stat-card p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .tool-card {
+      background: var(--white);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: 0.28s ease;
+      display: flex;
+      flex-direction: column;
+      min-height: 290px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.12);
+    }
+
+    .tool-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -40px auto;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(132,204,22,0.16), transparent 65%);
+      border-radius: 50%;
+    }
+
+    .tool-icon {
+      width: 62px;
+      height: 62px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      color: white;
+      margin-bottom: 16px;
+    }
+
+    .icon-risk { background: linear-gradient(135deg, #f59e0b, #dc2626); }
+    .icon-ppe { background: linear-gradient(135deg, #2563eb, #0f766e); }
+    .icon-incident { background: linear-gradient(135deg, #dc2626, #7f1d1d); }
+    .icon-inspection { background: linear-gradient(135deg, #0f766e, #84cc16); }
+    .icon-toolbox { background: linear-gradient(135deg, #7c3aed, #2563eb); }
+    .icon-emergency { background: linear-gradient(135deg, #ef4444, #f97316); }
+
+    .tool-card h4 {
+      margin: 0 0 10px;
+      font-size: 21px;
+      color: var(--dark);
+    }
+
+    .tool-card p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      flex-grow: 1;
+    }
+
+    .feature-list {
+      margin: 0 0 18px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: start;
+      gap: 10px;
+      font-size: 14px;
+      color: #374151;
+      margin-bottom: 9px;
+    }
+
+    .feature-list li i {
+      color: var(--green);
+      margin-top: 3px;
+      font-size: 13px;
+    }
+
+    .tool-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: auto;
+    }
+
+    .tool-btn {
+      flex: 1;
+      min-width: 140px;
+      text-align: center;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-weight: 600;
+      transition: 0.25s ease;
+    }
+
+    .open-btn {
+      background: var(--green);
+      color: white;
+    }
+
+    .open-btn:hover {
+      background: var(--green-dark);
+    }
+
+    .soon-btn {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .download-grid,
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .info-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .info-card h4 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      color: var(--dark);
+    }
+
+    .info-card p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .download-btn,
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 13px 15px;
+      border-radius: 12px;
+      color: white;
+      font-weight: 600;
+      transition: 0.25s ease;
+    }
+
+    .download-btn:hover,
+    .social-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .download-green { background: linear-gradient(135deg, var(--green), var(--green-dark)); }
+    .download-blue { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
+    .download-red { background: linear-gradient(135deg, #ef4444, #dc2626); }
+
+    .linkedin { background: linear-gradient(135deg, #0a66c2, #004182); }
+    .indeed { background: linear-gradient(135deg, #2557a7, #163a74); }
+    .instagram { background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af); }
+    .twitter { background: linear-gradient(135deg, #111827, #2563eb); }
+    .email { background: linear-gradient(135deg, #dc2626, #b91c1c); }
+
+    .contact-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .about-box {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .about-box h3 {
+      margin-top: 0;
+      font-size: 30px;
+      color: var(--dark);
+    }
+
+    .about-box p {
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 0;
+    }
+
+    .footer {
+      margin-top: 26px;
+      background: var(--dark);
+      color: #cbd5e1;
+      border-top: 4px solid var(--lime);
+    }
+
+    .footer-inner {
+      max-width: 1250px;
+      margin: 0 auto;
+      padding: 26px 20px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .footer p {
+      margin: 0;
+    }
+
+    .footer-mini {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-mini a {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      background: rgba(255,255,255,0.08);
+      transition: 0.25s ease;
+    }
+
+    .footer-mini a:hover {
+      background: rgba(132,204,22,0.2);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 1100px) {
+      .tool-grid,
+      .download-grid,
+      .social-grid,
+      .stats,
+      .contact-row {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .hero-content h2 {
+        font-size: 30px;
+      }
+
+      .tool-grid,
+      .download-grid,
+      .social-grid,
+      .stats,
+      .contact-row {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar-inner,
+      .footer-inner {
+        align-items: flex-start;
+      }
+
+      .nav {
+        width: 100%;
+      }
+
+      .nav a {
+        flex: 1;
+        text-align: center;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
-<header>
-  <h1>HSE Toolkit</h1>
-  <nav>
-    <a href="#">Home</a>
-    <a href="#">Tools</a>
-    <a href="#">About</a>
-  </nav>
-</header>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-badge">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <div class="brand-text">
+          <h1>HSE Digital Toolkit</h1>
+          <p>Safety • Health • Environment • Inspection • Reporting</p>
+        </div>
+      </div>
 
-<section class="hero">
-  <h2>HSE Digital Toolkit</h2>
-  <p>Professional tools for safety management and risk assessment</p>
-</section>
+      <nav class="nav">
+        <a href="#home"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="#tools"><i class="fa-solid fa-toolbox"></i> Tools</a>
+        <a href="#downloads"><i class="fa-solid fa-download"></i> Downloads</a>
+        <a href="#contact"><i class="fa-solid fa-address-card"></i> Contact</a>
+      </nav>
+    </div>
+  </header>
 
-<section class="tools">
+  <section class="hero" id="home">
+    <div class="hero-box">
+      <div class="hero-content">
+        <div class="hero-tag">
+          <i class="fa-solid fa-hard-hat"></i>
+          Practical digital support for HSE professionals
+        </div>
 
-  <div class="card">
-    <h3>Risk Assessment</h3>
-    <p>Multi hazard risk calculator with report</p>
-    <a href="#">Open</a>
-  </div>
+        <h2>Build Better Safety Systems With One Professional Toolkit</h2>
+        <p>
+          This platform is designed to help HSE professionals manage risk assessment,
+          reporting, site inspections, PPE checks, emergency information, and other
+          essential safety tasks in a clear, modern, and easy-to-use format.
+        </p>
 
-  <div class="card">
-    <h3>PPE Checklist</h3>
-    <p>Check worker PPE compliance</p>
-    <a href="#">Open</a>
-  </div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#tools">
+            <i class="fa-solid fa-briefcase"></i>
+            Explore Toolkit
+          </a>
+          <a class="btn btn-outline" href="mailto:umairpasha487@gmail.com">
+            <i class="fa-solid fa-envelope"></i>
+            Contact by Email
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div class="card">
-    <h3>Incident Report</h3>
-    <p>Create and manage incident reports</p>
-    <a href="#">Open</a>
-  </div>
+  <section class="section">
+    <div class="stats">
+      <div class="stat-card">
+        <i class="fa-solid fa-shield-virus"></i>
+        <h4>6+</h4>
+        <p>Core HSE modules planned in one place</p>
+      </div>
 
-  <div class="card">
-    <h3>Safety Inspection</h3>
-    <p>Perform site inspections</p>
-    <a href="#">Open</a>
-  </div>
+      <div class="stat-card">
+        <i class="fa-solid fa-file-pdf"></i>
+        <h4>PDF</h4>
+        <p>Download reports and structured records</p>
+      </div>
 
-</section>
+      <div class="stat-card">
+        <i class="fa-solid fa-mobile-screen-button"></i>
+        <h4>Mobile</h4>
+        <p>Responsive design for site and field use</p>
+      </div>
 
-<footer>
-  Built by Umair Pasha
-</footer>
+      <div class="stat-card">
+        <i class="fa-solid fa-database"></i>
+        <h4>Save Data</h4>
+        <p>Next-level tools with data saving system</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="tools">
+    <div class="section-head">
+      <div>
+        <h3>Toolkit Modules</h3>
+        <p>
+          Each module is designed to become a practical HSE service with strong design,
+          PDF downloads, data saving, and mobile-friendly use.
+        </p>
+      </div>
+    </div>
+
+    <div class="tool-grid">
+      <div class="tool-card">
+        <div class="tool-icon icon-risk">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <h4>Risk Assessment</h4>
+        <p>Professional site risk assessment with multiple hazards, scoring, chart, action tracking, and PDF output.</p>
+        <ul class="feature-list">
+          <li><i class="fa-solid fa-check"></i> Multi-hazard format</li>
+          <li><i class="fa-solid fa-check"></i> Risk matrix logic</li>
+          <li><i class="fa-solid fa-check"></i> Report download</li>
+        </ul>
+        <div class="tool-actions">
+          <a class="tool-btn open-btn" href="risk-assessment.html">Open Tool</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon icon-ppe">
+          <i class="fa-solid fa-helmet-safety"></i>
+        </div>
+        <h4>PPE Checklist</h4>
+        <p>Easy PPE checking format for workers, visitors, and site observations with remarks and compliance summary.</p>
+        <ul class="feature-list">
+          <li><i class="fa-solid fa-check"></i> Site-use friendly</li>
+          <li><i class="fa-solid fa-check"></i> Compliance records</li>
+          <li><i class="fa-solid fa-check"></i> Future PDF export</li>
+        </ul>
+        <div class="tool-actions">
+          <a class="tool-btn soon-btn" href="#">Coming Soon</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon icon-incident">
+          <i class="fa-solid fa-file-circle-exclamation"></i>
+        </div>
+        <h4>Incident Report</h4>
+        <p>Structured incident reporting page for recording events, injuries, observations, and corrective actions.</p>
+        <ul class="feature-list">
+          <li><i class="fa-solid fa-check"></i> Incident details</li>
+          <li><i class="fa-solid fa-check"></i> Corrective actions</li>
+          <li><i class="fa-solid fa-check"></i> Record generation</li>
+        </ul>
+        <div class="tool-actions">
+          <a class="tool-btn soon-btn" href="#">Coming Soon</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon icon-inspection">
+          <i class="fa-solid fa-clipboard-check"></i>
+        </div>
+        <h4>Safety Inspection</h4>
+        <p>Inspection page for site findings, unsafe acts, unsafe conditions, and follow-up actions.</p>
+        <ul class="feature-list">
+          <li><i class="fa-solid fa-check"></i> Site observation format</li>
+          <li><i class="fa-solid fa-check"></i> Action follow-up</li>
+          <li><i class="fa-solid fa-check"></i> Inspection records</li>
+        </ul>
+        <div class="tool-actions">
+          <a class="tool-btn soon-btn" href="#">Coming Soon</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon icon-toolbox">
+          <i class="fa-solid fa-comments"></i>
+        </div>
+        <h4>Toolbox Talk</h4>
+        <p>Useful toolbox talk topics and records for pre-job discussions, meetings, and awareness sessions.</p>
+        <ul class="feature-list">
+          <li><i class="fa-solid fa-check"></i> Topic support</li>
+          <li><i class="fa-solid fa-check"></i> Training notes</li>
+          <li><i class="fa-solid fa-check"></i> Attendance style format</li>
+        </ul>
+        <div class="tool-actions">
+          <a class="tool-btn soon-btn" href="#">Coming Soon</a>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <div class="tool-icon icon-emergency">
+          <i class="fa-solid fa-phone-volume"></i>
+        </div>
+        <h4>Emergency Contacts</h4>
+        <p>Important emergency numbers and quick-access information for site safety response and communication.</p>
+        <ul class="feature-list">
+          <li><i class="fa-solid fa-check"></i> Fast access list</li>
+          <li><i class="fa-solid fa-check"></i> Site emergency support</li>
+          <li><i class="fa-solid fa-check"></i> Mobile-ready layout</li>
+        </ul>
+        <div class="tool-actions">
+          <a class="tool-btn soon-btn" href="#">Coming Soon</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="downloads">
+    <div class="section-head">
+      <div>
+        <h3>Downloads & Resources</h3>
+        <p>
+          This section is for future downloadable HSE resources, reports, templates,
+          and checklists. Abhi yeh toolkit ka strong part banega.
+        </p>
+      </div>
+    </div>
+
+    <div class="download-grid">
+      <div class="info-card">
+        <h4><i class="fa-solid fa-file-arrow-down"></i> Risk Assessment Forms</h4>
+        <p>Site risk assessment templates, hazard registers, and printable formats for professional use.</p>
+        <a class="download-btn download-green" href="#">
+          <i class="fa-solid fa-download"></i>
+          Download Area
+        </a>
+      </div>
+
+      <div class="info-card">
+        <h4><i class="fa-solid fa-file-lines"></i> Inspection Templates</h4>
+        <p>Inspection sheets, audit forms, observation records, and safety follow-up layouts.</p>
+        <a class="download-btn download-blue" href="#">
+          <i class="fa-solid fa-download"></i>
+          Download Area
+        </a>
+      </div>
+
+      <div class="info-card">
+        <h4><i class="fa-solid fa-file-shield"></i> HSE Documents</h4>
+        <p>PPE sheets, toolbox talk notes, incident forms, emergency lists, and more resources.</p>
+        <a class="download-btn download-red" href="#">
+          <i class="fa-solid fa-download"></i>
+          Download Area
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="about-box">
+      <h3>About This Platform</h3>
+      <p>
+        HSE Digital Toolkit is being developed as a professional digital support system
+        for safety work. The purpose is not just to show pages, but to build a complete
+        toolkit where HSE professionals can assess risks, check PPE, report incidents,
+        record inspections, access emergency details, generate PDF reports, save data,
+        and use everything smoothly on desktop and mobile devices.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="section-head">
+      <div>
+        <h3>Connect With Umair Pasha</h3>
+        <p>
+          Professional links and contact channels. All buttons below are working and open
+          the correct profile or email.
+        </p>
+      </div>
+    </div>
+
+    <div class="contact-row">
+      <div class="social-grid">
+        <div class="info-card">
+          <h4><i class="fa-brands fa-linkedin"></i> LinkedIn</h4>
+          <p>Professional profile for networking, career growth, and HSE portfolio visibility.</p>
+          <a class="social-btn linkedin" href="https://www.linkedin.com/in/ch-umair-pasha" target="_blank">
+            <i class="fa-brands fa-linkedin"></i>
+            Open LinkedIn
+          </a>
+        </div>
+
+        <div class="info-card">
+          <h4><i class="fa-solid fa-briefcase"></i> Indeed</h4>
+          <p>Professional job profile and career visibility for opportunities and recruiter access.</p>
+          <a class="social-btn indeed" href="https://profile.indeed.com/p/muhammadumairp-1rstc24" target="_blank">
+            <i class="fa-solid fa-briefcase"></i>
+            Open Indeed
+          </a>
+        </div>
+
+        <div class="info-card">
+          <h4><i class="fa-brands fa-instagram"></i> Instagram</h4>
+          <p>Personal and public profile link for visibility, updates, and social connection.</p>
+          <a class="social-btn instagram" href="https://www.instagram.com/ch_umair_pasha" target="_blank">
+            <i class="fa-brands fa-instagram"></i>
+            Open Instagram
+          </a>
+        </div>
+
+        <div class="info-card">
+          <h4><i class="fa-brands fa-x-twitter"></i> Twitter / X</h4>
+          <p>Public social profile for updates, sharing, and online engagement.</p>
+          <a class="social-btn twitter" href="https://twitter.com/Ch_umair_pasha" target="_blank">
+            <i class="fa-brands fa-x-twitter"></i>
+            Open Twitter
+          </a>
+        </div>
+
+        <div class="info-card">
+          <h4><i class="fa-solid fa-envelope"></i> Email</h4>
+          <p>Direct professional communication button for contact, collaboration, and feedback.</p>
+          <a class="social-btn email" href="mailto:umairpasha487@gmail.com">
+            <i class="fa-solid fa-envelope"></i>
+            Send Email
+          </a>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h4><i class="fa-solid fa-circle-info"></i> Contact Summary</h4>
+        <p>
+          This toolkit is being developed by <strong>Umair Pasha</strong> to support HSE
+          professionals with practical digital tools and next-level field-ready systems.
+        </p>
+        <p style="margin-top:12px;">
+          <strong>Email:</strong><br>
+          umairpasha487@gmail.com
+        </p>
+        <p style="margin-top:12px;">
+          <strong>Focus:</strong><br>
+          HSE tools, safety systems, digital reporting, and professional field support.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p>Developed by Umair Pasha • HSE Digital Toolkit</p>
+      <div class="footer-mini">
+        <a href="https://www.linkedin.com/in/ch-umair-pasha" target="_blank" title="LinkedIn">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+        <a href="https://profile.indeed.com/p/muhammadumairp-1rstc24" target="_blank" title="Indeed">
+          <i class="fa-solid fa-briefcase"></i>
+        </a>
+        <a href="https://www.instagram.com/ch_umair_pasha" target="_blank" title="Instagram">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://twitter.com/Ch_umair_pasha" target="_blank" title="Twitter">
+          <i class="fa-brands fa-x-twitter"></i>
+        </a>
+        <a href="mailto:umairpasha487@gmail.com" title="Email">
+          <i class="fa-solid fa-envelope"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
 
 </body>
 </html>
