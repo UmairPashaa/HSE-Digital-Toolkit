@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Incident Report | HSE Digital Toolkit</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #f3f4f6;
+      --white: #ffffff;
+      --dark: #0f172a;
+      --green: #059669;
+      --red: #dc2626;
+      --red-light: #fee2e2;
+      --gray: #6b7280;
+      --gray-light: #f9fafb;
+      --blue: #2563eb;
+      --amber: #f59e0b;
+      --border: #e5e7eb;
+      --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      color: #1f2937;
+      background-color: var(--bg);
+    }
+
+    /* Top Navigation */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--dark);
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-bottom: 4px solid var(--red);
+    }
+
+    .brand { display: flex; align-items: center; gap: 12px; color: white; }
+    .brand i { font-size: 28px; color: var(--red); }
+    .brand h1 { margin: 0; font-size: 20px; font-weight: 700; }
+    
+    .nav-btn {
+      color: white;
+      text-decoration: none;
+      background: rgba(255,255,255,0.1);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+    .nav-btn:hover { background: var(--red); }
+
+    .container {
+      max-width: 950px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+
+    /* Report Area (This will be printed) */
+    #reportArea {
+      background: transparent;
+    }
+
+    /* Header Section with Logo */
+    .report-header {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 25px;
+      box-shadow: var(--shadow);
+      margin-bottom: 25px;
+      border: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      align-items: center;
+      gap: 20px;
+      border-top: 5px solid var(--red);
+    }
+
+    .report-title h2 { margin: 0 0 5px; font-size: 28px; color: var(--dark); }
+    .report-title p { margin: 0; color: var(--gray); font-size: 14px; }
+
+    /* Auto Summary Box */
+    .summary-box {
+      background: var(--red-light);
+      border: 1px dashed var(--red);
+      padding: 15px;
+      border-radius: 12px;
+      margin-top: 15px;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    .summary-box i { font-size: 32px; color: var(--red); }
+    .summary-text h4 { margin: 0 0 4px; color: var(--dark); font-size: 16px; }
+    .summary-text p { margin: 0; font-size: 13px; color: var(--dark); font-weight: 500; }
+
+    /* Form Cards */
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 25px;
+      box-shadow: var(--shadow);
+      margin-bottom: 25px;
+      border: 1px solid var(--border);
+      page-break-inside: avoid;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 2px solid var(--gray-light);
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+    .card-title i { color: var(--red); }
+
+    .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .col-full { grid-column: span 2; }
+    .col-third { grid-template-columns: 1fr 1fr 1fr; }
+    
+    @media(max-width: 600px) { 
+      .input-grid, .col-third { grid-template-columns: 1fr; } 
+      .col-full { grid-column: span 1; }
+      .report-header { grid-template-columns: 1fr; text-align: center; }
+    }
+
+    .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #4b5563; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 10px; font-family: inherit; font-size: 14px; background: var(--gray-light); transition: 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+    }
+
+    /* Image Upload Boxes (Logo, Evidence, Signature) */
+    .upload-box {
+      border: 2px dashed #cbd5e1;
+      padding: 20px;
+      text-align: center;
+      border-radius: 12px;
+      cursor: pointer;
+      position: relative;
+      background: var(--white);
+      color: var(--gray);
+      font-weight: 600;
+      font-size: 14px;
+      transition: 0.3s;
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .upload-box:hover { border-color: var(--red); color: var(--red); background: var(--red-light); }
+    .upload-box img { max-width: 100%; max-height: 150px; display: none; border-radius: 8px; z-index: 2; position: relative;}
+    .upload-box input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 3;}
+    .upload-text { z-index: 1; }
+
+    /* Toolbar Actions */
+    .toolbar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      color: white;
+      transition: 0.2s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+    
+    .btn-blue { background: var(--blue); }
+    .btn-green { background: var(--green); }
+    .btn-amber { background: var(--amber); color: #fff;}
+    .btn-red { background: var(--dark); }
+
+    @media(max-width: 760px) { .toolbar { grid-template-columns: 1fr 1fr; } }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <i class="fa-solid fa-file-circle-exclamation"></i>
+      <h1>HSE Toolkit</h1>
+    </div>
+    <a href="index.html" class="nav-btn"><i class="fa-solid fa-arrow-left"></i> Home</a>
+  </header>
+
+  <div class="container">
+    
+    <div id="reportArea">
+      
+      <div class="report-header">
+        <div class="upload-box" id="box-logo">
+          <div class="upload-text" id="text-logo"><i class="fa-solid fa-building"></i><br>Upload Company Logo</div>
+          <img id="img-logo" alt="Company Logo">
+          <input type="file" accept="image/*" onchange="previewImage(event, 'img-logo', 'text-logo', 'box-logo')">
+        </div>
+        <div class="report-title">
+          <h2>Official Incident Report</h2>
+          <p>Confidential • HSE Department • ISO 45001 Compliant</p>
+          
+          <div class="summary-box">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <div class="summary-text">
+              <h4>Incident Summary</h4>
+              <p id="autoSummaryText">Fill out the details below to generate an auto-summary.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title"><i class="fa-solid fa-location-dot"></i> 1. Location & Event Details</h3>
+        <div class="input-grid">
+          <div class="form-group">
+            <label>Project / Site Name</label>
+            <input type="text" id="siteName" placeholder="Enter project name" oninput="updateSummary()">
+          </div>
+          <div class="form-group">
+            <label>Specific Location of Incident</label>
+            <input type="text" id="exactLocation" placeholder="e.g., Scaffolding Level 3">
+          </div>
+          <div class="form-group">
+            <label>Date of Incident</label>
+            <input type="date" id="incDate">
+          </div>
+          <div class="form-group">
+            <label>Time of Incident</label>
+            <input type="time" id="incTime">
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title"><i class="fa-solid fa-tags"></i> 2. Categorization & Severity</h3>
+        <div class="input-grid col-third">
+          <div class="form-group">
+            <label>Type of Incident</label>
+            <select id="incType" onchange="updateSummary()">
+              <option value="">-- Select Type --</option>
+              <option value="Near Miss">Near Miss (No injury/damage)</option>
+              <option value="First Aid">First Aid Injury</option>
+              <option value="Medical Treatment">Medical Treatment Case (MTC)</option>
+              <option value="Lost Time Injury">Lost Time Injury (LTI)</option>
+              <option value="Property Damage">Property / Equipment Damage</option>
+              <option value="Environmental">Environmental Spill / Release</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Actual Severity</label>
+            <select id="severity">
+              <option value="Low">Low (Minor)</option>
+              <option value="Medium">Medium (Moderate)</option>
+              <option value="High">High (Major)</option>
+              <option value="Critical">Critical (Catastrophic/Fatality)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Reported By</label>
+            <input type="text" id="reportedBy" placeholder="Name of reporting person">
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title"><i class="fa-solid fa-align-left"></i> 3. Description of the Event</h3>
+        <div class="input-grid">
+          <div class="form-group col-full">
+            <label>What happened? (Provide a factual, step-by-step sequence of events)</label>
+            <textarea id="description" rows="4" placeholder="Describe the incident clearly..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Injured Person Details (If applicable)</label>
+            <textarea id="injuredDetails" rows="2" placeholder="Name, Age, Job Title, Nature of Injury..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Damage Details (Property / Environmental)</label>
+            <textarea id="damageDetails" rows="2" placeholder="Describe what was damaged or spilled..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title"><i class="fa-solid fa-camera"></i> 4. Photo Evidence</h3>
+        <div class="input-grid">
+          <div class="upload-box" id="box-ev1">
+            <div class="upload-text" id="text-ev1"><i class="fa-solid fa-image"></i><br>Attach Photo 1</div>
+            <img id="img-ev1" alt="Evidence 1">
+            <input type="file" accept="image/*" onchange="previewImage(event, 'img-ev1', 'text-ev1', 'box-ev1')">
+          </div>
+          <div class="upload-box" id="box-ev2">
+            <div class="upload-text" id="text-ev2"><i class="fa-solid fa-image"></i><br>Attach Photo 2</div>
+            <img id="img-ev2" alt="Evidence 2">
+            <input type="file" accept="image/*" onchange="previewImage(event, 'img-ev2', 'text-ev2', 'box-ev2')">
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title"><i class="fa-solid fa-screwdriver-wrench"></i> 5. Actions Taken</h3>
+        <div class="input-grid">
+          <div class="form-group col-full">
+            <label>Immediate Actions Taken (To secure the scene and prevent escalation)</label>
+            <textarea id="immediateActions" rows="2" placeholder="e.g., Stopped work, provided first aid, barricaded area..."></textarea>
+          </div>
+          <div class="form-group col-full">
+            <label>Preventive Corrective Actions (CAPA) (To prevent recurrence)</label>
+            <textarea id="preventiveActions" rows="3" placeholder="e.g., Retraining, equipment replacement, updated JSA..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 class="card-title"><i class="fa-solid fa-file-signature"></i> 6. Assessor Sign-Off</h3>
+        <div class="input-grid">
+          <div class="form-group">
+            <label>Investigating Officer / HSE Manager</label>
+            <input type="text" id="assessorName" placeholder="e.g., Umair Pasha">
+            <label style="margin-top: 15px;">Date Signed</label>
+            <input type="date" id="signDate">
+          </div>
+          <div class="form-group">
+            <label>Digital Signature</label>
+            <div class="upload-box" id="box-sig" style="min-height: 100px;">
+              <div class="upload-text" id="text-sig"><i class="fa-solid fa-pen"></i><br>Upload Signature</div>
+              <img id="img-sig" alt="Signature">
+              <input type="file" accept="image/*" onchange="previewImage(event, 'img-sig', 'text-sig', 'box-sig')">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div> <div class="toolbar">
+      <button class="btn btn-blue" onclick="saveData()"><i class="fa-solid fa-floppy-disk"></i> Save Data</button>
+      <button class="btn btn-green" onclick="loadData()"><i class="fa-solid fa-rotate"></i> Load Data</button>
+      <button class="btn btn-amber" onclick="generatePDF()"><i class="fa-solid fa-file-pdf"></i> PDF Download</button>
+      <button class="btn btn-red" onclick="clearData()"><i class="fa-solid fa-trash"></i> Clear Form</button>
+    </div>
+
+  </div>
+
+  <script>
+    const STORAGE_KEY = "hse_incident_report_v1";
+
+    // Set today's date automatically
+    document.getElementById('incDate').valueAsDate = new Date();
+    document.getElementById('signDate').valueAsDate = new Date();
+
+    // Universal Image Preview Function
+    function previewImage(event, imgId, textId, boxId) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.getElementById(imgId);
+          img.src = e.target.result;
+          img.style.display = 'inline-block';
+          document.getElementById(textId).style.display = 'none';
+          document.getElementById(boxId).style.borderStyle = 'solid'; // Remove dash once loaded
+        }
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Auto Summary Generator
+    function updateSummary() {
+      const type = document.getElementById('incType').value || "An incident";
+      const site = document.getElementById('siteName').value || "the site";
+      const summaryText = document.getElementById('autoSummaryText');
+      
+      summaryText.innerHTML = `<strong>${type}</strong> was recorded at <strong>${site}</strong>. Review details and implement corrective actions below.`;
+    }
+
+    // Collect Data
+    function collectData() {
+      return {
+        siteName: document.getElementById('siteName').value,
+        exactLocation: document.getElementById('exactLocation').value,
+        incDate: document.getElementById('incDate').value,
+        incTime: document.getElementById('incTime').value,
+        incType: document.getElementById('incType').value,
+        severity: document.getElementById('severity').value,
+        reportedBy: document.getElementById('reportedBy').value,
+        description: document.getElementById('description').value,
+        injuredDetails: document.getElementById('injuredDetails').value,
+        damageDetails: document.getElementById('damageDetails').value,
+        immediateActions: document.getElementById('immediateActions').value,
+        preventiveActions: document.getElementById('preventiveActions').value,
+        assessorName: document.getElementById('assessorName').value,
+        signDate: document.getElementById('signDate').value,
+        // Base64 Images
+        logo: document.getElementById('img-logo').src,
+        ev1: document.getElementById('img-ev1').src,
+        ev2: document.getElementById('img-ev2').src,
+        sig: document.getElementById('img-sig').src
+      };
+    }
+
+    // Save Data
+    function saveData() {
+      const data = collectData();
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        alert("✅ Incident Report Saved Successfully!");
+      } catch (e) {
+        alert("Error saving data. Images might be too large for local storage.");
+      }
+    }
+
+    // Load Data
+    function loadData() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) { alert("No saved data found!"); return; }
+
+      const data = JSON.parse(raw);
+      
+      // Text and Select Fields
+      document.getElementById('siteName').value = data.siteName || '';
+      document.getElementById('exactLocation').value = data.exactLocation || '';
+      document.getElementById('incDate').value = data.incDate || '';
+      document.getElementById('incTime').value = data.incTime || '';
+      document.getElementById('incType').value = data.incType || '';
+      document.getElementById('severity').value = data.severity || 'Low';
+      document.getElementById('reportedBy').value = data.reportedBy || '';
+      document.getElementById('description').value = data.description || '';
+      document.getElementById('injuredDetails').value = data.injuredDetails || '';
+      document.getElementById('damageDetails').value = data.damageDetails || '';
+      document.getElementById('immediateActions').value = data.immediateActions || '';
+      document.getElementById('preventiveActions').value = data.preventiveActions || '';
+      document.getElementById('assessorName').value = data.assessorName || '';
+      document.getElementById('signDate').value = data.signDate || '';
+
+      // Restore Images if they exist
+      restoreImage(data.logo, 'img-logo', 'text-logo', 'box-logo');
+      restoreImage(data.ev1, 'img-ev1', 'text-ev1', 'box-ev1');
+      restoreImage(data.ev2, 'img-ev2', 'text-ev2', 'box-ev2');
+      restoreImage(data.sig, 'img-sig', 'text-sig', 'box-sig');
+
+      updateSummary();
+      alert("📂 Saved Data Loaded!");
+    }
+
+    // Helper to restore image visually
+    function restoreImage(src, imgId, textId, boxId) {
+      if (src && src.startsWith('data:image')) {
+        const img = document.getElementById(imgId);
+        img.src = src;
+        img.style.display = 'inline-block';
+        document.getElementById(textId).style.display = 'none';
+        document.getElementById(boxId).style.borderStyle = 'solid';
+      }
+    }
+
+    // Clear Form
+    function clearData() {
+      if(!confirm("Are you sure you want to clear the entire report?")) return;
+      
+      const inputs = document.querySelectorAll('input[type="text"], input[type="time"], textarea');
+      inputs.forEach(i => i.value = '');
+      
+      document.getElementById('incType').value = '';
+      document.getElementById('severity').value = 'Low';
+      document.getElementById('incDate').valueAsDate = new Date();
+      document.getElementById('signDate').valueAsDate = new Date();
+
+      // Clear images
+      const images = ['logo', 'ev1', 'ev2', 'sig'];
+      images.forEach(id => {
+        document.getElementById(`img-${id}`).src = '';
+        document.getElementById(`img-${id}`).style.display = 'none';
+        document.getElementById(`text-${id}`).style.display = 'block';
+        document.getElementById(`box-${id}`).style.borderStyle = 'dashed';
+      });
+
+      updateSummary();
+      localStorage.removeItem(STORAGE_KEY);
+    }
+
+    // High-Quality PDF Generation
+    function generatePDF() {
+      const element = document.getElementById('reportArea');
+      
+      // Hide styling borders from file upload boxes for a cleaner print
+      const uploadBoxes = document.querySelectorAll('.upload-box');
+      uploadBoxes.forEach(box => { box.style.border = 'none'; box.style.padding = '0'; });
+
+      const opt = {
+        margin:       [10, 10, 10, 10], // top, left, bottom, right
+        filename:     'HSE_Incident_Report.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+      };
+
+      html2pdf().set(opt).from(element).save().then(() => {
+        // Restore styling borders after download
+        uploadBoxes.forEach(box => { 
+          box.style.border = ''; 
+          box.style.padding = '20px'; 
+        });
+      });
+    }
+  </script>
+</body>
+</html>
