@@ -96,6 +96,7 @@
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
     
     label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #475569; }
+    .required { color: var(--danger); margin-left: 3px; font-weight: bold; }
     input, select, textarea {
       width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; background: #f8fafc;
     }
@@ -175,24 +176,21 @@
         resize: none !important;
         overflow: hidden !important;
       }
-      /* Hide arrows from dropdowns */
       select::-ms-expand { display: none; }
       
-      /* Hide Buttons & UI Elements */
-      .topbar, .toolbar, .add-row-btn, .upload-btn, #logoText, span[id^="sigText"] { display: none !important; }
+      /* 🚨 FIX 1: Hide Topbar permanently during print */
+      .topbar, .toolbar, .add-row-btn, .upload-btn, #logoText, span[id^="sigText"] { 
+        display: none !important; 
+      }
       
-      /* Remove borders from upload boxes */
+      /* 🚨 FIX 2: Hide Empty Rows during print */
+      .hide-in-print { display: none !important; }
+
       .company-logo-box { border: none !important; background: transparent !important; }
-      
-      /* Fix Table Layout */
       .table-container { overflow-x: visible !important; }
       table { min-width: 100% !important; width: 100% !important; }
-      
-      /* Adjust Page Container */
       .container { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
       #printArea { padding: 0 !important; box-shadow: none !important; border: none !important; }
-
-      /* Slightly larger images for clear PDF */
       .row-gallery img { width: 75px !important; height: 75px !important; }
     }
 
@@ -233,22 +231,22 @@
       <h3 class="section-title">1. Site & Audit Details</h3>
       <div class="grid-2">
         <div>
-          <label>Project / Company Name</label>
-          <input type="text" id="projectName" placeholder="Enter details">
+          <label>Project / Company Name<span class="required">*</span></label>
+          <input type="text" id="projectName" placeholder="Enter details" required>
         </div>
         <div>
-          <label>Specific Area Inspected</label>
-          <input type="text" id="areaName" placeholder="e.g. Block A, Workshop">
+          <label>Specific Area Inspected<span class="required">*</span></label>
+          <input type="text" id="areaName" placeholder="e.g. Block A, Workshop" required>
         </div>
         <div>
-          <label>Lead Inspector</label>
-          <input type="text" id="inspectorName" placeholder="Name & Job Title">
+          <label>Lead Inspector<span class="required">*</span></label>
+          <input type="text" id="inspectorName" placeholder="Name & Job Title" required>
         </div>
         <div>
-          <label>Date & Time</label>
+          <label>Date & Time<span class="required">*</span></label>
           <div style="display: flex; gap: 10px;">
-            <input type="date" id="insDate">
-            <input type="time" id="insTime">
+            <input type="date" id="insDate" required>
+            <input type="time" id="insTime" required>
           </div>
         </div>
       </div>
@@ -321,18 +319,18 @@
       </div>
 
     </div> <div class="toolbar">
-      <button class="btn btn-blue" onclick="generateSummary()"><i class="fa-solid fa-bolt"></i> Generate Summary</button>
+      <button class="btn btn-blue" onclick="processReportAction('summary')"><i class="fa-solid fa-bolt"></i> Generate Summary</button>
       <button class="btn btn-green" onclick="saveData()"><i class="fa-solid fa-floppy-disk"></i> Save Data</button>
       <button class="btn btn-blue" style="background: var(--primary-dark);" onclick="loadData()"><i class="fa-solid fa-rotate"></i> Load</button>
-      <button class="btn btn-print" onclick="window.print()"><i class="fa-solid fa-print"></i> Print Report</button>
-      <button class="btn btn-pdf" onclick="downloadPDF()"><i class="fa-solid fa-file-pdf"></i> Download PDF</button>
+      <button class="btn btn-print" onclick="processReportAction('print')"><i class="fa-solid fa-print"></i> Print Report</button>
+      <button class="btn btn-pdf" onclick="processReportAction('pdf')"><i class="fa-solid fa-file-pdf"></i> Download PDF</button>
       <button class="btn btn-clear" onclick="clearForm()"><i class="fa-solid fa-trash"></i> Clear</button>
     </div>
 
   </div>
 
   <script>
-    const STORAGE_KEY = "hseInspectionIsoV3";
+    const STORAGE_KEY = "hseInspectionIsoV4";
 
     const categories = [
       "Housekeeping", "PPE Compliance", "Working at Height", "Scaffolding", 
@@ -420,7 +418,6 @@
       `;
       tbody.appendChild(tr);
 
-      // Load saved images if any
       if(data.images && data.images.length > 0) {
         const gallery = tr.querySelector('.row-gallery');
         data.images.forEach(src => {
@@ -432,17 +429,50 @@
         });
       }
       
-      // Auto resize existing text
       setTimeout(() => {
         autoResize(tr.querySelector('.obs-desc'));
         autoResize(tr.querySelector('.obs-action'));
       }, 50);
     }
 
-    // Expand textarea to show all text (Crucial for PDF)
     function autoResize(textarea) {
       textarea.style.height = 'auto';
       textarea.style.height = textarea.scrollHeight + 'px';
+    }
+
+    // 🚨 FIX: Form Validation Function
+    function validateForm() {
+      const requiredFields = ['projectName', 'areaName', 'inspectorName', 'insDate', 'insTime'];
+      for (let id of requiredFields) {
+        const field = document.getElementById(id);
+        if (!field.value.trim()) {
+          alert(`Please fill the required field: ${field.previousElementSibling.textContent.replace('*', '').trim()}`);
+          field.focus();
+          return false;
+        }
+      }
+      return true;
+    }
+
+    // 🚨 FIX: Hide empty rows before Print/PDF
+    function prepareForPrint() {
+      const rows = document.getElementById('obsBody').rows;
+      for(let i=0; i<rows.length; i++) {
+        const desc = rows[i].querySelector('.obs-desc').value.trim();
+        if(desc === "") {
+          rows[i].classList.add('hide-in-print');
+        } else {
+          rows[i].classList.remove('hide-in-print');
+        }
+      }
+    }
+
+    // 🚨 Restore rows after Print/PDF
+    function restoreAfterPrint() {
+      const rows = document.getElementById('obsBody').rows;
+      for(let i=0; i<rows.length; i++) {
+        rows[i].classList.remove('hide-in-print');
+      }
     }
 
     function generateSummary() {
@@ -473,31 +503,38 @@
       document.getElementById('autoSummaryText').innerText = summaryStr;
     }
 
-    // Advanced PDF Download
-    function downloadPDF() {
-      generateSummary();
-      const element = document.getElementById('printArea');
+    // 🚨 Master Function for Buttons to ensure Validation & Preparation
+    function processReportAction(actionType) {
+      if (!validateForm()) return; // Stop if form is incomplete
       
-      // Force textareas to expand fully before snapshot
-      document.querySelectorAll('textarea').forEach(ta => autoResize(ta));
-      
-      // Add PDF mode class for clean rendering
-      element.classList.add('pdf-mode');
-      
-      // Set window width wide enough so table doesn't cramp
-      const opt = {
-        margin:       [10, 10, 10, 10],
-        filename:     'ISO_Safety_Inspection_Report.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, windowWidth: 1000 },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
-      };
+      generateSummary(); // Update numbers
 
-      html2pdf().set(opt).from(element).save().then(() => {
-        // Remove class after PDF is generated
-        element.classList.remove('pdf-mode');
-      });
+      if (actionType === 'summary') {
+        alert("Summary generated successfully! Scroll down to review.");
+      } else if (actionType === 'print') {
+        prepareForPrint();
+        window.print();
+        setTimeout(restoreAfterPrint, 1000); // Bring empty rows back after print dialog opens
+      } else if (actionType === 'pdf') {
+        prepareForPrint();
+        const element = document.getElementById('printArea');
+        document.querySelectorAll('textarea').forEach(ta => autoResize(ta));
+        element.classList.add('pdf-mode');
+        
+        const opt = {
+          margin:       [10, 10, 10, 10],
+          filename:     'ISO_Safety_Inspection_Report.pdf',
+          image:        { type: 'jpeg', quality: 0.98 },
+          html2canvas:  { scale: 2, useCORS: true, windowWidth: 1000 },
+          jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+          pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+        };
+
+        html2pdf().set(opt).from(element).save().then(() => {
+          element.classList.remove('pdf-mode');
+          restoreAfterPrint();
+        });
+      }
     }
 
     function saveData() {
