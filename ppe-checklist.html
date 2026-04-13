@@ -102,12 +102,13 @@
     }
     input:focus, select:focus, textarea:focus { outline: none; border-color: var(--blue); background: white; }
 
-    /* Observations Table - STRICT LANDSCAPE FIX */
+    /* 🔥 FIX: Observations Table - Mobile Scrolling Enforced 🔥 */
     .table-container { overflow-x: auto; margin-top: 10px; width: 100%; }
     table { 
       width: 100%; 
       border-collapse: collapse; 
       table-layout: fixed; 
+      min-width: 1000px; /* Yeh mobile par squish hone se bachayega, aur left/right scroll layega */
     }
     th, td { 
       border: 1px solid var(--border); 
@@ -150,7 +151,7 @@
     .btn-clear { background: #f1f5f9; color: var(--danger); border: 1px solid #cbd5e1; }
 
     /* ==========================================
-       🔥 ULTIMATE FIX FOR NATIVE PRINT 🔥
+       🔥 ULTIMATE FIX FOR NATIVE PRINT & PDF 🔥
        ========================================== */
     @page { size: landscape; margin: 10mm; }
 
@@ -188,9 +189,20 @@
     body.is-printing input[type="text"] { text-align: left !important; }
     body.is-printing select::-ms-expand { display: none; }
     body.is-printing .company-logo-box { border: none !important; background: transparent !important; }
-    body.is-printing .table-container { overflow-x: hidden !important; width: 100% !important; }
-    body.is-printing table { table-layout: fixed !important; width: 100% !important; max-width: 100% !important; }
+    
+    /* 🔥 PDF ke liye Mobile Scroll band aur strictly A4 size wapas fit kiya hai */
+    body.is-printing .table-container { overflow-x: visible !important; width: 100% !important; }
+    body.is-printing table { 
+      table-layout: fixed !important; 
+      width: 100% !important; 
+      min-width: 100% !important; 
+      max-width: 100% !important; 
+    }
     body.is-printing .container { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
+
+    /* Status Colors for Print */
+    .status-pass { color: var(--success); font-weight: bold; }
+    .status-fail { color: var(--danger); font-weight: bold; }
 
     @media (max-width: 768px) {
       .grid-2, .sig-grid { grid-template-columns: 1fr; }
@@ -373,7 +385,6 @@
       }
     }
 
-    // 🔥 FIX 1: Removed Emojis to prevent PDF Font Encoding crash
     function getPpeOptions(selected) {
       return `
         <option value="Yes" ${selected === 'Yes' ? 'selected' : ''}>Yes</option>
@@ -421,7 +432,6 @@
       return true;
     }
 
-    // Native Print Preparation
     function prepareForOutput() {
       document.body.classList.add('is-printing');
       const rows = document.getElementById('ppeBody').rows;
@@ -480,9 +490,8 @@
         window.print();
       } 
       else if (actionType === 'pdf') {
-        prepareForOutput(); // Locks UI and hides empty rows
+        prepareForOutput(); 
         
-        // 🔥 FIX 2: Convert Inputs & Selects to Plain Text DIVs for Perfect PDF Generation
         const elementsToReplace = document.querySelectorAll('#printArea select, #printArea input[type="text"], #printArea input[type="date"], #printArea input[type="time"]');
         
         elementsToReplace.forEach(el => {
@@ -493,25 +502,22 @@
             div.style.padding = '4px';
             div.style.wordWrap = 'break-word';
 
-            // Alignment Logic
             if (el.tagName === 'SELECT' || el.type === 'date' || el.type === 'time') {
                 div.style.textAlign = 'center';
             } else {
                 div.style.textAlign = 'left';
             }
 
-            // Colors for Pass/Fail
             if (el.value === 'Pass') { div.style.color = '#16a34a'; div.style.fontWeight = 'bold'; }
             if (el.value === 'Fail') { div.style.color = '#dc2626'; div.style.fontWeight = 'bold'; }
 
-            el.style.display = 'none'; // Hide the actual input
-            el.parentNode.insertBefore(div, el); // Insert the clean text div
+            el.style.display = 'none'; 
+            el.parentNode.insertBefore(div, el); 
         });
 
         const element = document.getElementById('printArea');
         const originalWidth = element.style.width;
         
-        // Force Landscape dimensions
         element.style.width = '280mm'; 
         element.style.maxWidth = '280mm';
 
@@ -525,11 +531,9 @@
         };
 
         html2pdf().set(opt).from(element).save().then(() => {
-          // Restore dimensions
           element.style.width = originalWidth;
           element.style.maxWidth = originalWidth;
 
-          // 🔥 RESTORE: Remove the text divs and bring back the real inputs
           document.querySelectorAll('.pdf-clone-text').forEach(el => el.remove());
           elementsToReplace.forEach(el => { el.style.display = ''; });
 
