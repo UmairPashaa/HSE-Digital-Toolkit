@@ -107,7 +107,7 @@
     table { 
       width: 100%; 
       border-collapse: collapse; 
-      table-layout: fixed; /* Force columns to behave */
+      table-layout: fixed; 
     }
     th, td { 
       border: 1px solid var(--border); 
@@ -150,7 +150,7 @@
     .btn-clear { background: #f1f5f9; color: var(--danger); border: 1px solid #cbd5e1; }
 
     /* ==========================================
-       🔥 ULTIMATE FIX FOR PRINT & PDF (PPE) 🔥
+       🔥 ULTIMATE FIX FOR NATIVE PRINT 🔥
        ========================================== */
     @page { size: landscape; margin: 10mm; }
 
@@ -191,10 +191,6 @@
     body.is-printing .table-container { overflow-x: hidden !important; width: 100% !important; }
     body.is-printing table { table-layout: fixed !important; width: 100% !important; max-width: 100% !important; }
     body.is-printing .container { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
-
-    /* Status Colors for Print */
-    .status-pass { color: var(--success); font-weight: bold; }
-    .status-fail { color: var(--danger); font-weight: bold; }
 
     @media (max-width: 768px) {
       .grid-2, .sig-grid { grid-template-columns: 1fr; }
@@ -339,7 +335,7 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "hsePpeChecklistV2";
+    const STORAGE_KEY = "hsePpeChecklistV3";
 
     function setInitialDates() {
       const today = new Date().toISOString().split('T')[0];
@@ -377,11 +373,12 @@
       }
     }
 
+    // 🔥 FIX 1: Removed Emojis to prevent PDF Font Encoding crash
     function getPpeOptions(selected) {
       return `
-        <option value="Yes" ${selected === 'Yes' ? 'selected' : ''}>✔️ Yes</option>
-        <option value="No" ${selected === 'No' ? 'selected' : ''}>❌ No</option>
-        <option value="N/A" ${selected === 'N/A' ? 'selected' : ''}>- N/A</option>
+        <option value="Yes" ${selected === 'Yes' ? 'selected' : ''}>Yes</option>
+        <option value="No" ${selected === 'No' ? 'selected' : ''}>No</option>
+        <option value="N/A" ${selected === 'N/A' ? 'selected' : ''}>N/A</option>
       `;
     }
 
@@ -408,8 +405,6 @@
         <td><input type="text" class="w-remark" placeholder="Actions..." value="${data.remark || ''}"></td>
       `;
       tbody.appendChild(tr);
-      
-      // Apply color to the status select initially
       styleStatusSelect(tr.querySelector('.overall-status'));
     }
 
@@ -426,32 +421,22 @@
       return true;
     }
 
-    // 🔥 Physically lock UI and hide empty rows before any output
+    // Native Print Preparation
     function prepareForOutput() {
       document.body.classList.add('is-printing');
-
-      // Hide rows where worker name is empty
       const rows = document.getElementById('ppeBody').rows;
       for(let i=0; i<rows.length; i++) {
         const name = rows[i].querySelector('.w-name').value.trim();
-        if(name === "") {
-          rows[i].style.display = 'none';
-        }
+        if(name === "") rows[i].style.display = 'none';
       }
     }
 
-    // 🔥 Restore UI after output
     function restoreAfterOutput() {
       document.body.classList.remove('is-printing');
-      
-      // Bring empty rows back
       const rows = document.getElementById('ppeBody').rows;
-      for(let i=0; i<rows.length; i++) {
-        rows[i].style.display = '';
-      }
+      for(let i=0; i<rows.length; i++) rows[i].style.display = '';
     }
 
-    // Connect standard browser print
     window.addEventListener('beforeprint', prepareForOutput);
     window.addEventListener('afterprint', restoreAfterOutput);
 
@@ -495,17 +480,43 @@
         window.print();
       } 
       else if (actionType === 'pdf') {
-        prepareForOutput();
+        prepareForOutput(); // Locks UI and hides empty rows
         
+        // 🔥 FIX 2: Convert Inputs & Selects to Plain Text DIVs for Perfect PDF Generation
+        const elementsToReplace = document.querySelectorAll('#printArea select, #printArea input[type="text"], #printArea input[type="date"], #printArea input[type="time"]');
+        
+        elementsToReplace.forEach(el => {
+            const div = document.createElement('div');
+            div.className = 'pdf-clone-text';
+            div.innerText = el.value || ' ';
+            div.style.fontSize = '12px';
+            div.style.padding = '4px';
+            div.style.wordWrap = 'break-word';
+
+            // Alignment Logic
+            if (el.tagName === 'SELECT' || el.type === 'date' || el.type === 'time') {
+                div.style.textAlign = 'center';
+            } else {
+                div.style.textAlign = 'left';
+            }
+
+            // Colors for Pass/Fail
+            if (el.value === 'Pass') { div.style.color = '#16a34a'; div.style.fontWeight = 'bold'; }
+            if (el.value === 'Fail') { div.style.color = '#dc2626'; div.style.fontWeight = 'bold'; }
+
+            el.style.display = 'none'; // Hide the actual input
+            el.parentNode.insertBefore(div, el); // Insert the clean text div
+        });
+
         const element = document.getElementById('printArea');
-        
-        // 🚀 FORCE EXACT A4 LANDSCAPE WIDTH SO NOTHING GETS CUT
         const originalWidth = element.style.width;
+        
+        // Force Landscape dimensions
         element.style.width = '280mm'; 
         element.style.maxWidth = '280mm';
 
         const opt = {
-          margin:       [5, 5, 5, 5],
+          margin:       [10, 10, 10, 10],
           filename:     'Advanced_PPE_Inspection_Report.pdf',
           image:        { type: 'jpeg', quality: 0.98 },
           html2canvas:  { scale: 2, useCORS: true }, 
@@ -517,6 +528,11 @@
           // Restore dimensions
           element.style.width = originalWidth;
           element.style.maxWidth = originalWidth;
+
+          // 🔥 RESTORE: Remove the text divs and bring back the real inputs
+          document.querySelectorAll('.pdf-clone-text').forEach(el => el.remove());
+          elementsToReplace.forEach(el => { el.style.display = ''; });
+
           restoreAfterOutput();
         });
       }
@@ -624,7 +640,7 @@
 
     window.onload = function() {
       setInitialDates();
-      for(let i=0; i<6; i++) addPpeRow(); // Default 6 rows
+      for(let i=0; i<6; i++) addPpeRow(); 
     };
   </script>
 </body>
