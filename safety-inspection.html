@@ -104,7 +104,7 @@
 
     /* Observations Table */
     .table-container { overflow-x: auto; margin-top: 10px; }
-    table { width: 100%; border-collapse: collapse; min-width: 900px; }
+    table { width: 100%; border-collapse: collapse; min-width: 1000px; } /* Enforced width */
     th, td { border: 1px solid var(--border); padding: 10px; text-align: left; vertical-align: top; font-size: 13px; }
     th { background: #f1f5f9; color: var(--text); font-weight: 600; }
     tr { page-break-inside: avoid; break-inside: avoid; } 
@@ -158,41 +158,56 @@
     .btn-clear { background: #f1f5f9; color: var(--danger); border: 1px solid #cbd5e1; }
 
     /* ==========================================
-       🔥 MAGIC FIX FOR PDF & PRINT LAYOUT 🔥
+       🔥 ULTIMATE FIX FOR PRINT & PDF 🔥
        ========================================== */
-    .pdf-mode input, 
-    .pdf-mode select, 
-    .pdf-mode textarea,
-    @media print {
-      input, select, textarea { 
-        border: none !important; 
-        background: transparent !important; 
-        color: black !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        box-shadow: none !important;
-        appearance: none !important;
-        -webkit-appearance: none !important;
-        resize: none !important;
-        overflow: hidden !important;
-      }
-      select::-ms-expand { display: none; }
-      
-      /* 🚨 FIX 1: Hide Topbar permanently during print */
-      .topbar, .toolbar, .add-row-btn, .upload-btn, #logoText, span[id^="sigText"] { 
-        display: none !important; 
-      }
-      
-      /* 🚨 FIX 2: Hide Empty Rows during print */
-      .hide-in-print { display: none !important; }
-
-      .company-logo-box { border: none !important; background: transparent !important; }
-      .table-container { overflow-x: visible !important; }
-      table { min-width: 100% !important; width: 100% !important; }
-      .container { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
-      #printArea { padding: 0 !important; box-shadow: none !important; border: none !important; }
-      .row-gallery img { width: 75px !important; height: 75px !important; }
+    
+    /* Force Native Print to Landscape */
+    @page {
+      size: landscape;
+      margin: 10mm;
     }
+
+    /* Active Printing State */
+    body.is-printing #mainTopbar,
+    body.is-printing #actionToolbar,
+    body.is-printing #addRowBtn,
+    body.is-printing .upload-btn,
+    body.is-printing #logoText,
+    body.is-printing span[id^="sigText"] {
+      display: none !important;
+    }
+
+    body.is-printing {
+      background: white !important;
+    }
+
+    body.is-printing #printArea {
+      padding: 0 !important;
+      box-shadow: none !important;
+      border: none !important;
+    }
+
+    body.is-printing input, 
+    body.is-printing select, 
+    body.is-printing textarea {
+      border: none !important; 
+      background: transparent !important; 
+      color: black !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      box-shadow: none !important;
+      appearance: none !important;
+      -webkit-appearance: none !important;
+      resize: none !important;
+      overflow: hidden !important;
+    }
+
+    body.is-printing select::-ms-expand { display: none; }
+    body.is-printing .company-logo-box { border: none !important; background: transparent !important; }
+    body.is-printing .table-container { overflow-x: visible !important; }
+    body.is-printing table { min-width: 100% !important; width: 100% !important; }
+    body.is-printing .container { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
+    body.is-printing .row-gallery img { width: 75px !important; height: 75px !important; }
 
     @media (max-width: 768px) {
       .grid-2, .sig-grid { grid-template-columns: 1fr; }
@@ -203,7 +218,7 @@
 </head>
 <body>
 
-  <header class="topbar">
+  <header class="topbar" id="mainTopbar">
     <div class="brand">
       <i class="fa-solid fa-clipboard-check"></i>
       <h1>HSE Toolkit</h1>
@@ -211,7 +226,7 @@
     <a href="index.html" class="nav-btn"><i class="fa-solid fa-house"></i> Home</a>
   </header>
 
-  <div class="container">
+  <div class="container" id="mainContainer">
     
     <div id="printArea">
       
@@ -269,7 +284,7 @@
             </tbody>
         </table>
       </div>
-      <button class="add-row-btn" onclick="addObsRow()">+ Add Observation Row</button>
+      <button class="add-row-btn" id="addRowBtn" onclick="addObsRow()">+ Add Observation Row</button>
 
       <div class="summary-dash" id="summarySection">
         <h3 class="section-title" style="margin-top: 0; border-none;">3. Inspection Summary</h3>
@@ -318,11 +333,11 @@
         </div>
       </div>
 
-    </div> <div class="toolbar">
+    </div> <div class="toolbar" id="actionToolbar">
       <button class="btn btn-blue" onclick="processReportAction('summary')"><i class="fa-solid fa-bolt"></i> Generate Summary</button>
       <button class="btn btn-green" onclick="saveData()"><i class="fa-solid fa-floppy-disk"></i> Save Data</button>
       <button class="btn btn-blue" style="background: var(--primary-dark);" onclick="loadData()"><i class="fa-solid fa-rotate"></i> Load</button>
-      <button class="btn btn-print" onclick="processReportAction('print')"><i class="fa-solid fa-print"></i> Print Report</button>
+      <button class="btn btn-print" onclick="processReportAction('print')"><i class="fa-solid fa-print"></i> Native Print</button>
       <button class="btn btn-pdf" onclick="processReportAction('pdf')"><i class="fa-solid fa-file-pdf"></i> Download PDF</button>
       <button class="btn btn-clear" onclick="clearForm()"><i class="fa-solid fa-trash"></i> Clear</button>
     </div>
@@ -330,7 +345,7 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "hseInspectionIsoV4";
+    const STORAGE_KEY = "hseInspectionIsoV5";
 
     const categories = [
       "Housekeeping", "PPE Compliance", "Working at Height", "Scaffolding", 
@@ -440,7 +455,6 @@
       textarea.style.height = textarea.scrollHeight + 'px';
     }
 
-    // 🚨 FIX: Form Validation Function
     function validateForm() {
       const requiredFields = ['projectName', 'areaName', 'inspectorName', 'insDate', 'insTime'];
       for (let id of requiredFields) {
@@ -454,26 +468,37 @@
       return true;
     }
 
-    // 🚨 FIX: Hide empty rows before Print/PDF
-    function prepareForPrint() {
+    // 🔥 Physically lock UI and hide empty rows before any output
+    function prepareForOutput() {
+      document.body.classList.add('is-printing');
+      
+      // Auto resize textareas so text doesn't hide
+      document.querySelectorAll('textarea').forEach(ta => autoResize(ta));
+
+      // Hide empty rows
       const rows = document.getElementById('obsBody').rows;
       for(let i=0; i<rows.length; i++) {
         const desc = rows[i].querySelector('.obs-desc').value.trim();
         if(desc === "") {
-          rows[i].classList.add('hide-in-print');
-        } else {
-          rows[i].classList.remove('hide-in-print');
+          rows[i].style.display = 'none';
         }
       }
     }
 
-    // 🚨 Restore rows after Print/PDF
-    function restoreAfterPrint() {
+    // 🔥 Restore UI after output
+    function restoreAfterOutput() {
+      document.body.classList.remove('is-printing');
+      
+      // Bring empty rows back
       const rows = document.getElementById('obsBody').rows;
       for(let i=0; i<rows.length; i++) {
-        rows[i].classList.remove('hide-in-print');
+        rows[i].style.display = '';
       }
     }
+
+    // Attach to native browser print shortcut (Ctrl+P)
+    window.addEventListener('beforeprint', prepareForOutput);
+    window.addEventListener('afterprint', restoreAfterOutput);
 
     function generateSummary() {
       const rows = document.getElementById('obsBody').rows;
@@ -503,36 +528,33 @@
       document.getElementById('autoSummaryText').innerText = summaryStr;
     }
 
-    // 🚨 Master Function for Buttons to ensure Validation & Preparation
     function processReportAction(actionType) {
-      if (!validateForm()) return; // Stop if form is incomplete
-      
-      generateSummary(); // Update numbers
+      if (!validateForm()) return; 
+      generateSummary(); 
 
       if (actionType === 'summary') {
-        alert("Summary generated successfully! Scroll down to review.");
-      } else if (actionType === 'print') {
-        prepareForPrint();
-        window.print();
-        setTimeout(restoreAfterPrint, 1000); // Bring empty rows back after print dialog opens
-      } else if (actionType === 'pdf') {
-        prepareForPrint();
-        const element = document.getElementById('printArea');
-        document.querySelectorAll('textarea').forEach(ta => autoResize(ta));
-        element.classList.add('pdf-mode');
+        alert("Summary generated successfully!");
+      } 
+      else if (actionType === 'print') {
+        window.print(); // Triggers beforeprint/afterprint naturally
+      } 
+      else if (actionType === 'pdf') {
+        prepareForOutput(); // Lock UI manually for html2pdf
         
+        const element = document.getElementById('printArea');
+        
+        // Settings tailored for LANDSCAPE table layout
         const opt = {
           margin:       [10, 10, 10, 10],
           filename:     'ISO_Safety_Inspection_Report.pdf',
           image:        { type: 'jpeg', quality: 0.98 },
-          html2canvas:  { scale: 2, useCORS: true, windowWidth: 1000 },
-          jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-          pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+          html2canvas:  { scale: 2, useCORS: true, windowWidth: 1200 }, // Forced width
+          jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }, // LANDSCAPE FORMAT
+          pagebreak:    { mode: ['css', 'legacy'] }
         };
 
         html2pdf().set(opt).from(element).save().then(() => {
-          element.classList.remove('pdf-mode');
-          restoreAfterPrint();
+          restoreAfterOutput(); // Unlock UI after PDF is saved
         });
       }
     }
