@@ -102,10 +102,22 @@
     }
     input:focus, select:focus, textarea:focus { outline: none; border-color: var(--blue); background: white; }
 
-    /* Observations Table */
-    .table-container { overflow-x: auto; margin-top: 10px; }
-    table { width: 100%; border-collapse: collapse; min-width: 1000px; } /* Enforced width */
-    th, td { border: 1px solid var(--border); padding: 10px; text-align: left; vertical-align: top; font-size: 13px; }
+    /* Observations Table - SUPER STRICT FIX */
+    .table-container { overflow-x: auto; margin-top: 10px; width: 100%; }
+    table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      table-layout: fixed; /* Force fixed width for columns */
+    }
+    th, td { 
+      border: 1px solid var(--border); 
+      padding: 10px; 
+      text-align: left; 
+      vertical-align: top; 
+      font-size: 13px; 
+      word-wrap: break-word; /* Prevent text stretch */
+      overflow-wrap: break-word;
+    }
     th { background: #f1f5f9; color: var(--text); font-weight: 600; }
     tr { page-break-inside: avoid; break-inside: avoid; } 
 
@@ -129,17 +141,17 @@
     .upload-btn input { display: none; }
     
     .row-gallery { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-    .row-gallery img { width: 60px; height: 60px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border); cursor: pointer; }
+    .row-gallery img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border); cursor: pointer; }
 
     /* Signatures */
-    .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px; }
+    .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px; page-break-inside: avoid; break-inside: avoid;}
     .sig-box { border-top: 1px solid var(--text); padding-top: 10px; text-align: center; }
     .sig-img-container { height: 60px; margin-bottom: 10px; position: relative; }
     .sig-img-container img { max-height: 100%; display: none; margin: 0 auto; }
     .sig-img-container input { position: absolute; top:0; left:0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
 
     /* Dashboard Summary */
-    .summary-dash { background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid var(--border); margin-top: 30px; }
+    .summary-dash { background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid var(--border); margin-top: 30px; page-break-inside: avoid; break-inside: avoid;}
     .dash-metrics { display: flex; gap: 20px; margin-bottom: 15px; }
     .metric { flex: 1; background: white; padding: 15px; border-radius: 8px; border: 1px solid var(--border); text-align: center; }
     .metric h4 { margin: 0 0 5px; font-size: 12px; color: var(--muted); }
@@ -158,16 +170,10 @@
     .btn-clear { background: #f1f5f9; color: var(--danger); border: 1px solid #cbd5e1; }
 
     /* ==========================================
-       🔥 ULTIMATE FIX FOR PRINT & PDF 🔥
+       🔥 BULLETPROOF PDF/PRINT STYLES 🔥
        ========================================== */
-    
-    /* Force Native Print to Landscape */
-    @page {
-      size: landscape;
-      margin: 10mm;
-    }
+    @page { size: landscape; margin: 10mm; }
 
-    /* Active Printing State */
     body.is-printing #mainTopbar,
     body.is-printing #actionToolbar,
     body.is-printing #addRowBtn,
@@ -177,14 +183,13 @@
       display: none !important;
     }
 
-    body.is-printing {
-      background: white !important;
-    }
-
+    body.is-printing { background: white !important; }
+    
     body.is-printing #printArea {
       padding: 0 !important;
       box-shadow: none !important;
       border: none !important;
+      /* Fixed width enforced via JS during PDF generation */
     }
 
     body.is-printing input, 
@@ -200,14 +205,16 @@
       -webkit-appearance: none !important;
       resize: none !important;
       overflow: hidden !important;
+      white-space: pre-wrap !important;
+      word-wrap: break-word !important;
     }
 
     body.is-printing select::-ms-expand { display: none; }
     body.is-printing .company-logo-box { border: none !important; background: transparent !important; }
-    body.is-printing .table-container { overflow-x: visible !important; }
-    body.is-printing table { min-width: 100% !important; width: 100% !important; }
+    body.is-printing .table-container { overflow-x: hidden !important; width: 100% !important; }
+    body.is-printing table { table-layout: fixed !important; width: 100% !important; max-width: 100% !important; }
     body.is-printing .container { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
-    body.is-printing .row-gallery img { width: 75px !important; height: 75px !important; }
+    body.is-printing .row-gallery img { width: 65px !important; height: 65px !important; margin: 2px;}
 
     @media (max-width: 768px) {
       .grid-2, .sig-grid { grid-template-columns: 1fr; }
@@ -468,35 +475,26 @@
       return true;
     }
 
-    // 🔥 Physically lock UI and hide empty rows before any output
     function prepareForOutput() {
       document.body.classList.add('is-printing');
-      
-      // Auto resize textareas so text doesn't hide
       document.querySelectorAll('textarea').forEach(ta => autoResize(ta));
 
       // Hide empty rows
       const rows = document.getElementById('obsBody').rows;
       for(let i=0; i<rows.length; i++) {
         const desc = rows[i].querySelector('.obs-desc').value.trim();
-        if(desc === "") {
-          rows[i].style.display = 'none';
-        }
+        if(desc === "") rows[i].style.display = 'none';
       }
     }
 
-    // 🔥 Restore UI after output
     function restoreAfterOutput() {
       document.body.classList.remove('is-printing');
       
-      // Bring empty rows back
       const rows = document.getElementById('obsBody').rows;
-      for(let i=0; i<rows.length; i++) {
-        rows[i].style.display = '';
-      }
+      for(let i=0; i<rows.length; i++) rows[i].style.display = '';
     }
 
-    // Attach to native browser print shortcut (Ctrl+P)
+    // Connect standard browser print
     window.addEventListener('beforeprint', prepareForOutput);
     window.addEventListener('afterprint', restoreAfterOutput);
 
@@ -536,29 +534,37 @@
         alert("Summary generated successfully!");
       } 
       else if (actionType === 'print') {
-        window.print(); // Triggers beforeprint/afterprint naturally
+        window.print();
       } 
       else if (actionType === 'pdf') {
-        prepareForOutput(); // Lock UI manually for html2pdf
+        prepareForOutput();
         
         const element = document.getElementById('printArea');
         
-        // Settings tailored for LANDSCAPE table layout
+        // 🚀 FORCE EXACT A4 LANDSCAPE WIDTH SO NOTHING GETS CUT
+        const originalWidth = element.style.width;
+        element.style.width = '280mm'; 
+        element.style.maxWidth = '280mm';
+
         const opt = {
-          margin:       [10, 10, 10, 10],
+          margin:       [5, 5, 5, 5],
           filename:     'ISO_Safety_Inspection_Report.pdf',
           image:        { type: 'jpeg', quality: 0.98 },
-          html2canvas:  { scale: 2, useCORS: true, windowWidth: 1200 }, // Forced width
-          jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' }, // LANDSCAPE FORMAT
+          html2canvas:  { scale: 2, useCORS: true }, 
+          jsPDF:        { unit: 'mm', format: 'a4', orientation: 'landscape' },
           pagebreak:    { mode: ['css', 'legacy'] }
         };
 
         html2pdf().set(opt).from(element).save().then(() => {
-          restoreAfterOutput(); // Unlock UI after PDF is saved
+          // Restore dimensions
+          element.style.width = originalWidth;
+          element.style.maxWidth = originalWidth;
+          restoreAfterOutput();
         });
       }
     }
 
+    // Keep save/load logic unchanged
     function saveData() {
       const data = {
         projectName: document.getElementById('projectName').value,
