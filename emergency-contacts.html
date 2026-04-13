@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emergency Contacts | HSE Digital Toolkit</title>
+  <style>
+    :root {
+      --bg: #f3f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #dc2626; /* Red for Emergency */
+      --primary-dark: #991b1b;
+      --secondary: #fee2e2;
+      --danger: #dc2626;
+      --warning: #d97706;
+      --success: #15803d;
+      --border: #d9e3ea;
+      --soft: #fbfdfe;
+      --shadow: 0 14px 36px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #fef2f2 0%, var(--bg) 100%);
+      color: var(--text);
+    }
+
+    .container {
+      width: min(1000px, 94%);
+      margin: 0 auto;
+      padding: 24px 0 40px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .brand h1 { margin: 0; font-size: 2rem; color: var(--primary-dark); }
+    .brand p { margin: 6px 0 0; color: var(--muted); font-size: 0.98rem; }
+
+    .top-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 24px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+      text-align: center;
+    }
+
+    .hero h2 { margin: 0 0 8px; font-size: 1.8rem; }
+    .hero p { margin: 0; line-height: 1.65; opacity: 0.96; }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 26px;
+      border: 1px solid rgba(217, 227, 234, 0.9);
+      margin-bottom: 22px;
+    }
+
+    .card h3 { 
+      margin: 0 0 20px; 
+      color: var(--primary-dark); 
+      font-size: 1.3rem; 
+      border-bottom: 2px solid var(--secondary);
+      padding-bottom: 10px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+    .full { grid-column: 1 / -1; }
+    label { font-size: 0.93rem; font-weight: 700; color: #1f2937; }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 13px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      font-size: 0.95rem;
+      color: var(--text);
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+    }
+
+    /* Emergency Contacts Custom Grid */
+    .contact-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .contact-item {
+      background: var(--soft);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .contact-item-header {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+
+    .input-row { display: flex; gap: 10px; }
+    .input-row input { flex: 1; }
+
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 12px 20px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-secondary { background: #e8f0f3; color: var(--text); }
+    .btn-dark { background: #1f2937; color: white; }
+
+    .button-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; justify-content: center; }
+
+    /* Print Header (Hidden on screen) */
+    .print-header { display: none; margin-bottom: 20px; text-align: center; border-bottom: 4px solid var(--primary); padding-bottom: 20px;}
+    .print-header h1 { font-size: 3rem; color: var(--primary-dark); margin: 0 0 10px; text-transform: uppercase;}
+    .print-header h2 { font-size: 1.8rem; margin: 0; color: #1f2937;}
+    .print-header p { font-size: 1.2rem; margin: 10px 0 0; color: var(--muted); }
+
+    .footer-note { text-align: center; margin-top: 22px; color: var(--muted); font-size: 0.92rem; }
+
+    @media (max-width: 760px) {
+      .form-grid, .contact-list { grid-template-columns: 1fr; }
+      .brand h1 { font-size: 1.6rem; }
+      .hero h2 { font-size: 1.4rem; }
+    }
+
+    /* Professional ERP Poster Print Layout */
+    @media print {
+      body { background: white; color: black; }
+      .topbar, .hero, .button-row, .footer-note { display: none !important; }
+      .container { width: 100%; padding: 0; margin: 0; max-width: 100%; }
+      .print-header { display: block; }
+      
+      .card { 
+        box-shadow: none; 
+        border: 2px solid #000; 
+        margin-bottom: 20px; 
+        padding: 20px; 
+        break-inside: avoid;
+      }
+      
+      .card h3 { color: black; border-bottom: 2px solid #000; }
+      
+      input, select, textarea { 
+        border: none !important; 
+        background: transparent !important; 
+        padding: 4px 0 !important; 
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: black;
+      }
+      
+      .contact-item {
+        border: 1px solid #ccc;
+        background: transparent;
+      }
+      
+      label { color: #555; font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <div class="brand">
+        <h1>Emergency Contacts</h1>
+        <p>HSE Digital Toolkit | Fast Access Site Emergency Plan</p>
+      </div>
+      <div class="top-actions">
+        <button class="btn btn-secondary" onclick="window.location.href='index.html'">Back to Home</button>
+      </div>
+    </div>
+
+    <div class="hero">
+      <h2>SITE EMERGENCY RESPONSE PLAN</h2>
+      <p>Configure this page for your specific site, save the data, and print it as a poster for your site notice boards.</p>
+    </div>
+
+    <div class="print-header">
+      <h1>EMERGENCY CONTACTS</h1>
+      <h2 id="printProjectName">Project Name Here</h2>
+      <p>In case of an emergency, stay calm and call the relevant numbers below.</p>
+    </div>
+
+    <div class="card">
+      <h3>1. Site Information (Tell them where you are)</h3>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>Project / Company Name</label>
+          <input type="text" id="projectName" placeholder="Enter Project Name" oninput="updatePrintHeader()" />
+        </div>
+        <div class="form-group full">
+          <label>Exact Site Address</label>
+          <textarea id="siteAddress" rows="2" placeholder="Enter the exact address to read out to emergency services"></textarea>
+        </div>
+        <div class="form-group">
+          <label>GPS Coordinates / Plus Code</label>
+          <input type="text" id="gpsCoords" placeholder="e.g. 31.4222° N, 73.0833° E" />
+        </div>
+        <div class="form-group">
+          <label>Site Gate / Access Point</label>
+          <input type="text" id="accessPoint" placeholder="e.g. Gate 2, Main Highway" />
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>2. Primary Emergency Services</h3>
+      <div class="contact-list">
+        <div class="contact-item">
+          <div class="contact-item-header">🚑 Ambulance / Medical</div>
+          <div class="input-row">
+            <input type="text" id="ambName" value="Edhi Ambulance" placeholder="Service Name" />
+            <input type="text" id="ambNum" value="115" placeholder="Number" style="font-weight: 800; color: var(--primary);" />
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-header">🚒 Fire Brigade</div>
+          <div class="input-row">
+            <input type="text" id="fireName" value="Fire Rescue" placeholder="Service Name" />
+            <input type="text" id="fireNum" value="16" placeholder="Number" style="font-weight: 800; color: var(--primary);" />
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-header">🚓 Police</div>
+          <div class="input-row">
+            <input type="text" id="polName" value="Police Emergency" placeholder="Service Name" />
+            <input type="text" id="polNum" value="15" placeholder="Number" style="font-weight: 800; color: var(--primary);" />
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-header">⚡ Electricity / Utilities Emergency</div>
+          <div class="input-row">
+            <input type="text" id="elecName" value="WAPDA / Local Grid" placeholder="Service Name" />
+            <input type="text" id="elecNum" value="118" placeholder="Number" style="font-weight: 800; color: var(--primary);" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>3. Site Response Team</h3>
+      <div class="contact-list">
+        <div class="contact-item">
+          <div class="contact-item-header">HSE Manager / Lead</div>
+          <input type="text" id="hseName" placeholder="Name" />
+          <input type="text" id="hseNum" placeholder="Phone Number" />
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-header">Site Manager / Project Manager</div>
+          <input type="text" id="smName" placeholder="Name" />
+          <input type="text" id="smNum" placeholder="Phone Number" />
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-header">Primary First Aider</div>
+          <input type="text" id="faName" placeholder="Name" />
+          <input type="text" id="faNum" placeholder="Phone Number" />
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-header">Security Gate / Guard Room</div>
+          <input type="text" id="secName" placeholder="Name / Post" />
+          <input type="text" id="secNum" placeholder="Phone Number" />
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>4. Nearest Medical Facilities</h3>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>Primary Hospital Name</label>
+          <input type="text" id="hosp1Name" placeholder="Enter Hospital Name" />
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="text" id="hosp1Num" placeholder="Hospital Phone" />
+        </div>
+        <div class="form-group">
+          <label>Distance / Travel Time</label>
+          <input type="text" id="hosp1Dist" placeholder="e.g. 5 km / 10 mins" />
+        </div>
+        <div class="form-group full">
+          <label>Secondary Clinic / Burn Center</label>
+          <input type="text" id="hosp2Name" placeholder="Enter Secondary Facility Name" />
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="text" id="hosp2Num" placeholder="Clinic Phone" />
+        </div>
+        <div class="form-group">
+          <label>Distance / Travel Time</label>
+          <input type="text" id="hosp2Dist" placeholder="e.g. 12 km / 25 mins" />
+        </div>
+      </div>
+    </div>
+
+    <div class="button-row">
+      <button class="btn btn-primary" onclick="saveData()">Save Configurations</button>
+      <button class="btn btn-secondary" onclick="loadData()">Load Saved Data</button>
+      <button class="btn btn-dark" onclick="window.print()">Print as Poster</button>
+      <button class="btn btn-secondary" style="color: var(--primary);" onclick="clearForm()">Clear All</button>
+    </div>
+
+    <div class="footer-note">
+      HSE Digital Toolkit | Emergency Response Information Module
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "hseEmergencyContactsV1";
+
+    function updatePrintHeader() {
+      const pName = document.getElementById('projectName').value;
+      document.getElementById('printProjectName').innerText = pName ? pName : "Project Name Here";
+    }
+
+    function saveData() {
+      const data = {
+        projectName: document.getElementById('projectName').value,
+        siteAddress: document.getElementById('siteAddress').value,
+        gpsCoords: document.getElementById('gpsCoords').value,
+        accessPoint: document.getElementById('accessPoint').value,
+
+        ambName: document.getElementById('ambName').value,
+        ambNum: document.getElementById('ambNum').value,
+        fireName: document.getElementById('fireName').value,
+        fireNum: document.getElementById('fireNum').value,
+        polName: document.getElementById('polName').value,
+        polNum: document.getElementById('polNum').value,
+        elecName: document.getElementById('elecName').value,
+        elecNum: document.getElementById('elecNum').value,
+
+        hseName: document.getElementById('hseName').value,
+        hseNum: document.getElementById('hseNum').value,
+        smName: document.getElementById('smName').value,
+        smNum: document.getElementById('smNum').value,
+        faName: document.getElementById('faName').value,
+        faNum: document.getElementById('faNum').value,
+        secName: document.getElementById('secName').value,
+        secNum: document.getElementById('secNum').value,
+
+        hosp1Name: document.getElementById('hosp1Name').value,
+        hosp1Num: document.getElementById('hosp1Num').value,
+        hosp1Dist: document.getElementById('hosp1Dist').value,
+        hosp2Name: document.getElementById('hosp2Name').value,
+        hosp2Num: document.getElementById('hosp2Num').value,
+        hosp2Dist: document.getElementById('hosp2Dist').value,
+      };
+      
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      alert("Emergency Contacts saved locally! You can now print this as a poster.");
+    }
+
+    function loadData() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) {
+        alert("No saved data found.");
+        return;
+      }
+      
+      const data = JSON.parse(raw);
+      
+      const fields = [
+        'projectName', 'siteAddress', 'gpsCoords', 'accessPoint',
+        'ambName', 'ambNum', 'fireName', 'fireNum', 'polName', 'polNum', 'elecName', 'elecNum',
+        'hseName', 'hseNum', 'smName', 'smNum', 'faName', 'faNum', 'secName', 'secNum',
+        'hosp1Name', 'hosp1Num', 'hosp1Dist', 'hosp2Name', 'hosp2Num', 'hosp2Dist'
+      ];
+
+      fields.forEach(field => {
+        if(document.getElementById(field) && data[field] !== undefined) {
+          document.getElementById(field).value = data[field];
+        }
+      });
+      
+      updatePrintHeader();
+      alert("Saved data loaded successfully.");
+    }
+
+    function clearForm() {
+      if(!confirm("Are you sure you want to clear all emergency contacts?")) return;
+      
+      document.querySelectorAll('input[type="text"], textarea').forEach(el => el.value = '');
+      
+      // Restore default national numbers
+      document.getElementById('ambName').value = "Ambulance";
+      document.getElementById('ambNum').value = "115";
+      document.getElementById('fireName').value = "Fire Rescue";
+      document.getElementById('fireNum').value = "16";
+      document.getElementById('polName').value = "Police";
+      document.getElementById('polNum').value = "15";
+      document.getElementById('elecName').value = "Electricity";
+      document.getElementById('elecNum').value = "118";
+      
+      updatePrintHeader();
+      localStorage.removeItem(STORAGE_KEY);
+    }
+  </script>
+</body>
+</html>
