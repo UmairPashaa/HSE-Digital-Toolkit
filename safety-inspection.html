@@ -50,7 +50,7 @@
     .brand h1 { margin: 0; font-size: 1.2rem; font-weight: 600; }
     .nav-btn { color: white; text-decoration: none; padding: 8px 16px; background: rgba(255,255,255,0.1); border-radius: 6px; font-size: 14px; }
 
-    .container { max-width: 1000px; margin: 20px auto; padding: 0 15px; }
+    .container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
 
     /* A4 Print Container */
     #printArea {
@@ -94,7 +94,6 @@
     /* Form Grid */
     .section-title { font-size: 16px; font-weight: 700; color: var(--primary); margin: 30px 0 15px; border-bottom: 1px solid var(--border); padding-bottom: 5px; }
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-    .full-width { grid-column: span 2; }
     
     label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #475569; }
     input, select, textarea {
@@ -104,16 +103,45 @@
 
     /* Observations Table */
     .table-container { overflow-x: auto; margin-top: 10px; }
-    table { width: 100%; border-collapse: collapse; min-width: 800px; }
+    table { width: 100%; border-collapse: collapse; min-width: 900px; }
     th, td { border: 1px solid var(--border); padding: 10px; text-align: left; vertical-align: top; font-size: 13px; }
     th { background: #f1f5f9; color: var(--text); font-weight: 600; }
+    tr { page-break-inside: avoid; break-inside: avoid; } /* Prevents rows from splitting in PDF */
+
     .add-row-btn { background: #e2e8f0; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; margin-top: 10px; font-size: 13px; font-weight: 600;}
 
-    /* Photo Evidence */
-    .evidence-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 10px; }
-    .ev-box { border: 2px dashed var(--border); height: 120px; display: flex; align-items: center; justify-content: center; position: relative; background: #f1f5f9; border-radius: 8px; cursor: pointer; flex-direction: column; text-align: center; font-size: 12px; color: var(--muted);}
-    .ev-box img { width: 100%; height: 100%; object-fit: cover; display: none; border-radius: 6px;}
-    .ev-box input { position: absolute; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+    /* Table Inline Photo Upload */
+    .upload-btn {
+      display: inline-block;
+      background: #e0f2fe;
+      color: #0284c7;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid #bae6fd;
+      text-align: center;
+      width: 100%;
+    }
+    .upload-btn:hover { background: #bae6fd; }
+    .upload-btn input { display: none; }
+    
+    .row-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .row-gallery img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+    }
+    .row-gallery img:hover { opacity: 0.7; }
 
     /* Signatures */
     .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px; }
@@ -145,19 +173,16 @@
     /* Print Styles */
     @media print {
       body { background: white; }
-      .topbar, .toolbar, .add-row-btn { display: none !important; }
+      .topbar, .toolbar, .add-row-btn, .upload-btn { display: none !important; }
       .container { max-width: 100%; margin: 0; padding: 0; }
       #printArea { padding: 0; box-shadow: none; border: none; }
       input, select, textarea { border: 1px solid #ccc !important; background: transparent !important; }
-      .ev-box { border: 1px solid #ccc; }
-      .ev-box span { display: none; } /* Hide upload text when printing */
+      .row-gallery img { width: 80px; height: 80px; } /* Slightly larger images for PDF clarity */
     }
 
     @media (max-width: 768px) {
       .grid-2, .sig-grid { grid-template-columns: 1fr; }
-      .full-width { grid-column: span 1; }
       .report-header { flex-direction: column; align-items: center; text-align: center; gap: 15px; }
-      .evidence-grid { grid-template-columns: 1fr 1fr; }
       .dash-metrics { flex-direction: column; }
     }
   </style>
@@ -218,11 +243,12 @@
           <thead>
             <tr>
               <th style="width: 5%;">#</th>
-              <th style="width: 20%;">Category</th>
-              <th style="width: 30%;">Observation Details</th>
+              <th style="width: 15%;">Category</th>
+              <th style="width: 25%;">Observation Details</th>
               <th style="width: 10%;">Risk</th>
               <th style="width: 20%;">Corrective Action</th>
-              <th style="width: 15%;">Status</th>
+              <th style="width: 15%;">Evidence 📷</th>
+              <th style="width: 10%;">Status</th>
             </tr>
           </thead>
           <tbody id="obsBody">
@@ -231,32 +257,8 @@
       </div>
       <button class="add-row-btn" onclick="addObsRow()">+ Add Observation</button>
 
-      <h3 class="section-title">3. Photo Evidence</h3>
-      <div class="evidence-grid">
-        <div class="ev-box">
-          <span id="evText1"><i class="fa-solid fa-camera"></i> Photo 1</span>
-          <img id="evImg1">
-          <input type="file" accept="image/*" onchange="previewImage(event, 'evImg1', 'evText1')">
-        </div>
-        <div class="ev-box">
-          <span id="evText2"><i class="fa-solid fa-camera"></i> Photo 2</span>
-          <img id="evImg2">
-          <input type="file" accept="image/*" onchange="previewImage(event, 'evImg2', 'evText2')">
-        </div>
-        <div class="ev-box">
-          <span id="evText3"><i class="fa-solid fa-camera"></i> Photo 3</span>
-          <img id="evImg3">
-          <input type="file" accept="image/*" onchange="previewImage(event, 'evImg3', 'evText3')">
-        </div>
-        <div class="ev-box">
-          <span id="evText4"><i class="fa-solid fa-camera"></i> Photo 4</span>
-          <img id="evImg4">
-          <input type="file" accept="image/*" onchange="previewImage(event, 'evImg4', 'evText4')">
-        </div>
-      </div>
-
       <div class="summary-dash" id="summarySection">
-        <h3 class="section-title" style="margin-top: 0; border-none;">4. Inspection Summary</h3>
+        <h3 class="section-title" style="margin-top: 0; border-none;">3. Inspection Summary</h3>
         <div class="dash-metrics">
           <div class="metric">
             <h4>Total Findings</h4>
@@ -274,7 +276,7 @@
         <div id="autoSummaryText">Click "Generate Summary" below to analyze the findings.</div>
       </div>
 
-      <h3 class="section-title">5. Signatures & Approvals</h3>
+      <h3 class="section-title">4. Signatures & Approvals</h3>
       <div class="sig-grid">
         <div class="sig-col">
           <div class="sig-img-container">
@@ -308,23 +310,20 @@
       <button class="btn btn-blue" style="background: var(--primary-dark);" onclick="loadData()"><i class="fa-solid fa-rotate"></i> Load</button>
       <button class="btn btn-print" onclick="window.print()"><i class="fa-solid fa-print"></i> Print Report</button>
       <button class="btn btn-pdf" onclick="downloadPDF()"><i class="fa-solid fa-file-pdf"></i> Download PDF</button>
-      
       <button class="btn btn-clear" onclick="clearForm()"><i class="fa-solid fa-trash"></i> Clear</button>
     </div>
 
   </div>
 
   <script>
-    const STORAGE_KEY = "hseInspectionIsoV1";
+    const STORAGE_KEY = "hseInspectionIsoV2"; // Updated Key for new structure
 
-    // Standard Categories
     const categories = [
       "Housekeeping", "PPE Compliance", "Working at Height", "Scaffolding", 
       "Electrical Safety", "Fire Safety", "Lifting Operations", "Tools/Equipment", 
       "Chemical/COSHH", "Excavation", "Positive Finding", "Other"
     ];
 
-    // Set Initial Dates
     function setInitialDates() {
       const today = new Date().toISOString().split('T')[0];
       document.getElementById('insDate').value = today;
@@ -332,7 +331,6 @@
       document.getElementById('sigDate2').value = today;
     }
 
-    // Universal Image Preview
     function previewImage(event, imgId, textId) {
       const file = event.target.files[0];
       if (file) {
@@ -347,6 +345,25 @@
         }
         reader.readAsDataURL(file);
       }
+    }
+
+    // Handle Inline Row Image Uploads
+    function handleRowImages(inputElement) {
+      const gallery = inputElement.closest('td').querySelector('.row-gallery');
+      const files = Array.from(inputElement.files);
+      
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.title = "Click to remove";
+          img.onclick = function() { this.remove(); }; // Remove image on click
+          gallery.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+      });
+      inputElement.value = ""; // Reset input so same file can be selected again if needed
     }
 
     // Add Table Row
@@ -374,6 +391,13 @@
         </td>
         <td><textarea class="obs-action" placeholder="Action required...">${data.action || ''}</textarea></td>
         <td>
+          <label class="upload-btn">
+            <i class="fa-solid fa-plus"></i> Add Photo
+            <input type="file" accept="image/*" multiple onchange="handleRowImages(this)">
+          </label>
+          <div class="row-gallery"></div>
+        </td>
+        <td>
           <select class="obs-status">
             <option value="Open" ${data.status === 'Open' ? 'selected' : ''}>Open</option>
             <option value="Closed" ${data.status === 'Closed' ? 'selected' : ''}>Closed</option>
@@ -381,21 +405,26 @@
         </td>
       `;
       tbody.appendChild(tr);
-    }
 
-    function updateRowNums() {
-      const rows = document.getElementById('obsBody').rows;
-      for(let i=0; i<rows.length; i++) { rows[i].cells[0].innerText = i+1; }
+      // If data has saved images, render them
+      if(data.images && data.images.length > 0) {
+        const gallery = tr.querySelector('.row-gallery');
+        data.images.forEach(src => {
+          const img = document.createElement('img');
+          img.src = src;
+          img.title = "Click to remove";
+          img.onclick = function() { this.remove(); };
+          gallery.appendChild(img);
+        });
+      }
     }
 
     // Generate Summary Logic
     function generateSummary() {
       const rows = document.getElementById('obsBody').rows;
       let total = 0, high = 0, open = 0;
-      let actionsText = "";
 
       for(let i=0; i<rows.length; i++) {
-        const cat = rows[i].querySelector('.obs-cat').value;
         const desc = rows[i].querySelector('.obs-desc').value;
         const risk = rows[i].querySelector('.obs-risk').value;
         const status = rows[i].querySelector('.obs-status').value;
@@ -404,8 +433,6 @@
           total++;
           if(risk === "High") high++;
           if(status === "Open") open++;
-
-          actionsText += `${i+1}. [${cat}] ${desc} (Risk: ${risk}, Status: ${status})\n`;
         }
       }
 
@@ -416,33 +443,27 @@
       const project = document.getElementById('projectName').value || "the site";
       let summaryStr = `An inspection was conducted at ${project}. A total of ${total} findings were recorded. `;
       if (high > 0) summaryStr += `CRITICAL: There are ${high} High Risk items requiring immediate management attention. `;
-      summaryStr += `Currently, ${open} actions remain open and must be tracked to closure as per ISO 45001 standards.\n\nKey Findings:\n${actionsText || "No findings detailed."}`;
+      summaryStr += `Currently, ${open} actions remain open and must be tracked to closure as per ISO 45001 standards.`;
 
       document.getElementById('autoSummaryText').innerText = summaryStr;
-      alert("Summary Generated!");
     }
 
-    // High Quality PDF Download (Strict A4 Size)
+    // High Quality PDF Download
     function downloadPDF() {
-      // First ensure summary is updated
       generateSummary();
-      
       const element = document.getElementById('printArea');
       
-      // Configuration for strict A4 output
       const opt = {
-        margin:       10,
+        margin:       [10, 5, 10, 5],
         filename:     'ISO_Safety_Inspection_Report.pdf',
         image:        { type: 'jpeg', quality: 0.98 },
         html2canvas:  { scale: 2, useCORS: true, logging: false },
-        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
       };
 
-      // Add a temporary class to format specifically for the PDF generator
       element.style.padding = '10px';
-      
       html2pdf().set(opt).from(element).save().then(() => {
-        // Restore padding after PDF generation
         element.style.padding = '40px';
       });
     }
@@ -459,31 +480,30 @@
         sigDate1: document.getElementById('sigDate1').value,
         sigName2: document.getElementById('sigName2').value,
         sigDate2: document.getElementById('sigDate2').value,
-        // Images (Base64)
         logoImg: document.getElementById('logoImg').src,
-        evImg1: document.getElementById('evImg1').src,
-        evImg2: document.getElementById('evImg2').src,
-        evImg3: document.getElementById('evImg3').src,
-        evImg4: document.getElementById('evImg4').src,
         sigImg1: document.getElementById('sigImg1').src,
         sigImg2: document.getElementById('sigImg2').src,
-        // Table Rows
         rows: []
       };
 
       const tableRows = document.getElementById('obsBody').rows;
       for(let i=0; i<tableRows.length; i++) {
+        // Get images from the gallery
+        const imgs = tableRows[i].querySelector('.row-gallery').querySelectorAll('img');
+        const imgArray = Array.from(imgs).map(img => img.src);
+
         data.rows.push({
           cat: tableRows[i].querySelector('.obs-cat').value,
           desc: tableRows[i].querySelector('.obs-desc').value,
           risk: tableRows[i].querySelector('.obs-risk').value,
           action: tableRows[i].querySelector('.obs-action').value,
-          status: tableRows[i].querySelector('.obs-status').value
+          status: tableRows[i].querySelector('.obs-status').value,
+          images: imgArray // Save the images for this specific row
         });
       }
 
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      alert("Report Data Saved Locally!");
+      alert("Report Data & Photos Saved Locally!");
     }
 
     // Load Data
@@ -502,7 +522,6 @@
       document.getElementById('sigName2').value = data.sigName2 || '';
       document.getElementById('sigDate2').value = data.sigDate2 || '';
 
-      // Load Images
       const loadImg = (id, textId, src) => {
         if(src && src.startsWith('data:image')) {
           document.getElementById(id).src = src;
@@ -512,14 +531,10 @@
       };
 
       loadImg('logoImg', 'logoText', data.logoImg);
-      loadImg('evImg1', 'evText1', data.evImg1);
-      loadImg('evImg2', 'evText2', data.evImg2);
-      loadImg('evImg3', 'evText3', data.evImg3);
-      loadImg('evImg4', 'evText4', data.evImg4);
       loadImg('sigImg1', 'sigText1', data.sigImg1);
       loadImg('sigImg2', 'sigText2', data.sigImg2);
 
-      // Load Table
+      // Load Table Rows with Images
       document.getElementById('obsBody').innerHTML = '';
       if(data.rows && data.rows.length > 0) {
         data.rows.forEach(r => addObsRow(r));
@@ -533,15 +548,13 @@
 
     // Clear Form
     function clearForm() {
-      if(!confirm("Are you sure you want to clear all data?")) return;
+      if(!confirm("Are you sure you want to clear all data and photos?")) return;
       document.querySelectorAll('input[type="text"], input[type="time"], textarea').forEach(el => el.value = '');
       document.querySelectorAll('select').forEach(el => el.selectedIndex = 0);
       
-      // Reset Images
-      const imgs = document.querySelectorAll('img');
+      const imgs = document.querySelectorAll('.sig-img-container img, .company-logo-box img');
       imgs.forEach(img => { img.src = ''; img.style.display = 'none'; });
-      const spans = document.querySelectorAll('span');
-      spans.forEach(span => span.style.display = 'inline-block');
+      document.querySelectorAll('span').forEach(span => span.style.display = 'inline-block');
 
       document.getElementById('obsBody').innerHTML = '';
       addObsRow(); addObsRow(); addObsRow();
