@@ -68,7 +68,6 @@ The toolkit also serves as a central hub for HSE learning, providing direct Goog
 **Umair Pasha** is an HSE Professional with a passion for integrating technology into occupational health and safety. This toolkit is a reflection of bridging the gap between field safety execution and modern digital convenience.
 
 * 💼 **LinkedIn:** [Ch Umair Pasha](https://www.linkedin.com/in/ch-umair-pasha)
-* 📝 **Indeed:** [Muhammad Umair](https://profile.indeed.com/p/muhammadumairp-1rstc24)
 * 📧 **Email:** umairpasha487@gmail.com
 
 ---
