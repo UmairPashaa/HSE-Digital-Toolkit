@@ -67,8 +67,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 16px;
       flex-wrap: wrap;
+      position: relative; /* Added for mobile menu positioning */
     }
 
     .brand {
@@ -103,11 +103,13 @@
       color: #cbd5e1;
     }
 
+    /* Desktop Navigation */
     .nav {
       display: flex;
       align-items: center;
       gap: 10px;
       flex-wrap: wrap;
+      transition: 0.3s ease-in-out;
     }
 
     .nav a {
@@ -122,6 +124,20 @@
     .nav a:hover {
       background: rgba(132, 204, 22, 0.15);
       border-color: rgba(132, 204, 22, 0.45);
+    }
+
+    /* Toggle Button (Hidden on Desktop) */
+    .menu-toggle {
+      display: none;
+      color: white;
+      font-size: 28px;
+      cursor: pointer;
+      padding: 5px;
+      transition: 0.3s;
+    }
+
+    .menu-toggle:hover {
+      color: var(--lime);
     }
 
     .hero {
@@ -553,6 +569,7 @@
       }
     }
 
+    /* 🔥 Responsive Menu Media Query 🔥 */
     @media (max-width: 760px) {
       .hero-content h2 {
         font-size: 30px;
@@ -566,18 +583,37 @@
         grid-template-columns: 1fr;
       }
 
-      .topbar-inner,
-      .footer-inner {
-        align-items: flex-start;
+      /* Enable Hamburger Icon */
+      .menu-toggle {
+        display: block;
       }
 
+      /* Hide Desktop Nav and style as Mobile Dropdown */
       .nav {
+        display: none; 
+        flex-direction: column;
         width: 100%;
+        background: rgba(15, 23, 42, 0.98);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        padding: 20px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        border-bottom: 3px solid var(--lime);
+        border-radius: 0 0 16px 16px;
+      }
+
+      /* When JS toggles this class, the menu opens */
+      .nav.active {
+        display: flex;
       }
 
       .nav a {
-        flex: 1;
+        width: 100%;
         text-align: center;
+        padding: 12px;
+        font-size: 16px;
+        background: rgba(255,255,255,0.05);
       }
     }
   </style>
@@ -596,11 +632,15 @@
         </div>
       </div>
 
-      <nav class="nav">
-        <a href="#home"><i class="fa-solid fa-house"></i> Home</a>
-        <a href="#tools"><i class="fa-solid fa-toolbox"></i> Tools</a>
-        <a href="#downloads"><i class="fa-solid fa-download"></i> Downloads</a>
-        <a href="#contact"><i class="fa-solid fa-address-card"></i> Contact</a>
+      <div class="menu-toggle" id="mobile-menu-btn" onclick="toggleMobileMenu()">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+
+      <nav class="nav" id="nav-menu">
+        <a href="#home" onclick="closeMobileMenu()"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="#tools" onclick="closeMobileMenu()"><i class="fa-solid fa-toolbox"></i> Tools</a>
+        <a href="#downloads" onclick="closeMobileMenu()"><i class="fa-solid fa-download"></i> Downloads</a>
+        <a href="#contact" onclick="closeMobileMenu()"><i class="fa-solid fa-address-card"></i> Contact</a>
       </nav>
     </div>
   </header>
@@ -826,60 +866,7 @@
 
     </div>
   </section>
-    <!-- <div class="section-head">
-      <div>
-        <h3>Downloads & Study Resources</h3>
-        <p>
-          Access our free library of HSE study materials, certification guides, and interview preparations. Click below to open the resources directly from Google Drive.
-        </p>
-      </div>
-    </div>
-
-    <div class="download-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
-      
-      <div class="info-card">
-        <h4><i class="fa-solid fa-graduation-cap"></i> NEBOSH Materials</h4>
-        <p>IGC study notes, risk assessment practicals (IG2), and exam preparation guides.</p>
-        <a class="download-btn download-green" href="AAPKA_NEBOSH_LINK_YAHAN_AAYEGA" target="_blank">
-          <i class="fa-brands fa-google-drive"></i> Open NEBOSH Folder
-        </a>
-      </div>
-
-      <div class="info-card">
-        <h4><i class="fa-solid fa-book"></i> IOSH Managing Safely</h4>
-        <p>Project templates, study materials, and hazard identification guides for IOSH MS.</p>
-        <a class="download-btn download-blue" href="AAPKA_IOSH_LINK_YAHAN_AAYEGA" target="_blank">
-          <i class="fa-brands fa-google-drive"></i> Open IOSH Folder
-        </a>
-      </div>
-
-      <div class="info-card">
-        <h4><i class="fa-solid fa-hard-hat"></i> OSHA Standards</h4>
-        <p>OSHA 30-hour construction guidelines, CFR 1926 standards, and safety checklists.</p>
-        <a class="download-btn download-red" href="AAPKA_OSHA_LINK_YAHAN_AAYEGA" target="_blank">
-          <i class="fa-brands fa-google-drive"></i> Open OSHA Folder
-        </a>
-      </div>
-
-      <div class="info-card">
-        <h4><i class="fa-solid fa-file-signature"></i> WPR (Permit Receiver)</h4>
-        <p>Standard Work Permit Receiver study guides, mock tests, and clearance procedures.</p>
-        <a class="download-btn" style="background: linear-gradient(135deg, #f59e0b, #d97706);" href="AAPKA_WPR_LINK_YAHAN_AAYEGA" target="_blank">
-          <i class="fa-brands fa-google-drive"></i> Open WPR Folder
-        </a>
-      </div>
-
-      <div class="info-card">
-        <h4><i class="fa-solid fa-comments"></i> HSE Interview Q&A</h4>
-        <p>Most frequently asked safety officer interview questions and professional answers.</p>
-        <a class="download-btn" style="background: linear-gradient(135deg, #8b5cf6, #4f46e5);" href="AAPKA_INTERVIEW_LINK_YAHAN_AAYEGA" target="_blank">
-          <i class="fa-brands fa-google-drive"></i> Open Interview Q&A
-        </a>
-      </div>
-
-    </div>
-  </section>
-   -->
+  
   <section class="section">
     <div class="about-box">
       <h3>About This Platform</h3>
@@ -993,5 +980,20 @@
     </div>
   </footer>
 
+  <script>
+    function toggleMobileMenu() {
+      const navMenu = document.getElementById('nav-menu');
+      navMenu.classList.toggle('active');
+    }
+
+    // Yeh function tab call hoga jab user kisi link (jaise Home, Tools) par click karega 
+    // taake click hone ke baad menu khud-ba-khud band ho jaye
+    function closeMobileMenu() {
+      const navMenu = document.getElementById('nav-menu');
+      if (navMenu.classList.contains('active')) {
+        navMenu.classList.remove('active');
+      }
+    }
+  </script>
 </body>
 </html>
