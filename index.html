@@ -80,7 +80,7 @@
       color: white; border-radius: 28px; padding: 38px 30px;
       box-shadow: var(--shadow); position: relative; overflow: hidden;
       background-size: 200% 200%;
-      animation: gradientMove 10s ease infinite; /* Magic Animation */
+      animation: gradientMove 10s ease infinite;
     }
     @keyframes gradientMove {
       0% { background-position: 0% 50%; }
@@ -142,7 +142,6 @@
       box-shadow: var(--shadow); border: 1px solid var(--border); transition: 0.3s ease;
       display: flex; flex-direction: column; min-height: 290px; position: relative; overflow: hidden;
     }
-    /* 🔥 Colored Glow on Hover 🔥 */
     .tool-card:hover { transform: translateY(-8px); box-shadow: var(--glow); border-color: var(--green); }
     .tool-card::after { content: ""; position: absolute; inset: auto -40px -40px auto; width: 120px; height: 120px; background: radial-gradient(circle, rgba(132,204,22,0.16), transparent 65%); border-radius: 50%; transition: 0.3s;}
     .tool-card:hover::after { transform: scale(1.2); }
@@ -182,13 +181,8 @@
     .download-green { background: linear-gradient(135deg, var(--green), var(--green-dark)); }
     .download-blue { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
     .download-red { background: linear-gradient(135deg, #ef4444, #dc2626); }
-    .linkedin { background: linear-gradient(135deg, #0a66c2, #004182); }
-    .indeed { background: linear-gradient(135deg, #2557a7, #163a74); }
-    .instagram { background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af); }
-    .twitter { background: linear-gradient(135deg, #111827, #2563eb); }
-    .email { background: linear-gradient(135deg, #dc2626, #b91c1c); }
-
-    /* 🔥 Developer Profile Card 🔥 */
+    
+    /* 🔥 SQUARE DEVELOPER PROFILE CARD 🔥 */
     .developer-card {
       background: linear-gradient(145deg, var(--white), #f8fafc);
       border-radius: 24px; padding: 30px;
@@ -198,7 +192,17 @@
       position: relative; overflow: hidden;
     }
     .developer-card::before { content: ""; position: absolute; top: 0; left: 0; width: 8px; height: 100%; background: linear-gradient(to bottom, var(--green), var(--lime)); }
-    .dev-img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+    
+    /* Yahan maine profile pic ko Square kar diya hai (border-radius 16px) */
+    .dev-img { 
+      width: 140px; 
+      height: 140px; 
+      border-radius: 16px; 
+      object-fit: cover; 
+      border: 4px solid white; 
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15); 
+    }
+    
     .dev-info h3 { margin: 0; font-size: 28px; color: var(--dark); font-weight: 800; }
     .dev-title { color: var(--green); font-weight: 600; font-size: 15px; margin: 4px 0 12px; text-transform: uppercase; letter-spacing: 1px; }
     .dev-bio { color: var(--muted); line-height: 1.8; margin: 0; font-size: 15px; }
@@ -345,23 +349,34 @@
       <div class="info-card fade-in">
         <h4><i class="fa-solid fa-graduation-cap"></i> NEBOSH Materials</h4>
         <p>IGC study notes, IG2 practicals, and exam preparation.</p>
-        <a class="download-btn download-green" href="https://drive.google.com/drive/folders/1jInRzzT1GG8CDCcQb2KYgahoE4-dhoSR" target="_blank"><i class="fa-brands fa-google-drive"></i> Open Folder</a>
+        <a class="download-btn download-green" href="https://drive.google.com/drive/folders/1jInRzzT1GG8CDCcQb2KYgahoE4-dhoSR?usp=sharing" target="_blank"><i class="fa-brands fa-google-drive"></i> Open Folder</a>
       </div>
       <div class="info-card fade-in">
         <h4><i class="fa-solid fa-book"></i> IOSH Managing Safely</h4>
         <p>Templates, study materials, and hazard guides for IOSH.</p>
-        <a class="download-btn download-blue" href="https://drive.google.com/drive/folders/1TCTpGHD6vOcAkCvoQ6hem871mNS0fJIo" target="_blank"><i class="fa-brands fa-google-drive"></i> Open Folder</a>
+        <a class="download-btn download-blue" href="https://drive.google.com/drive/folders/1TCTpGHD6vOcAkCvoQ6hem871mNS0fJIo?usp=sharing" target="_blank"><i class="fa-brands fa-google-drive"></i> Open Folder</a>
       </div>
       <div class="info-card fade-in">
         <h4><i class="fa-solid fa-hard-hat"></i> OSHA Standards</h4>
         <p>OSHA 30-hour construction guidelines and CFR 1926 standards.</p>
-        <a class="download-btn download-red" href="https://drive.google.com/drive/folders/1-Ibsy1lWn9lhdH5zPiQuiFBK6174FT_I" target="_blank"><i class="fa-brands fa-google-drive"></i> Open Folder</a>
+        <a class="download-btn download-red" href="https://drive.google.com/drive/folders/1-Ibsy1lWn9lhdH5zPiQuiFBK6174FT_I?usp=sharing" target="_blank"><i class="fa-brands fa-google-drive"></i> Open Folder</a>
+      </div>
+      <div class="info-card fade-in">
+        <h4><i class="fa-solid fa-file-signature"></i> WPR (Permit Receiver)</h4>
+        <p>Standard Work Permit Receiver study guides, mock tests, and clearance procedures.</p>
+        <a class="download-btn" style="background: linear-gradient(135deg, #f59e0b, #d97706);" href="https://drive.google.com/drive/folders/1OS6UhgWeh6h0gk-_Alp7vcS80KCpr6m7?usp=sharing" target="_blank"><i class="fa-brands fa-google-drive"></i> Open Folder</a>
+      </div>
+      <div class="info-card fade-in">
+        <h4><i class="fa-solid fa-comments"></i> HSE Interview Q&A</h4>
+        <p>Most frequently asked safety officer interview questions and professional answers.</p>
+        <a class="download-btn" style="background: linear-gradient(135deg, #8b5cf6, #4f46e5);" href="https://drive.google.com/drive/folders/1dGe8PRxo5wY5dnqUXq05wxYIF-gcTa6e?usp=sharing" target="_blank"><i class="fa-brands fa-google-drive"></i> Open Folder</a>
       </div>
     </div>
   </section>
   
   <section class="section fade-in" id="contact">
     <div class="developer-card">
+      
       <img src="https://drive.google.com/uc?export=view&id=1o89vt2viZT57arrbSrs398E3X0NUE2qU" alt="Umair Pasha" class="dev-img">
       
       <div class="dev-info">
@@ -424,17 +439,14 @@
   </div>
 
   <script>
-    // Mobile Menu Toggle
     function toggleMobileMenu() { document.getElementById('nav-menu').classList.toggle('active'); }
     function closeMobileMenu() { document.getElementById('nav-menu').classList.remove('active'); }
 
-    // Floating Button Toggle
     function toggleFab() {
       document.getElementById('fabMenu').classList.toggle('active');
       document.getElementById('fabMain').classList.toggle('active');
     }
 
-    // Scroll Fade-In Animation Observer
     const faders = document.querySelectorAll('.fade-in');
     const appearOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
     const appearOnScroll = new IntersectionObserver(function(entries, observer) {
@@ -446,7 +458,6 @@
     }, appearOptions);
     faders.forEach(fader => appearOnScroll.observe(fader));
 
-    // Data Badges Checker
     window.addEventListener('DOMContentLoaded', () => {
       const checkData = (key, badgeId, btnId) => {
         if (localStorage.getItem(key)) {
@@ -459,7 +470,6 @@
       };
       checkData('hseInspectionIsoV6', 'badge-inspection', 'btn-inspection');
       checkData('hsePpeChecklistV3', 'badge-ppe', 'btn-ppe');
-      // Add other keys as you build their saving features
       checkData('yourRiskKey', 'badge-risk', 'btn-risk');
       checkData('yourIncidentKey', 'badge-incident', 'btn-incident');
       checkData('yourTbtKey', 'badge-tbt', 'btn-tbt');
