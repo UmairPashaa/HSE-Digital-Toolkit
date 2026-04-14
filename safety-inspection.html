@@ -102,12 +102,13 @@
     }
     input:focus, select:focus, textarea:focus { outline: none; border-color: var(--blue); background: white; }
 
-    /* Observations Table - SUPER STRICT FIX */
+    /* 🔥 FIX: Observations Table - Mobile Scrolling Enforced 🔥 */
     .table-container { overflow-x: auto; margin-top: 10px; width: 100%; }
     table { 
       width: 100%; 
       border-collapse: collapse; 
-      table-layout: fixed; /* Force fixed width for columns */
+      table-layout: fixed; 
+      min-width: 1000px; /* Yeh table ko squish hone se bachayega aur scroll dega */
     }
     th, td { 
       border: 1px solid var(--border); 
@@ -115,7 +116,7 @@
       text-align: left; 
       vertical-align: top; 
       font-size: 13px; 
-      word-wrap: break-word; /* Prevent text stretch */
+      word-wrap: break-word; 
       overflow-wrap: break-word;
     }
     th { background: #f1f5f9; color: var(--text); font-weight: 600; }
@@ -189,7 +190,6 @@
       padding: 0 !important;
       box-shadow: none !important;
       border: none !important;
-      /* Fixed width enforced via JS during PDF generation */
     }
 
     body.is-printing input, 
@@ -211,8 +211,15 @@
 
     body.is-printing select::-ms-expand { display: none; }
     body.is-printing .company-logo-box { border: none !important; background: transparent !important; }
-    body.is-printing .table-container { overflow-x: hidden !important; width: 100% !important; }
-    body.is-printing table { table-layout: fixed !important; width: 100% !important; max-width: 100% !important; }
+    
+    /* 🔥 PDF ke waqt wapas A4 size fit karo */
+    body.is-printing .table-container { overflow-x: visible !important; width: 100% !important; }
+    body.is-printing table { 
+      table-layout: fixed !important; 
+      width: 100% !important; 
+      min-width: 100% !important; 
+      max-width: 100% !important; 
+    }
     body.is-printing .container { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
     body.is-printing .row-gallery img { width: 65px !important; height: 65px !important; margin: 2px;}
 
@@ -352,7 +359,7 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "hseInspectionIsoV5";
+    const STORAGE_KEY = "hseInspectionIsoV6";
 
     const categories = [
       "Housekeeping", "PPE Compliance", "Working at Height", "Scaffolding", 
@@ -479,7 +486,6 @@
       document.body.classList.add('is-printing');
       document.querySelectorAll('textarea').forEach(ta => autoResize(ta));
 
-      // Hide empty rows
       const rows = document.getElementById('obsBody').rows;
       for(let i=0; i<rows.length; i++) {
         const desc = rows[i].querySelector('.obs-desc').value.trim();
@@ -494,7 +500,6 @@
       for(let i=0; i<rows.length; i++) rows[i].style.display = '';
     }
 
-    // Connect standard browser print
     window.addEventListener('beforeprint', prepareForOutput);
     window.addEventListener('afterprint', restoreAfterOutput);
 
@@ -541,7 +546,6 @@
         
         const element = document.getElementById('printArea');
         
-        // 🚀 FORCE EXACT A4 LANDSCAPE WIDTH SO NOTHING GETS CUT
         const originalWidth = element.style.width;
         element.style.width = '280mm'; 
         element.style.maxWidth = '280mm';
@@ -556,7 +560,6 @@
         };
 
         html2pdf().set(opt).from(element).save().then(() => {
-          // Restore dimensions
           element.style.width = originalWidth;
           element.style.maxWidth = originalWidth;
           restoreAfterOutput();
@@ -564,7 +567,6 @@
       }
     }
 
-    // Keep save/load logic unchanged
     function saveData() {
       const data = {
         projectName: document.getElementById('projectName').value,
