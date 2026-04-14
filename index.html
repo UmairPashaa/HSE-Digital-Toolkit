@@ -73,7 +73,7 @@
     .menu-toggle { display: none; color: white; font-size: 28px; cursor: pointer; padding: 5px; transition: 0.3s; }
     .menu-toggle:hover { color: var(--lime); }
 
-    /* 🔥 Animated Hero Section 🔥 */
+    /* Animated Hero Section */
     .hero { max-width: 1250px; margin: 0 auto; padding: 34px 20px 18px; }
     .hero-box {
       background: linear-gradient(135deg, rgba(15,118,110,0.95), rgba(11,93,87,0.92)), url("https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=80") center/cover;
@@ -116,16 +116,13 @@
     .section-head h3 { margin: 0; font-size: 30px; color: var(--dark); }
     .section-head p { margin: 8px 0 0; color: var(--muted); max-width: 700px; }
 
-    /* 🔥 Fade-In Scroll Animation Classes 🔥 */
+    /* Fade-In Scroll Animation Classes */
     .fade-in {
       opacity: 0;
       transform: translateY(40px);
       transition: opacity 0.8s ease-out, transform 0.8s ease-out;
     }
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
 
     /* Stats */
     .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 10px; }
@@ -170,19 +167,27 @@
     .resume-btn { background: var(--yellow); color: #422006; }
     .resume-btn:hover { background: #eab308; }
 
-    /* Downloads */
+    /* Downloads & Social Grids */
     .download-grid, .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
     .info-card { background: var(--white); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); border: 1px solid var(--border); transition: 0.3s; }
     .info-card:hover { transform: translateY(-5px); box-shadow: var(--glow); }
     .info-card h4 { margin: 0 0 10px; font-size: 20px; color: var(--dark); }
     .info-card p { margin: 0 0 16px; color: var(--muted); line-height: 1.7; }
+    
     .download-btn, .social-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 13px 15px; border-radius: 12px; color: white; font-weight: 600; transition: 0.25s ease; }
     .download-btn:hover, .social-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+    
+    /* Button Colors */
     .download-green { background: linear-gradient(135deg, var(--green), var(--green-dark)); }
     .download-blue { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
     .download-red { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .linkedin { background: linear-gradient(135deg, #0a66c2, #004182); }
+    .indeed { background: linear-gradient(135deg, #2557a7, #163a74); }
+    .instagram { background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af); }
+    .twitter { background: linear-gradient(135deg, #111827, #2563eb); }
+    .email { background: linear-gradient(135deg, #dc2626, #b91c1c); }
     
-    /* 🔥 SQUARE DEVELOPER PROFILE CARD 🔥 */
+    /* Developer Profile Card */
     .developer-card {
       background: linear-gradient(145deg, var(--white), #f8fafc);
       border-radius: 24px; padding: 30px;
@@ -193,11 +198,10 @@
     }
     .developer-card::before { content: ""; position: absolute; top: 0; left: 0; width: 8px; height: 100%; background: linear-gradient(to bottom, var(--green), var(--lime)); }
     
-    /* Yahan maine profile pic ko Square kar diya hai (border-radius 16px) */
     .dev-img { 
       width: 140px; 
       height: 140px; 
-      border-radius: 16px; 
+      border-radius: 16px; /* Square with rounded corners */
       object-fit: cover; 
       border: 4px solid white; 
       box-shadow: 0 8px 25px rgba(0,0,0,0.15); 
@@ -217,7 +221,7 @@
     .footer-mini a { width: 42px; height: 42px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: white; background: rgba(255,255,255,0.08); transition: 0.25s ease; }
     .footer-mini a:hover { background: rgba(132,204,22,0.2); transform: translateY(-2px); }
 
-    /* 🔥 Floating Action Button (FAB) 🔥 */
+    /* Floating Action Button (FAB) */
     .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 999; display: flex; flex-direction: column; align-items: center; gap: 10px; }
     .fab-menu { display: flex; flex-direction: column; gap: 10px; opacity: 0; visibility: hidden; transform: translateY(20px); transition: 0.3s ease; }
     .fab-menu.active { opacity: 1; visibility: visible; transform: translateY(0); }
@@ -376,8 +380,7 @@
   
   <section class="section fade-in" id="contact">
     <div class="developer-card">
-      
-      <img src="https://drive.google.com/uc?export=view&id=1o89vt2viZT57arrbSrs398E3X0NUE2qU" alt="Umair Pasha" class="dev-img">
+      <img src="profile.jpg.jpg" alt="Ch Umair Pasha" class="dev-img">
       
       <div class="dev-info">
         <h3>Ch Umair Pasha</h3>
@@ -393,26 +396,53 @@
   </section>
 
   <section class="section fade-in">
-    <div class="social-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+    <div class="social-grid">
       <div class="info-card">
-        <h4 style="font-size: 16px;"><i class="fa-brands fa-linkedin"></i> LinkedIn</h4>
-        <a class="social-btn linkedin" href="https://www.linkedin.com/in/ch-umair-pasha" target="_blank">Connect</a>
+        <h4><i class="fa-brands fa-linkedin"></i> LinkedIn</h4>
+        <p>Professional profile for networking, career growth, and HSE portfolio visibility.</p>
+        <a class="social-btn linkedin" href="https://www.linkedin.com/in/ch-umair-pasha" target="_blank">
+          <i class="fa-brands fa-linkedin"></i> Open LinkedIn
+        </a>
       </div>
+
       <div class="info-card">
-        <h4 style="font-size: 16px;"><i class="fa-solid fa-briefcase"></i> Indeed</h4>
-        <a class="social-btn indeed" href="https://profile.indeed.com/p/muhammadumairp-1rstc24" target="_blank">Portfolio</a>
+        <h4><i class="fa-solid fa-briefcase"></i> Indeed</h4>
+        <p>Professional job profile and career visibility for opportunities and recruiter access.</p>
+        <a class="social-btn indeed" href="https://profile.indeed.com/p/muhammadumairp-1rstc24" target="_blank">
+          <i class="fa-solid fa-briefcase"></i> Open Indeed
+        </a>
       </div>
+
       <div class="info-card">
-        <h4 style="font-size: 16px;"><i class="fa-brands fa-instagram"></i> Instagram</h4>
-        <a class="social-btn instagram" href="https://www.instagram.com/ch_umair_pasha" target="_blank">Follow</a>
+        <h4><i class="fa-brands fa-instagram"></i> Instagram</h4>
+        <p>Personal and public profile link for visibility, updates, and social connection.</p>
+        <a class="social-btn instagram" href="https://www.instagram.com/ch_umair_pasha" target="_blank">
+          <i class="fa-brands fa-instagram"></i> Open Instagram
+        </a>
       </div>
+
       <div class="info-card">
-        <h4 style="font-size: 16px;"><i class="fa-brands fa-x-twitter"></i> Twitter</h4>
-        <a class="social-btn twitter" href="https://twitter.com/Ch_umair_pasha" target="_blank">Follow</a>
+        <h4><i class="fa-brands fa-x-twitter"></i> Twitter / X</h4>
+        <p>Public social profile for updates, sharing, and online engagement.</p>
+        <a class="social-btn twitter" href="https://twitter.com/Ch_umair_pasha" target="_blank">
+          <i class="fa-brands fa-x-twitter"></i> Open Twitter
+        </a>
       </div>
+
       <div class="info-card">
-        <h4 style="font-size: 16px;"><i class="fa-solid fa-envelope"></i> Email</h4>
-        <a class="social-btn email" href="mailto:umairpasha487@gmail.com">Contact</a>
+        <h4><i class="fa-solid fa-envelope"></i> Email</h4>
+        <p>Direct professional communication button for contact, collaboration, and feedback.</p>
+        <a class="social-btn email" href="mailto:umairpasha487@gmail.com">
+          <i class="fa-solid fa-envelope"></i> Send Email
+        </a>
+      </div>
+      
+      <div class="info-card">
+        <h4><i class="fa-solid fa-circle-info"></i> Contact Summary</h4>
+        <p>
+          This toolkit is being developed by <strong>Umair Pasha</strong> to support HSE
+          professionals with practical digital tools and next-level field-ready systems.
+        </p>
       </div>
     </div>
   </section>
@@ -422,6 +452,9 @@
       <p>Developed by Ch Umair Pasha • HSE Digital Toolkit</p>
       <div class="footer-mini">
         <a href="https://www.linkedin.com/in/ch-umair-pasha" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="https://profile.indeed.com/p/muhammadumairp-1rstc24" target="_blank"><i class="fa-solid fa-briefcase"></i></a>
+        <a href="https://www.instagram.com/ch_umair_pasha" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://twitter.com/Ch_umair_pasha" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
         <a href="mailto:umairpasha487@gmail.com"><i class="fa-solid fa-envelope"></i></a>
       </div>
     </div>
