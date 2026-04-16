@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital JSA | Aramco Standard</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #b71c1c;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #b71c1c;
+            margin: 0;
+            font-size: 28px;
+        }
+        .header p {
+            color: #555;
+            margin: 5px 0 0 0;
+            font-size: 14px;
+        }
+
+        /* Form Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 5px;
+            color: #444;
+        }
+        .form-group input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+        }
+
+        /* JSA Table Setup */
+        .table-responsive {
+            overflow-x: auto; /* Keeps mobile layout perfect */
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px; /* Forces scroll on small screens */
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #b71c1c;
+            color: white;
+            font-size: 14px;
+        }
+        td input, td textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        td textarea {
+            min-height: 60px;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn-add { background-color: #1976d2; color: white; }
+        .btn-add:hover { background-color: #1565c0; }
+        
+        .btn-remove { background-color: #e53935; color: white; }
+        .btn-remove:hover { background-color: #c62828; }
+        
+        .btn-pdf { background-color: #2e7d32; color: white; margin-left: auto; }
+        .btn-pdf:hover { background-color: #1b5e20; }
+        
+        .btn-back { background-color: #607d8b; color: white; text-decoration: none; display: inline-flex; justify-content: center;}
+
+        /* ========================================= */
+        /* 🖨️ ADVANCED PRINT & PDF SETTINGS */
+        /* ========================================= */
+        @media print {
+            @page {
+                size: landscape; /* Aramco Standard Format */
+                margin: 10mm;
+            }
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+                max-width: 100%;
+            }
+            .no-print {
+                display: none !important;
+            }
+            input, textarea {
+                border: none !important;
+                background: transparent !important;
+                padding: 0 !important;
+                resize: none !important;
+            }
+            table {
+                page-break-inside: auto;
+            }
+            tr {
+                page-break-inside: avoid; /* Prevents rows from splitting across pages */
+                page-break-after: auto;
+            }
+            th {
+                background-color: #e0e0e0 !important; /* Lighter background for print */
+                color: black !important;
+                -webkit-print-color-adjust: exact;
+            }
+            td {
+                border-color: #000 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="pdf-content">
+        
+        <div class="header">
+            <h1>Job Safety Analysis (JSA)</h1>
+            <p>Aligned with Saudi Aramco SSMS Guidelines (Appendix 2)</p>
+        </div>
+
+        <div class="info-grid">
+            <div class="form-group">
+                <label>Job Title / Activity:</label>
+                <input type="text" placeholder="e.g. Scaffolding Erection">
+            </div>
+            <div class="form-group">
+                <label>Date & Time:</label>
+                <input type="datetime-local">
+            </div>
+            <div class="form-group">
+                <label>Location / Plant Area:</label>
+                <input type="text" placeholder="e.g. Unit 5, North Sector">
+            </div>
+            <div class="form-group">
+                <label>Permit Receiver / Supervisor:</label>
+                <input type="text" placeholder="Name & ID">
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table id="jsa-table">
+                <thead>
+                    <tr>
+                        <th style="width: 5%;">#</th>
+                        <th style="width: 25%;">Sequence of Basic Job Steps</th>
+                        <th style="width: 25%;">Potential Hazards</th>
+                        <th style="width: 30%;">Recommended Safe Job Procedures / Controls</th>
+                        <th style="width: 15%;">Action By</th>
+                    </tr>
+                </thead>
+                <tbody id="jsa-tbody">
+                    <tr>
+                        <td class="step-number" style="font-weight: bold; text-align: center;">1</td>
+                        <td><textarea placeholder="Write job step here..."></textarea></td>
+                        <td><textarea placeholder="Identify hazards..."></textarea></td>
+                        <td><textarea placeholder="List control measures..."></textarea></td>
+                        <td><input type="text" placeholder="e.g. Supervisor"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="btn-group no-print">
+            <a href="index.html" class="btn-back">⬅️ Back to Dashboard</a>
+            <button class="btn-add" onclick="addRow()">➕ Add New Step</button>
+            <button class="btn-remove" onclick="removeRow()">➖ Remove Last Step</button>
+            <button class="btn-pdf" onclick="generatePDF()">📄 Save / Print as PDF</button>
+        </div>
+
+    </div>
+
+    <script>
+        let stepCount = 1;
+
+        // Function to Add a New Row
+        function addRow() {
+            stepCount++;
+            const tbody = document.getElementById('jsa-tbody');
+            const row = document.createElement('tr');
+            
+            row.innerHTML = `
+                <td class="step-number" style="font-weight: bold; text-align: center;">${stepCount}</td>
+                <td><textarea placeholder="Write job step here..."></textarea></td>
+                <td><textarea placeholder="Identify hazards..."></textarea></td>
+                <td><textarea placeholder="List control measures..."></textarea></td>
+                <td><input type="text" placeholder="e.g. Supervisor"></td>
+            `;
+            tbody.appendChild(row);
+        }
+
+        // Function to Remove the Last Row
+        function removeRow() {
+            const tbody = document.getElementById('jsa-tbody');
+            if (tbody.children.length > 1) {
+                tbody.removeChild(tbody.lastChild);
+                stepCount--;
+            } else {
+                alert("At least one job step is required!");
+            }
+        }
+
+        // Function to Trigger PDF / Print
+        function generatePDF() {
+            // This triggers the browser's native print engine, 
+            // which handles our @media print CSS perfectly for A4 Landscape.
+            window.print();
+        }
+    </script>
+
+</body>
+</html>
