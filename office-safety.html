@@ -6,33 +6,41 @@
     <title>Office Safety | Aramco Standard</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Poppins', sans-serif; background-color: #f4f6f9; padding: 20px; }
-        .container { max-width: 900px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .header { text-align: center; border-bottom: 3px solid #00897b; padding-bottom: 15px; margin-bottom: 30px; }
-        .header h1 { color: #00897b; margin: 0; }
+        body { font-family: 'Poppins', sans-serif; background-color: #f4f6f9; padding: 15px; margin: 0; }
+        .container { max-width: 900px; margin: 0 auto; background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .header { text-align: center; border-bottom: 3px solid #00897b; padding-bottom: 15px; margin-bottom: 25px; }
+        .header h1 { color: #00897b; margin: 0; font-size: 24px; }
         .category-section { margin-bottom: 25px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }
-        .category-title { background: #00897b; color: white; padding: 10px; margin: 0; font-size: 16px; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border-bottom: 1px solid #eee; padding: 12px; text-align: left; font-size: 13px; }
+        .category-title { background: #00897b; color: white; padding: 10px 15px; margin: 0; font-size: 16px; }
+        
+        /* 📱 Mobile Responsive Table Wrapper */
+        .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; }
+        
+        table { width: 100%; border-collapse: collapse; min-width: 500px; /* Forces scroll on small mobiles */ }
+        th, td { border-bottom: 1px solid #eee; padding: 12px; text-align: left; font-size: 13px; vertical-align: middle; }
         th { background: #e0f2f1; }
-        input[type="text"] { width: 100%; padding: 5px; border: 1px solid #ccc; border-radius: 4px; }
+        input[type="text"] { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-family: 'Poppins'; font-size: 13px; box-sizing: border-box; }
+        
+        .radio-group { display: flex; gap: 15px; white-space: nowrap; }
+        .radio-group label { cursor: pointer; display: flex; align-items: center; gap: 5px; }
+
         .btn-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
-        button, .btn-link { padding: 10px 18px; border: none; border-radius: 5px; cursor: pointer; font-weight: 600; font-family: 'Poppins'; font-size: 13px; text-decoration: none; display: inline-flex; align-items: center; }
+        button, .btn-link { padding: 10px 18px; border: none; border-radius: 5px; cursor: pointer; font-weight: 600; font-family: 'Poppins'; font-size: 13px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; flex: 1 1 auto; }
         .btn-save { background: #1976d2; color: white; }
         .btn-load { background: #f57c00; color: white; }
-        .btn-pdf { background: #2e7d32; color: white; margin-left: auto; }
+        .btn-pdf { background: #2e7d32; color: white; }
         .btn-back { background: #607d8b; color: white; }
-        @media print { .no-print { display: none !important; } .container { box-shadow: none; border: none; } }
+        @media print { .no-print { display: none !important; } .container { box-shadow: none; border: none; padding: 0; margin: 0; } body { padding: 0; background: white; } }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>🏢 Office Safety Inspection</h1>
-            <p>Based on Saudi Aramco SSMS Appendix 7</p>
+            <p style="color: #666; font-size: 14px;">Based on Saudi Aramco SSMS Appendix 7</p>
         </div>
 
-        <div class="no-print" style="background: #e3f2fd; padding: 15px; border-radius: 5px; margin-bottom: 20px; font-size: 13px;">
+        <div class="no-print" style="background: #e3f2fd; padding: 15px; border-radius: 5px; margin-bottom: 20px; font-size: 13px; color: #1565c0; border: 1px solid #90caf9;">
             <strong>💡 Data Feature:</strong> Aap "Save Data" dabayen taake kaam mahfooz rahe. Baad mein "Load Data" se wapas la sakte hain.
         </div>
 
@@ -41,8 +49,8 @@
 
         <div class="btn-group no-print">
             <a href="index.html" class="btn-link btn-back">⬅️ Back</a>
-            <button class="btn-save" onclick="saveToLocal()">💾 Save Data</button>
-            <button class="btn-load" onclick="loadFromLocal()">🔄 Load Data</button>
+            <button class="btn-save" onclick="saveToLocal()">💾 Save</button>
+            <button class="btn-load" onclick="loadFromLocal()">🔄 Load</button>
             <button class="btn-pdf" onclick="window.print()">📄 Save PDF</button>
         </div>
     </div>
@@ -58,12 +66,32 @@
         sections.forEach((sec, sIdx) => {
             let rows = sec.items.map((item, iIdx) => `
                 <tr>
-                    <td>${item}</td>
-                    <td><input type="radio" name="r_${sIdx}_${iIdx}" value="Yes"> Y <input type="radio" name="r_${sIdx}_${iIdx}" value="No"> N</td>
-                    <td><input type="text" id="obs_${sIdx}_${iIdx}" class="obs-input"></td>
+                    <td style="width: 45%; font-weight: 500;">${item}</td>
+                    <td style="width: 25%;">
+                        <div class="radio-group">
+                            <label><input type="radio" name="r_${sIdx}_${iIdx}" value="Yes"> Yes</label>
+                            <label><input type="radio" name="r_${sIdx}_${iIdx}" value="No" checked> No</label>
+                        </div>
+                    </td>
+                    <td style="width: 30%;"><input type="text" id="obs_${sIdx}_${iIdx}" class="obs-input" placeholder="Observation..."></td>
                 </tr>
             `).join('');
-            container.innerHTML += `<div class="category-section"><h3 class="category-title">${sec.title}</h3><table><tr><th>Checklist Item</th><th width="100">Status</th><th>Observations</th></tr>${rows}</table></div>`;
+            
+            // Added .table-responsive wrapper to fix mobile view
+            container.innerHTML += `
+                <div class="category-section">
+                    <h3 class="category-title">${sec.title}</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <tr>
+                                <th>Checklist Item</th>
+                                <th>Deficiency?</th>
+                                <th>Observations</th>
+                            </tr>
+                            ${rows}
+                        </table>
+                    </div>
+                </div>`;
         });
 
         function saveToLocal() {
