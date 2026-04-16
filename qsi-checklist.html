@@ -3,310 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QSI General Inspection | Aramco Standard</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
+    <title>QSI Inspection | Aramco Appendix 6</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* General Styles */
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f4f6f9;
-            margin: 0;
-            padding: 20px;
-            color: #333;
-        }
+        body { font-family: 'Poppins', sans-serif; background-color: #f4f6f9; padding: 15px; margin: 0; }
+        .container { max-width: 900px; margin: 0 auto; background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .header { text-align: center; border-bottom: 4px solid #1976d2; padding-bottom: 15px; margin-bottom: 25px; }
+        .header h1 { color: #1565c0; margin: 0; font-size: 24px; }
+        
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; background: #e3f2fd; padding: 15px; border-radius: 8px; }
+        .info-group label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px; }
+        .info-group input { width: 100%; padding: 8px; border: 1px solid #90caf9; border-radius: 4px; box-sizing: border-box; }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
+        .section-title { background: #1976d2; color: white; padding: 10px; margin-top: 20px; border-radius: 5px; font-size: 15px; font-weight: 600; }
+        
+        .table-responsive { overflow-x: auto; margin-top: 10px; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; font-size: 13px; }
+        th { background: #f1f8ff; color: #1565c0; }
+        
+        .status-cell { text-align: center; width: 100px; }
+        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 25px; }
+        button, .btn-link { padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; text-decoration: none; display: flex; align-items: center; justify-content: center; flex: 1; min-width: 120px; font-family: 'Poppins'; }
+        .btn-save { background: #1976d2; color: white; }
+        .btn-load { background: #f57c00; color: white; }
+        .btn-pdf { background: #2e7d32; color: white; }
+        .btn-back { background: #607d8b; color: white; }
 
-        /* Header */
-        .header {
-            text-align: center;
-            border-bottom: 3px solid #1976d2; /* Blue Theme */
-            padding-bottom: 15px;
-            margin-bottom: 30px;
-        }
-        .header h1 {
-            color: #1976d2;
-            margin: 0;
-            font-size: 26px;
-        }
-        .header p {
-            color: #555;
-            margin: 5px 0 0 0;
-            font-size: 14px;
-        }
-
-        /* Info Grid */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-        .form-group label {
-            font-weight: 600;
-            font-size: 13px;
-            margin-bottom: 5px;
-            color: #444;
-        }
-        .form-group input {
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 13px;
-        }
-
-        /* Checklist Tables */
-        .category-section {
-            margin-bottom: 30px;
-            background-color: #fafafa;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        .category-title {
-            background-color: #1976d2;
-            color: white;
-            padding: 10px 15px;
-            margin: 0;
-            font-size: 16px;
-        }
-        .table-responsive {
-            overflow-x: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 600px;
-        }
-        th, td {
-            border-bottom: 1px solid #ddd;
-            padding: 10px 15px;
-            text-align: left;
-            vertical-align: middle;
-        }
-        th {
-            background-color: #e3f2fd;
-            color: #333;
-            font-size: 13px;
-        }
-        td {
-            font-size: 13px;
-        }
-        .item-name {
-            width: 40%;
-            font-weight: 500;
-        }
-        .deficiency-radios {
-            width: 25%;
-            white-space: nowrap;
-        }
-        .deficiency-radios label {
-            margin-right: 10px;
-            cursor: pointer;
-        }
-        td input[type="text"] {
-            width: 100%;
-            padding: 6px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-family: 'Poppins', sans-serif;
-            box-sizing: border-box;
-        }
-
-        /* Buttons */
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-        button, .btn-link {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: 'Poppins', sans-serif;
-            font-size: 14px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-        }
-        .btn-pdf { background-color: #2e7d32; color: white; margin-left: auto; }
-        .btn-pdf:hover { background-color: #1b5e20; }
-        .btn-back { background-color: #607d8b; color: white; }
-        .btn-back:hover { background-color: #455a64; }
-
-        /* ========================================= */
-        /* 🖨️ ADVANCED PRINT & PDF SETTINGS */
-        /* ========================================= */
-        @media print {
-            @page {
-                size: portrait;
-                margin: 10mm;
-            }
-            body {
-                background: white;
-                padding: 0;
-            }
-            .container {
-                box-shadow: none;
-                margin: 0;
-                padding: 0;
-                max-width: 100%;
-            }
-            .no-print {
-                display: none !important;
-            }
-            .category-title {
-                color: black !important;
-                background-color: #e0e0e0 !important;
-                -webkit-print-color-adjust: exact;
-            }
-            th {
-                background-color: #f5f5f5 !important;
-                -webkit-print-color-adjust: exact;
-            }
-            input[type="text"] {
-                border: none !important;
-                border-bottom: 1px dashed #ccc !important;
-                background: transparent !important;
-                padding: 2px !important;
-            }
-            /* Prevents splitting rows across pages */
-            tr, .category-section {
-                page-break-inside: avoid;
-            }
-        }
+        @media print { .no-print { display: none !important; } .container { box-shadow: none; border: none; width: 100%; } }
     </style>
 </head>
 <body>
-
     <div class="container">
-        
         <div class="header">
             <h1>✅ QSI General Inspection</h1>
-            <p>Standard Walkthrough Checklist (Aramco SSMS Appendix 6)</p>
+            <p style="font-size: 12px; color: #666;">Based on Saudi Aramco SSMS Appendix 6</p>
         </div>
 
         <div class="info-grid">
-            <div class="form-group">
-                <label>Division:</label>
-                <input type="text" placeholder="Enter division...">
-            </div>
-            <div class="form-group">
-                <label>Department:</label>
-                <input type="text" placeholder="Enter department...">
-            </div>
-            <div class="form-group">
-                <label>Facility / Location:</label>
-                <input type="text" placeholder="Enter facility location...">
-            </div>
-            <div class="form-group">
-                <label>Safety Officer:</label>
-                <input type="text" placeholder="Name of inspector...">
-            </div>
-            <div class="form-group">
-                <label>Date & Time:</label>
-                <input type="datetime-local">
-            </div>
+            <div class="info-group"><label>Facility/Area:</label><input type="text" id="qsi_area"></div>
+            <div class="info-group"><label>Inspector Name:</label><input type="text" id="qsi_name"></div>
+            <div class="info-group"><label>Date:</label><input type="date" id="qsi_date"></div>
         </div>
 
-        <div id="checklist-container"></div>
+        <div id="qsi-content">
+            </div>
 
         <div class="btn-group no-print">
-            <a href="index.html" class="btn-link btn-back">⬅️ Back to Dashboard</a>
-            <button class="btn-pdf" onclick="window.print()">📄 Save / Print as PDF</button>
+            <a href="index.html" class="btn-link btn-back">⬅️ Back</a>
+            <button class="btn-save" onclick="saveQSI()">💾 Save Draft</button>
+            <button class="btn-load" onclick="loadQSI()">🔄 Load Draft</button>
+            <button class="btn-pdf" onclick="window.print()">📄 Save PDF</button>
         </div>
-
     </div>
 
     <script>
-        // Aramco Appendix 6 Exact Data Structure
         const qsiData = [
             {
-                title: "1. FIRE PROTECTION / PREVENTION",
-                items: ["Fire Water System", "Hydrants / Monitors", "Fire Hose Stations", "Portable Fire Extinguishers", "Fire Detection Systems", "Fire Alarms", "Water Sprinkler / Spray Systems", "Equipment Fireproofing"]
+                title: "FIRE PROTECTION & SAFETY",
+                items: [
+                    "Are fire extinguishers charged and inspected monthly?",
+                    "Are fire hydrants/monitors accessible and clear?",
+                    "Are Halon/CO2 systems in auto-mode and inspected?",
+                    "Are windsocks in good condition and visible?",
+                    "Are H2S/Combustible gas alarms working?"
+                ]
             },
             {
-                title: "2. PLANT SAFETY",
-                items: ["Tank Areas", "Pumps", "Boilers / Furnaces / Reheaters", "Flares & Relief Valves", "Catch Basins / Drainage / Sewers", "Vessels / Drums / Columns", "H2S / HC Alarms & ESD Systems", "Control Rooms / Substations", "Rotating Equipment", "Windsocks"]
+                title: "PLANT & EQUIPMENT",
+                items: [
+                    "Are pressure gauges within calibration date?",
+                    "Are safety relief valves (SRV) seals intact?",
+                    "Are rotating equipment guards in place?",
+                    "Is scaffolding tagged (Green) and inspected?",
+                    "Are electrical panels locked and rubber mats present?"
+                ]
             },
             {
-                title: "3. INDUSTRIAL SAFETY",
-                items: ["Hand / Power Tools", "Scaffolding / Ladders / Stairs", "Excavations", "Chemical Storage / Handling", "Sandblasting", "Crane / Heavy Equipment", "Lighting & Noise", "Electrical Accessories / Grounding", "Personal Protective Equipment"]
-            },
-            {
-                title: "4. PROCEDURES",
-                items: ["Emergency Plan", "Work Permits", "Lock Out / Hold Tags", "Gas Testing", "Welding", "First Aid", "Traffic Safety", "Training & Record Keeping", "Safety Meetings & Evacuation Plan"]
-            },
-            {
-                title: "5. OTHER / GENERAL",
-                items: ["Haz. Matl / Flammable Storage", "Emerg. Safety Showers / Eyewashes", "Egress / Exits", "Guard Rails", "Fire Doors / Barriers", "Housekeeping"]
+                title: "PROCEDURES & PERSONNEL",
+                items: [
+                    "Are work permits (Safe/Hot/Confined) properly displayed?",
+                    "Are employees using correct PPE for the task?",
+                    "Are MSDS/SDS sheets available for chemicals?",
+                    "Is emergency evacuation map displayed?"
+                ]
             }
         ];
 
-        const container = document.getElementById('checklist-container');
+        const container = document.getElementById('qsi-content');
 
-        // Loop through data and generate HTML
-        qsiData.forEach((category, catIndex) => {
-            let tableRows = '';
-            
-            category.items.forEach((item, itemIndex) => {
-                // Unique name for radio buttons so they work properly
-                const radioName = `cat${catIndex}_item${itemIndex}`;
-                
-                tableRows += `
-                    <tr>
-                        <td class="item-name">${item}</td>
-                        <td class="deficiency-radios">
-                            <label><input type="radio" name="${radioName}" value="Yes"> Yes</label>
-                            <label><input type="radio" name="${radioName}" value="No" checked> No</label>
-                        </td>
-                        <td><input type="text" placeholder="Add observation..."></td>
-                    </tr>
-                `;
-            });
+        qsiData.forEach((section, sIdx) => {
+            let rows = section.items.map((item, iIdx) => `
+                <tr>
+                    <td>${item}</td>
+                    <td class="status-cell">
+                        <select id="q_${sIdx}_${iIdx}">
+                            <option value="Pass">Pass</option>
+                            <option value="Fail">Fail</option>
+                            <option value="N/A">N/A</option>
+                        </select>
+                    </td>
+                    <td><input type="text" id="o_${sIdx}_${iIdx}" style="width:100%; border:none; border-bottom:1px solid #eee;" placeholder="Notes..."></td>
+                </tr>
+            `).join('');
 
-            const sectionHTML = `
-                <div class="category-section">
-                    <h3 class="category-title">${category.title}</h3>
-                    <div class="table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th style="width: 40%;">Categories Addressed</th>
-                                    <th style="width: 25%;">Deficiency?</th>
-                                    <th style="width: 35%;">Observation</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${tableRows}
-                            </tbody>
-                        </table>
-                    </div>
+            container.innerHTML += `
+                <div class="section-title">${section.title}</div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr><th>Audit Question</th><th>Status</th><th>Observations</th></tr>
+                        </thead>
+                        <tbody>${rows}</tbody>
+                    </table>
                 </div>
             `;
-            
-            container.innerHTML += sectionHTML;
         });
-    </script>
 
+        function saveQSI() {
+            const data = { area: document.getElementById('qsi_area').value, date: document.getElementById('qsi_date').value, responses: {} };
+            qsiData.forEach((sec, sIdx) => {
+                sec.items.forEach((_, iIdx) => {
+                    data.responses[`q_${sIdx}_${iIdx}`] = document.getElementById(`q_${sIdx}_${iIdx}`).value;
+                    data.responses[`o_${sIdx}_${iIdx}`] = document.getElementById(`o_${sIdx}_${iIdx}`).value;
+                });
+            });
+            localStorage.setItem('aramco_qsi_data', JSON.stringify(data));
+            alert("✅ QSI Draft Saved!");
+        }
+
+        function loadQSI() {
+            const data = JSON.parse(localStorage.getItem('aramco_qsi_data'));
+            if(!data) return alert("No data found!");
+            document.getElementById('qsi_area').value = data.area;
+            document.getElementById('qsi_date').value = data.date;
+            for (let key in data.responses) {
+                const el = document.getElementById(key);
+                if(el) el.value = data.responses[key];
+            }
+            alert("🔄 Data Loaded!");
+        }
+    </script>
 </body>
 </html>
