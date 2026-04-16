@@ -3,58 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HSE Objectives | Aramco Standard</title>
+    <title>HSE Objectives Planner | Aramco Standard</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Poppins', sans-serif; background: #f4f6f9; padding: 15px; }
-        .container { max-width: 1000px; margin: 0 auto; background: #fff; padding: 25px; border-radius: 10px; }
-        .header { text-align: center; border-bottom: 3px solid #283593; padding-bottom: 15px; margin-bottom: 25px; }
-        .header h1 { color: #283593; font-size: 24px; }
-        .table-responsive { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 700px; }
-        th, td { border: 1px solid #ddd; padding: 12px; font-size: 13px; text-align: center; }
-        th { background: #e8eaf6; color: #283593; }
-        input { width: 100%; border: none; background: transparent; text-align: center; font-family: 'Poppins'; }
-        .btn-group { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
-        button, .btn-link { padding: 10px 15px; border-radius: 5px; border: none; font-weight: bold; cursor: pointer; text-decoration: none; font-size: 13px; flex: 1; }
-        .btn-add { background: #283593; color: white; }
+        body { font-family: 'Poppins', sans-serif; background-color: #f4f6f9; padding: 15px; margin: 0; }
+        .container { max-width: 1100px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .header { text-align: center; border-bottom: 4px solid #283593; padding-bottom: 10px; margin-bottom: 20px; }
+        .header h1 { color: #1a237e; margin: 0; font-size: 22px; }
+        
+        .objective-meta { background: #e8eaf6; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid #283593; }
+        label { font-size: 12px; font-weight: 700; color: #283593; }
+        input, textarea { width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #c5cae9; border-radius: 4px; box-sizing: border-box; font-family: 'Poppins'; font-size: 13px; }
+
+        .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        table { width: 100%; border-collapse: collapse; min-width: 900px; table-layout: fixed; }
+        th, td { border: 1px solid #d1d9ff; padding: 10px; text-align: left; font-size: 12px; word-wrap: break-word; }
+        th { background: #283593; color: white; }
+        
+        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+        button, .btn-link { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; text-decoration: none; display: flex; align-items: center; justify-content: center; flex: 1; font-size: 13px; }
+        .btn-add { background: #3949ab; color: white; }
         .btn-save { background: #1976d2; color: white; }
+        .btn-load { background: #f57c00; color: white; }
         .btn-pdf { background: #2e7d32; color: white; }
-        @media print { .no-print { display: none; } }
+        .btn-back { background: #607d8b; color: white; }
+
+        /* 🖨️ PDF & Print Settings */
+        @media print {
+            @page { size: landscape; margin: 5mm; }
+            .no-print { display: none !important; }
+            .container { width: 100%; max-width: 100%; box-shadow: none; padding: 0; margin: 0; }
+            table { font-size: 10px; min-width: 100%; }
+            th { background: #eee !important; color: black !important; -webkit-print-color-adjust: exact; }
+            input, textarea { border: none !important; padding: 2px !important; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header"><h1>🎯 HSE Objectives & Targets</h1><p>Strategic Safety Planning (Appendix 3)</p></div>
+        <div class="header">
+            <h1>🎯 HSE Objectives, Targets & Plans</h1>
+            <p style="font-size: 11px; color: #666;">Saudi Aramco SSMS Appendix 3 Standard</p>
+        </div>
+
+        <div class="objective-meta">
+            <div style="margin-bottom: 10px;">
+                <label>OBJECTIVE TITLE (e.g. 1.0 General Safety Management):</label>
+                <input type="text" id="obj_title" placeholder="Aramco Appendix 3 Heading...">
+            </div>
+            <div>
+                <label>RATIONALE (Why is this objective needed?):</label>
+                <textarea id="rationale" rows="2" placeholder="e.g. Required by policy and risk assessment process..."></textarea>
+            </div>
+        </div>
+
         <div class="table-responsive">
             <table>
                 <thead>
-                    <tr><th>Objective</th><th>Target (%)</th><th>Action Plan</th><th>Responsibility</th><th>Status</th></tr>
-                </thead>
-                <tbody id="obj-body">
                     <tr>
-                        <td><input type="text" placeholder="e.g. Reduce LTIs"></td>
-                        <td><input type="text" placeholder="0%"></td>
-                        <td><input type="text" placeholder="Training..."></td>
-                        <td><input type="text" placeholder="HSE Manager"></td>
-                        <td><select><option>On Track</option><option>Delayed</option><option>Done</option></select></td>
+                        <th style="width: 50px;">No.</th>
+                        <th>Target (What is the goal?)</th>
+                        <th>Action Plan (Detailed Steps)</th>
+                        <th style="width: 120px;">Time Scale</th>
+                        <th style="width: 150px;">Responsibility</th>
+                    </tr>
+                </thead>
+                <tbody id="planner-body">
+                    <tr>
+                        <td>1.1</td>
+                        <td><textarea placeholder="Target description"></textarea></td>
+                        <td><textarea placeholder="How to achieve it"></textarea></td>
+                        <td><input type="text" placeholder="e.g. Oct 2024"></td>
+                        <td><input type="text" placeholder="Job Title/Name"></td>
                     </tr>
                 </tbody>
             </table>
         </div>
+
         <div class="btn-group no-print">
-            <a href="index.html" class="btn-link" style="background:#607d8b; color:white;">⬅️ Back</a>
-            <button class="btn-add" onclick="addRow()">➕ Add Objective</button>
-            <button class="btn-save" onclick="saveData()">💾 Save</button>
-            <button class="btn-pdf" onclick="window.print()">📄 PDF</button>
+            <a href="index.html" class="btn-link btn-back">⬅️ Back</a>
+            <button class="btn-add" onclick="addRow()">➕ Add Target</button>
+            <button class="btn-save" onclick="savePlanner()">💾 Save Draft</button>
+            <button class="btn-load" onclick="loadPlanner()">🔄 Load Draft</button>
+            <button class="btn-pdf" onclick="window.print()">📄 Save PDF (Landscape)</button>
         </div>
     </div>
+
     <script>
+        let rowCount = 1;
         function addRow() {
-            const row = `<tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><select><option>On Track</option><option>Delayed</option><option>Done</option></select></td></tr>`;
-            document.getElementById('obj-body').insertAdjacentHTML('beforeend', row);
+            rowCount++;
+            const tbody = document.getElementById('planner-body');
+            const row = `<tr>
+                <td>1.${rowCount}</td>
+                <td><textarea placeholder="Target description"></textarea></td>
+                <td><textarea placeholder="How to achieve it"></textarea></td>
+                <td><input type="text" placeholder="e.g. Oct 2024"></td>
+                <td><input type="text" placeholder="Job Title/Name"></td>
+            </tr>`;
+            tbody.insertAdjacentHTML('beforeend', row);
         }
-        function saveData() { alert("Strategic Data Saved Locally!"); }
+
+        function savePlanner() {
+            const data = {
+                title: document.getElementById('obj_title').value,
+                rationale: document.getElementById('rationale').value
+            };
+            localStorage.setItem('aramco_objectives', JSON.stringify(data));
+            alert("✅ Objectives Draft Saved!");
+        }
+
+        function loadPlanner() {
+            const data = JSON.parse(localStorage.getItem('aramco_objectives'));
+            if(!data) return alert("No saved data!");
+            document.getElementById('obj_title').value = data.title;
+            document.getElementById('rationale').value = data.rationale;
+            alert("🔄 Data Loaded Successfully!");
+        }
     </script>
 </body>
 </html>
