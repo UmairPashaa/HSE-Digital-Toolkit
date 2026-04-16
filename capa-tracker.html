@@ -3,69 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAPA Tracker | Aramco Appendix 11</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>CAPA Tracker | Aramco Standard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Poppins', sans-serif; background: #f4f6f9; padding: 15px; margin: 0; }
-        .container { max-width: 900px; margin: 0 auto; background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .header { text-align: center; border-bottom: 4px solid #8e24aa; padding-bottom: 10px; margin-bottom: 25px; }
-        .header h1 { color: #8e24aa; font-size: 24px; margin: 0; }
-        .form-section { border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 5px solid #8e24aa; }
-        .form-section h3 { margin-top: 0; font-size: 16px; color: #8e24aa; border-bottom: 1px dashed #ddd; padding-bottom: 5px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-        label { font-size: 12px; font-weight: 600; display: block; margin-bottom: 5px; }
-        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: 'Poppins'; font-size: 13px; }
-        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
-        button, .btn-link { padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; text-decoration: none; display: flex; align-items: center; justify-content: center; flex: 1; }
-        @media print { .no-print { display: none !important; } .container { box-shadow: none; border: none; width: 100%; } }
+        :root { --primary: #2e7d32; --secondary: #388e3c; --bg: #f0f2f5; --border: #bdc3c7; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg); margin: 0; padding: 15px; }
+        .container { max-width: 1000px; margin: 0 auto; background: #fff; border: 2px solid #333; }
+        
+        /* Official Header Style */
+        .official-header { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 2px solid #333; background: #fafafa; }
+        .header-title { text-align: left; }
+        .header-title h1 { margin: 0; font-size: 20px; color: #1b5e20; text-transform: uppercase; }
+        .header-title p { margin: 2px 0; font-size: 11px; color: #555; font-weight: bold; }
+
+        /* Form Grid Layout */
+        .form-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid #333; }
+        .cell { border-right: 1px solid #333; padding: 8px; }
+        .cell:last-child { border-right: none; }
+        .cell label { display: block; font-size: 10px; font-weight: 700; color: #333; text-transform: uppercase; margin-bottom: 3px; }
+        .cell input, .cell select { width: 100%; border: none; font-size: 13px; font-family: 'Poppins'; outline: none; background: transparent; }
+
+        .section-bar { background: #333; color: white; padding: 5px 15px; font-size: 13px; font-weight: 600; text-transform: uppercase; }
+        
+        .full-cell { padding: 10px; border-bottom: 1px solid #333; }
+        .full-cell label { font-size: 11px; font-weight: 700; display: block; margin-bottom: 5px; }
+        .full-cell textarea { width: 100%; border: 1px solid #eee; height: 60px; font-family: 'Poppins'; resize: none; font-size: 13px; }
+
+        /* Action Table */
+        .action-table { width: 100%; border-collapse: collapse; }
+        .action-table th { background: #f2f2f2; border: 1px solid #333; padding: 8px; font-size: 11px; }
+        .action-table td { border: 1px solid #333; padding: 0; }
+
+        .btn-group { display: flex; gap: 10px; padding: 20px; background: var(--bg); }
+        .btn { padding: 12px; border: none; border-radius: 4px; color: white; font-weight: bold; cursor: pointer; flex: 1; text-align: center; text-decoration: none; font-size: 13px; }
+
+        @media print {
+            .no-print { display: none !important; }
+            body { padding: 0; background: white; }
+            .container { border: 2px solid #000; width: 100%; }
+            @page { size: portrait; margin: 10mm; }
+        }
+        @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header"><h1>🛠️ CAPA Report Form</h1><p>Official Aramco Standard - Appendix 11</p></div>
-
-        <div class="form-section">
-            <h3>1. FINDING & ROOT CAUSE</h3>
-            <div class="grid">
-                <div><label>Date Issued:</label><input type="date" id="c_date"></div>
-                <div><label>Ref No:</label><input type="text" id="c_ref"></div>
+    <div class="container" id="printable-area">
+        <div class="official-header">
+            <div class="header-title">
+                <h1>Corrective & Preventive Action (CAPA)</h1>
+                <p>PURSUANT TO SAUDI Aramco SSMS APPENDIX 11</p>
             </div>
-            <div style="margin-top:10px;"><label>Description of Non-Conformance:</label><textarea id="c_desc"></textarea></div>
-            <div style="margin-top:10px;"><label>Root Cause Analysis:</label><textarea id="c_root"></textarea></div>
+            <div style="text-align: right; font-size: 10px; font-weight: bold;">
+                FORM ID: SA-SSMS-11<br>REVISION: 02
+            </div>
         </div>
 
-        <div class="form-section">
-            <h3>2. CORRECTIVE & PREVENTIVE ACTIONS</h3>
-            <div class="grid">
-                <div><label>Action Owner:</label><input type="text" id="c_owner"></div>
-                <div><label>Target Date:</label><input type="date" id="c_target"></div>
-                <div><label>Status:</label><select id="c_status"><option>Open</option><option>Closed</option></select></div>
+        <div class="form-grid">
+            <div class="cell"><label>CAPA Ref No:</label><input type="text" id="capa_ref" placeholder="CP-001"></div>
+            <div class="cell"><label>Date Issued:</label><input type="date" id="capa_date"></div>
+            <div class="cell"><label>Source:</label>
+                <select id="capa_source"><option>Audit</option><option>Inspection</option><option>Incident</option></select>
             </div>
-            <div style="margin-top:10px;"><label>Action to be Taken:</label><textarea id="c_action"></textarea></div>
+            <div class="cell"><label>Priority:</label>
+                <select id="capa_priority"><option>High</option><option>Medium</option><option>Low</option></select>
+            </div>
         </div>
 
-        <div class="form-section" style="background: #f3e5f5;">
-            <h3>3. VERIFICATION & EVIDENCE (ARAMCO REQUIREMENT)</h3>
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label style="color: #8e24aa;">🔗 Evidence of Closure (Photo Ref / Doc Link):</label>
-                <input type="text" id="c_evidence" placeholder="e.g. Photo_Site_Update_01.jpg or Google Drive Link">
-                <small style="color: #666; font-size: 10px;">Mention the photo name or link as proof of action taken.</small>
-            </div>
-            <div style="margin-top:10px;"><label>Auditor Verification Comments:</label><textarea id="c_verify"></textarea></div>
+        <div class="section-bar">Section 1: Non-Conformance Details</div>
+        <div class="full-cell">
+            <label>Description of Deficiency/Finding:</label>
+            <textarea id="capa_desc"></textarea>
+        </div>
+        <div class="full-cell">
+            <label>Root Cause Analysis (Why did it happen?):</label>
+            <textarea id="capa_root"></textarea>
         </div>
 
-        <div class="btn-group no-print">
-            <a href="index.html" class="btn-link" style="background:#607d8b; color:white;">⬅️ Back</a>
-            <button style="background:#1976d2; color:white;" onclick="saveCAPA()">💾 Save Draft</button>
-            <button style="background:#2e7d32; color:white;" onclick="window.print()">📄 Save PDF</button>
+        <div class="section-bar">Section 2: Action Plan & Verification</div>
+        <table class="action-table">
+            <tr>
+                <th>Corrective / Preventive Actions</th>
+                <th width="150">Owner</th>
+                <th width="120">Target Date</th>
+            </tr>
+            <tr>
+                <td><textarea id="capa_action" style="border:none; height:80px;"></textarea></td>
+                <td><input type="text" id="capa_owner" class="input-cell" style="padding:10px;"></td>
+                <td><input type="date" id="capa_target" class="input-cell" style="padding:10px;"></td>
+            </tr>
+        </table>
+
+        <div class="section-bar" style="background: #1b5e20;">Section 3: Evidence of Closure (Aramco Requirement)</div>
+        <div class="form-grid">
+            <div class="cell" style="grid-column: span 3;">
+                <label>Evidence Reference (Photo ID / Document No / Link):</label>
+                <input type="text" id="capa_evidence" placeholder="e.g. Photo_Ref_01, JSA-Update-Rev01">
+            </div>
+            <div class="cell">
+                <label>Status:</label>
+                <select id="capa_status"><option>OPEN</option><option>CLOSED</option></select>
+            </div>
+        </div>
+        <div class="full-cell">
+            <label>Verification Comments by HSE/Auditor:</label>
+            <textarea id="capa_verify"></textarea>
         </div>
     </div>
 
+    <div class="btn-group no-print">
+        <a href="index.html" class="btn" style="background:#607d8b;">Back</a>
+        <button class="btn" style="background:#1976d2;" onclick="saveData()">💾 Save Draft</button>
+        <button class="btn" style="background:#f57c00;" onclick="loadData()">🔄 Load Draft</button>
+        <button class="btn" style="background:#2e7d32;" onclick="window.print()">📄 Print / PDF</button>
+    </div>
+
     <script>
-        function saveCAPA() {
-            const data = { ref: document.getElementById('c_ref').value, evidence: document.getElementById('c_evidence').value };
-            localStorage.setItem('aramco_capa_v2', JSON.stringify(data));
-            alert("Draft Saved!");
+        function saveData() {
+            const fields = ['capa_ref', 'capa_date', 'capa_source', 'capa_priority', 'capa_desc', 'capa_root', 'capa_action', 'capa_owner', 'capa_target', 'capa_evidence', 'capa_status', 'capa_verify'];
+            const data = {};
+            fields.forEach(f => data[f] = document.getElementById(f).value);
+            localStorage.setItem('aramco_capa_master', JSON.stringify(data));
+            alert("✅ CAPA Template Saved!");
+        }
+        function loadData() {
+            const data = JSON.parse(localStorage.getItem('aramco_capa_master'));
+            if(!data) return alert("No saved data!");
+            Object.keys(data).forEach(key => document.getElementById(key).value = data[key]);
+            alert("🔄 Data Loaded!");
         }
     </script>
 </body>
