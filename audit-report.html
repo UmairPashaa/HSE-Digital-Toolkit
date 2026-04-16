@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Audit Report | Aramco Standard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f4f6f9; padding: 15px; margin: 0; }
+        .container { max-width: 900px; margin: 0 auto; background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .header { text-align: center; border-bottom: 3px solid #d84315; padding-bottom: 15px; margin-bottom: 25px; }
+        .header h1 { color: #d84315; margin: 0; font-size: 24px; }
+        .form-section { margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; padding: 15px; border-left: 5px solid #d84315; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 15px; }
+        table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        th, td { border: 1px solid #eee; padding: 10px; text-align: left; font-size: 13px; }
+        th { background: #fbe9e7; color: #d84315; }
+        input, select, textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: 'Poppins'; }
+        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+        button, .btn-link { padding: 10px 18px; border: none; border-radius: 5px; cursor: pointer; font-weight: 600; font-size: 13px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; flex: 1; }
+        .btn-save { background: #1976d2; color: white; }
+        .btn-load { background: #f57c00; color: white; }
+        .btn-pdf { background: #2e7d32; color: white; }
+        .btn-back { background: #607d8b; color: white; }
+        @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+        @media print { .no-print { display: none !important; } .container { box-shadow: none; border: none; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Safety Audit Report</h1>
+            <p>Internal Audit Checklist (SSMS Appendix 12)</p>
+        </div>
+
+        <div class="form-section">
+            <div class="grid-2">
+                <div><label>Audit Date:</label><input type="date" id="audit_date"></div>
+                <div><label>Location/Facility:</label><input type="text" id="audit_loc"></div>
+                <div><label>Lead Auditor:</label><input type="text" id="auditor_name"></div>
+                <div><label>Overall Result:</label>
+                    <select id="audit_result">
+                        <option>Excellent</option><option>Pass</option><option>Fail</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Audit Question / Requirement</th>
+                        <th width="120">Status</th>
+                        <th>Observations / Evidence</th>
+                    </tr>
+                </thead>
+                <tbody id="audit-items">
+                    </tbody>
+            </table>
+        </div>
+
+        <div class="btn-group no-print">
+            <a href="index.html" class="btn-link btn-back">⬅️ Back</a>
+            <button class="btn-save" onclick="saveAudit()">💾 Save</button>
+            <button class="btn-load" onclick="loadAudit()">🔄 Load</button>
+            <button class="btn-pdf" onclick="window.print()">📄 PDF</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            "Is the SSMS manual available and updated?",
+            "Are JSA's being conducted for all critical tasks?",
+            "Is emergency equipment (fire/first aid) inspected?",
+            "Are incident reports filed within 24 hours?",
+            "Is personal protective equipment (PPE) used correctly?"
+        ];
+
+        const tbody = document.getElementById('audit-items');
+        questions.forEach((q, i) => {
+            tbody.innerHTML += `<tr>
+                <td>${q}</td>
+                <td><select id="stat_${i}"><option>Compliant</option><option>Non-Compliant</option><option>N/A</option></select></td>
+                <td><input type="text" id="obs_${i}" placeholder="Notes..."></td>
+            </tr>`;
+        });
+
+        function saveAudit() {
+            const data = { date: document.getElementById('audit_date').value, loc: document.getElementById('audit_loc').value, name: document.getElementById('auditor_name').value, result: document.getElementById('audit_result').value, details: [] };
+            questions.forEach((_, i) => { data.details.push({ stat: document.getElementById(`stat_${i}`).value, obs: document.getElementById(`obs_${i}`).value }); });
+            localStorage.setItem('audit_data', JSON.stringify(data));
+            alert("Audit Saved!");
+        }
+
+        function loadAudit() {
+            const data = JSON.parse(localStorage.getItem('audit_data'));
+            if (!data) return alert("No data!");
+            document.getElementById('audit_date').value = data.date;
+            document.getElementById('audit_loc').value = data.loc;
+            document.getElementById('auditor_name').value = data.name;
+            document.getElementById('audit_result').value = data.result;
+            data.details.forEach((d, i) => {
+                document.getElementById(`stat_${i}`).value = d.stat;
+                document.getElementById(`obs_${i}`).value = d.obs;
+            });
+            alert("Audit Loaded!");
+        }
+    </script>
+</body>
+</html>
