@@ -2,131 +2,90 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CAPA Tracker | Aramco Appendix 11</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>APPENDIX 11 - CAPA TRACKER</title>
     <style>
-        body { font-family: 'Poppins', sans-serif; background-color: #f0f0f0; padding: 20px; margin: 0; }
-        .official-page { max-width: 1000px; margin: 0 auto; background: #fff; border: 2px solid #000; padding: 0; }
+        body { font-family: "Courier New", Courier, monospace; padding: 20px; background: #555; }
+        .page { background: white; width: 210mm; min-height: 297mm; margin: 0 auto; padding: 10mm; box-sizing: border-box; border: 1px solid #000; }
         
-        /* Official Header Layout */
-        .header-table { width: 100%; border-bottom: 2px solid #000; border-collapse: collapse; }
-        .header-table td { border: 1px solid #000; padding: 10px; vertical-align: top; }
-        .form-name { font-size: 18px; font-weight: bold; text-align: center; background: #f2f2f2; }
-
-        /* Form Details Grid */
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 2px solid #000; }
-        .info-item { border-right: 1px solid #000; padding: 8px; }
-        .info-item label { display: block; font-size: 10px; font-weight: bold; text-transform: uppercase; }
-        .info-item input { width: 100%; border: none; font-size: 13px; outline: none; background: transparent; }
-
-        /* Main Data Table */
-        .data-table { width: 100%; border-collapse: collapse; }
-        .data-table th { border: 1px solid #000; background: #e0e0e0; font-size: 11px; padding: 8px; text-transform: uppercase; }
-        .data-table td { border: 1px solid #000; padding: 5px; vertical-align: top; }
-        .data-table textarea { width: 100%; border: none; font-family: 'Poppins'; font-size: 12px; min-height: 100px; resize: vertical; }
-
-        /* Sign-off Section */
-        .sign-off { display: grid; grid-template-columns: 1fr 1fr; border-top: 2px solid #000; background: #f9f9f9; }
-        .sign-box { border-right: 1px solid #000; padding: 15px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: -1px; }
+        td, th { border: 1px solid #000; padding: 8px; font-size: 12px; vertical-align: top; }
         
-        .btn-group { display: flex; gap: 10px; margin-top: 20px; max-width: 1000px; margin-left: auto; margin-right: auto; }
-        .btn { padding: 12px; border: none; border-radius: 4px; color: white; font-weight: bold; cursor: pointer; flex: 1; text-align: center; text-decoration: none; font-size: 13px; }
+        .header-title { text-align: center; font-weight: bold; font-size: 16px; background: #eee; }
+        .label { font-weight: bold; font-size: 10px; text-transform: uppercase; display: block; }
+        
+        input, textarea { width: 100%; border: none; font-family: inherit; font-size: 13px; outline: none; padding: 0; background: transparent; }
+        textarea { height: 80px; resize: none; }
+
+        .no-print { position: fixed; bottom: 20px; right: 20px; background: #2e7d32; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
 
         @media print {
-            .no-print { display: none !important; }
-            body { padding: 0; background: white; }
-            .official-page { border: 2px solid #000; width: 100%; }
-            @page { size: portrait; margin: 10mm; }
+            body { background: white; padding: 0; }
+            .page { margin: 0; border: none; width: 100%; }
+            .no-print { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <div class="official-page">
-        <table class="header-table">
-            <tr>
-                <td width="30%" rowspan="2" style="text-align:center;"><strong>HSE MANAGEMENT SYSTEM</strong></td>
-                <td class="form-name">APPENDIX 11: CAPA TRACKER</td>
-                <td width="20%">Rev: 01<br>Date: 2026</td>
+<div class="page">
+    <table>
+        <tr>
+            <td width="20%" style="text-align: center;"><strong>SAUDI ARAMCO</strong></td>
+            <td class="header-title">APPENDIX 11: CORRECTIVE & PREVENTIVE ACTION (CAPA) LOG</td>
+            <td width="20%">REV: 01/2026<br>PAGE: 1 OF 1</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr>
+            <td width="50%"><span class="label">Company Name:</span><input type="text"></td>
+            <td width="50%"><span class="label">Contract No:</span><input type="text"></td>
+        </tr>
+    </table>
+
+    <table>
+        <thead>
+            <tr style="background: #f2f2f2;">
+                <th width="5%">NO</th>
+                <th width="35%">FINDING / NON-CONFORMANCE DESCRIPTION</th>
+                <th width="30%">ROOT CAUSE ANALYSIS</th>
+                <th width="30%">CORRECTIVE / PREVENTIVE ACTIONS</th>
             </tr>
+        </thead>
+        <tbody>
             <tr>
-                <td style="text-align:center; font-size:12px;"><strong>CORRECTIVE & PREVENTIVE ACTION LOG</strong></td>
-                <td>Page 1 of 1</td>
+                <td style="text-align: center;">1</td>
+                <td><textarea></textarea></td>
+                <td><textarea></textarea></td>
+                <td><textarea></textarea></td>
             </tr>
-        </table>
+        </tbody>
+    </table>
 
-        <div class="info-grid">
-            <div class="info-item"><label>Company Name:</label><input type="text" id="comp_name"></div>
-            <div class="info-item"><label>Contract No:</label><input type="text" id="cont_no"></div>
-            <div class="info-item"><label>Facility/Area:</label><input type="text" id="fac_area"></div>
-        </div>
+    <table>
+        <tr style="background: #f2f2f2;">
+            <th width="25%">ACTION OWNER</th>
+            <th width="15%">TARGET DATE</th>
+            <th width="15%">STATUS (O/C)</th>
+            <th width="45%">EVIDENCE OF CLOSURE / VERIFICATION</th>
+        </tr>
+        <tr>
+            <td><input type="text"></td>
+            <td><input type="date"></td>
+            <td><select style="width:100%; border:none;"><option>OPEN</option><option>CLOSED</option></select></td>
+            <td><input type="text" placeholder="Photo/Document Reference"></td>
+        </tr>
+    </table>
 
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th width="5%">No.</th>
-                    <th width="35%">Finding / Non-Conformance Description</th>
-                    <th width="30%">Root Cause Analysis</th>
-                    <th width="30%">Corrective & Preventive Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="text-align:center;">1</td>
-                    <td><textarea id="finding_1"></textarea></td>
-                    <td><textarea id="root_1"></textarea></td>
-                    <td><textarea id="action_1"></textarea></td>
-                </tr>
-            </tbody>
-        </table>
+    <table style="margin-top: 20px;">
+        <tr>
+            <td width="50%" height="60"><span class="label">Originator (Auditor/HSE) Name & Sign:</span></td>
+            <td width="50%"><span class="label">Action Owner (Manager) Name & Sign:</span></td>
+        </tr>
+    </table>
+</div>
 
-        <table class="data-table" style="border-top:none;">
-            <thead>
-                <tr>
-                    <th width="25%">Action Owner</th>
-                    <th width="15%">Target Date</th>
-                    <th width="15%">Status (O/C)</th>
-                    <th width="45%">Evidence of Closure / Verification Ref</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><input type="text" style="width:100%; border:none; padding:10px;"></td>
-                    <td><input type="date" style="width:100%; border:none; padding:10px;"></td>
-                    <td><select style="width:100%; border:none; padding:10px;"><option>Open</option><option>Closed</option></select></td>
-                    <td><input type="text" id="evid_1" style="width:100%; border:none; padding:10px;" placeholder="Photo/Doc Ref"></td>
-                </tr>
-            </tbody>
-        </table>
+<button class="no-print" onclick="window.print()">📄 PRINT OFFICIAL FORM</button>
 
-        <div class="sign-off">
-            <div class="sign-box"><label>Originator (HSE/Auditor):</label><br><br>_________________</div>
-            <div class="sign-box" style="border-right:none;"><label>Action Owner (Manager):</label><br><br>_________________</div>
-        </div>
-    </div>
-
-    <div class="btn-group no-print">
-        <a href="index.html" class="btn" style="background:#607d8b;">⬅️ Back</a>
-        <button class="btn" style="background:#1976d2;" onclick="saveData()">💾 Save Draft</button>
-        <button class="btn" style="background:#f57c00;" onclick="loadData()">🔄 Load Draft</button>
-        <button class="btn" style="background:#2e7d32;" onclick="window.print()">📄 Generate Official PDF</button>
-    </div>
-
-    <script>
-        function saveData() {
-            const data = { comp: document.getElementById('comp_name').value, f1: document.getElementById('finding_1').value };
-            localStorage.setItem('aramco_capa_official', JSON.stringify(data));
-            alert("Official CAPA Saved!");
-        }
-        function loadData() {
-            const data = JSON.parse(localStorage.getItem('aramco_capa_official'));
-            if(data) {
-                document.getElementById('comp_name').value = data.comp;
-                document.getElementById('finding_1').value = data.f1;
-                alert("Data Loaded!");
-            }
-        }
-    </script>
 </body>
 </html>
