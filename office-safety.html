@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office Safety | Aramco Standard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f4f6f9; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .header { text-align: center; border-bottom: 3px solid #00897b; padding-bottom: 15px; margin-bottom: 30px; }
+        .header h1 { color: #00897b; margin: 0; }
+        .category-section { margin-bottom: 25px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }
+        .category-title { background: #00897b; color: white; padding: 10px; margin: 0; font-size: 16px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border-bottom: 1px solid #eee; padding: 12px; text-align: left; font-size: 13px; }
+        th { background: #e0f2f1; }
+        input[type="text"] { width: 100%; padding: 5px; border: 1px solid #ccc; border-radius: 4px; }
+        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+        button, .btn-link { padding: 10px 18px; border: none; border-radius: 5px; cursor: pointer; font-weight: 600; font-family: 'Poppins'; font-size: 13px; text-decoration: none; display: inline-flex; align-items: center; }
+        .btn-save { background: #1976d2; color: white; }
+        .btn-load { background: #f57c00; color: white; }
+        .btn-pdf { background: #2e7d32; color: white; margin-left: auto; }
+        .btn-back { background: #607d8b; color: white; }
+        @media print { .no-print { display: none !important; } .container { box-shadow: none; border: none; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏢 Office Safety Inspection</h1>
+            <p>Based on Saudi Aramco SSMS Appendix 7</p>
+        </div>
+
+        <div class="no-print" style="background: #e3f2fd; padding: 15px; border-radius: 5px; margin-bottom: 20px; font-size: 13px;">
+            <strong>💡 Data Feature:</strong> Aap "Save Data" dabayen taake kaam mahfooz rahe. Baad mein "Load Data" se wapas la sakte hain.
+        </div>
+
+        <div id="checklist-content">
+            </div>
+
+        <div class="btn-group no-print">
+            <a href="index.html" class="btn-link btn-back">⬅️ Back</a>
+            <button class="btn-save" onclick="saveToLocal()">💾 Save Data</button>
+            <button class="btn-load" onclick="loadFromLocal()">🔄 Load Data</button>
+            <button class="btn-pdf" onclick="window.print()">📄 Save PDF</button>
+        </div>
+    </div>
+
+    <script>
+        const sections = [
+            { title: "1. Workstations & Ergonomics", items: ["Chair adjusted properly?", "Monitor at eye level?", "Keyboard/Mouse position ok?", "Desk surface clutter-free?"] },
+            { title: "2. Electrical Safety", items: ["No daisy-chained power strips?", "Cables not crossing walkways?", "Plugs/Outlets in good condition?", "Heaters/Fans unplugged after use?"] },
+            { title: "3. Fire Safety", items: ["Exits clearly marked & clear?", "Fire extinguishers accessible?", "Smoke detectors working?", "No smoking rules followed?"] }
+        ];
+
+        const container = document.getElementById('checklist-content');
+        sections.forEach((sec, sIdx) => {
+            let rows = sec.items.map((item, iIdx) => `
+                <tr>
+                    <td>${item}</td>
+                    <td><input type="radio" name="r_${sIdx}_${iIdx}" value="Yes"> Y <input type="radio" name="r_${sIdx}_${iIdx}" value="No"> N</td>
+                    <td><input type="text" id="obs_${sIdx}_${iIdx}" class="obs-input"></td>
+                </tr>
+            `).join('');
+            container.innerHTML += `<div class="category-section"><h3 class="category-title">${sec.title}</h3><table><tr><th>Checklist Item</th><th width="100">Status</th><th>Observations</th></tr>${rows}</table></div>`;
+        });
+
+        function saveToLocal() {
+            const data = {};
+            document.querySelectorAll('input[type="radio"]:checked').forEach(r => data[r.name] = r.value);
+            document.querySelectorAll('.obs-input').forEach(i => data[i.id] = i.value);
+            localStorage.setItem('office_safety_draft', JSON.stringify(data));
+            alert("✅ Data saved in browser memory!");
+        }
+
+        function loadFromLocal() {
+            const data = JSON.parse(localStorage.getItem('office_safety_draft'));
+            if (!data) return alert("❌ No saved data found!");
+            Object.keys(data).forEach(key => {
+                const el = document.getElementById(key) || document.querySelector(`input[name="${key}"][value="${data[key]}"]`);
+                if (el) el.type === 'radio' ? el.checked = true : el.value = data[key];
+            });
+            alert("🔄 Data loaded successfully!");
+        }
+    </script>
+</body>
+</html>
