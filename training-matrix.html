@@ -3,40 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Training Matrix | HSE Toolkit</title>
+    <title>Training Matrix | Aramco Appendix 9</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Poppins', sans-serif; background: #f4f6f9; padding: 20px; }
-        .container { max-width: 1100px; margin: 0 auto; background: #fff; padding: 25px; border-radius: 10px; }
+        body { font-family: 'Poppins', sans-serif; background: #f4f6f9; padding: 15px; margin: 0; }
+        .container { max-width: 1200px; margin: 0 auto; background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .header { text-align: center; border-bottom: 3px solid #f4511e; margin-bottom: 25px; }
-        .header h1 { color: #f4511e; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .header h1 { color: #f4511e; font-size: 24px; }
+        
+        .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        table { width: 100%; border-collapse: collapse; min-width: 1000px; }
         th, td { border: 1px solid #ddd; padding: 10px; text-align: center; font-size: 12px; }
-        th { background: #fbe9e7; }
-        .input-cell { width: 100%; border: none; text-align: center; font-family: 'Poppins'; }
-        .status-select { border: none; background: transparent; cursor: pointer; }
-        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
-        button, .btn-link { padding: 10px 15px; border-radius: 5px; border: none; font-weight: bold; cursor: pointer; text-decoration: none; font-size: 13px; }
+        th { background: #fbe9e7; color: #bf360c; }
+        
+        .input-cell { width: 100%; border: 1px solid transparent; text-align: center; font-family: 'Poppins'; padding: 5px; border-radius: 4px; }
+        .input-cell:focus { border: 1px solid #f4511e; outline: none; background: #fffde7; }
+        .status-select { border: none; background: transparent; cursor: pointer; font-weight: 600; }
+        
+        .btn-group { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+        button, .btn-link { padding: 10px 18px; border-radius: 5px; border: none; font-weight: bold; cursor: pointer; text-decoration: none; font-size: 13px; flex: 1; min-width: 120px; display: flex; align-items: center; justify-content: center; }
         .btn-add { background: #f4511e; color: white; }
         .btn-save { background: #1976d2; color: white; }
         .btn-load { background: #f57c00; color: white; }
         .btn-pdf { background: #2e7d32; color: white; margin-left: auto; }
         .btn-back { background: #607d8b; color: white; }
-        @media print { .no-print { display: none; } table { font-size: 10px; } }
+        
+        @media print { 
+            .no-print { display: none !important; } 
+            .container { box-shadow: none; width: 100%; max-width: 100%; padding: 0; }
+            table { font-size: 10px; }
+            th { background: #eee !important; color: black !important; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>📊 Training & Competency Matrix</h1>
-            <p>Track Safety Training & Certification Status</p>
+            <p style="font-size: 12px; color: #666;">Aramco Standard Versatility Chart - Appendix 9</p>
         </div>
 
-        <div style="overflow-x: auto;">
+        <div class="table-responsive">
             <table>
                 <thead>
                     <tr>
                         <th rowspan="2">Worker Name / ID</th>
+                        <th rowspan="2">Job Title / Designation</th>
+                        <th rowspan="2">Site Access Date</th>
                         <th colspan="5">Safety Training Modules (Status)</th>
                     </tr>
                     <tr>
@@ -48,15 +61,7 @@
                     </tr>
                 </thead>
                 <tbody id="matrix-body">
-                    <tr>
-                        <td><input type="text" class="input-cell" placeholder="Enter Name..."></td>
-                        <td><select class="status-select"><option>Due</option><option>Valid</option><option>Expired</option></select></td>
-                        <td><select class="status-select"><option>Due</option><option>Valid</option><option>Expired</option></select></td>
-                        <td><select class="status-select"><option>Due</option><option>Valid</option><option>Expired</option></select></td>
-                        <td><select class="status-select"><option>Due</option><option>Valid</option><option>Expired</option></select></td>
-                        <td><select class="status-select"><option>Due</option><option>Valid</option><option>Expired</option></select></td>
-                    </tr>
-                </tbody>
+                    </tbody>
             </table>
         </div>
 
@@ -65,36 +70,56 @@
             <button class="btn-add" onclick="addNewRow()">➕ Add Worker</button>
             <button class="btn-save" onclick="saveMatrix()">💾 Save Matrix</button>
             <button class="btn-load" onclick="loadMatrix()">🔄 Load Matrix</button>
-            <button class="btn-pdf" onclick="window.print()">📄 Save PDF</button>
+            <button class="btn-pdf" onclick="window.print()">📄 Save PDF (Landscape)</button>
         </div>
     </div>
 
     <script>
-        function addNewRow() {
-            const row = `<tr><td><input type="text" class="input-cell" placeholder="Enter Name..."></td><td><select class="status-select"><option>Due</option><option>Valid</option><option>Expired</option></select></td><td><select class="status-select"><option>Due</option><option>Valid</option><option>Expired</option></select></td><td><select class="status-select"><option>Due</option><option>Valid</option><option>Expired</option></select></td><td><select class="status-select"><option>Due</option><option>Valid</option><option>Expired</option></select></td><td><select class="status-select"><option>Due</option><option>Valid</option><option>Expired</option></select></td></tr>`;
+        // Naya Row Add Karne ka function (Aramco Columns ke sath)
+        function addNewRow(data = {}) {
+            const row = `<tr>
+                <td><input type="text" class="input-cell name" value="${data.name || ''}" placeholder="Enter Name..."></td>
+                <td><input type="text" class="input-cell job" value="${data.job || ''}" placeholder="e.g. Rigger"></td>
+                <td><input type="date" class="input-cell access-date" value="${data.date || ''}"></td>
+                <td><select class="status-select t1"><option ${data.t1==='Due'?'selected':''}>Due</option><option ${data.t1==='Valid'?'selected':''}>Valid</option><option ${data.t1==='Expired'?'selected':''}>Expired</option></select></td>
+                <td><select class="status-select t2"><option ${data.t2==='Due'?'selected':''}>Due</option><option ${data.t2==='Valid'?'selected':''}>Valid</option><option ${data.t2==='Expired'?'selected':''}>Expired</option></select></td>
+                <td><select class="status-select t3"><option ${data.t3==='Due'?'selected':''}>Due</option><option ${data.t3==='Valid'?'selected':''}>Valid</option><option ${data.t3==='Expired'?'selected':''}>Expired</option></select></td>
+                <td><select class="status-select t4"><option ${data.t4==='Due'?'selected':''}>Due</option><option ${data.t4==='Valid'?'selected':''}>Valid</option><option ${data.t4==='Expired'?'selected':''}>Expired</option></select></td>
+                <td><select class="status-select t5"><option ${data.t5==='Due'?'selected':''}>Due</option><option ${data.t5==='Valid'?'selected':''}>Valid</option><option ${data.t5==='Expired'?'selected':''}>Expired</option></select></td>
+            </tr>`;
             document.getElementById('matrix-body').insertAdjacentHTML('beforeend', row);
         }
 
+        // Pehla row auto-add karein
+        window.onload = () => { if(document.getElementById('matrix-body').children.length === 0) addNewRow(); };
+
+        // Save Data (Ab naye columns bhi save honge)
         function saveMatrix() {
             const rows = [];
             document.querySelectorAll('#matrix-body tr').forEach(tr => {
-                const inputs = tr.querySelectorAll('input, select');
-                rows.push({ name: inputs[0].value, t1: inputs[1].value, t2: inputs[2].value, t3: inputs[3].value, t4: inputs[4].value, t5: inputs[5].value });
+                rows.push({
+                    name: tr.querySelector('.name').value,
+                    job: tr.querySelector('.job').value,
+                    date: tr.querySelector('.access-date').value,
+                    t1: tr.querySelector('.t1').value,
+                    t2: tr.querySelector('.t2').value,
+                    t3: tr.querySelector('.t3').value,
+                    t4: tr.querySelector('.t4').value,
+                    t5: tr.querySelector('.t5').value
+                });
             });
-            localStorage.setItem('training_matrix_data', JSON.stringify(rows));
-            alert("✅ Matrix saved successfully!");
+            localStorage.setItem('training_matrix_v2', JSON.stringify(rows));
+            alert("✅ Training Matrix Saved Successfully!");
         }
 
+        // Load Data
         function loadMatrix() {
-            const data = JSON.parse(localStorage.getItem('training_matrix_data'));
+            const data = JSON.parse(localStorage.getItem('training_matrix_v2'));
             if (!data) return alert("❌ No saved data found!");
             const body = document.getElementById('matrix-body');
-            body.innerHTML = '';
-            data.forEach(d => {
-                const row = `<tr><td><input type="text" class="input-cell" value="${d.name}"></td><td><select class="status-select"><option ${d.t1==='Due'?'selected':''}>Due</option><option ${d.t1==='Valid'?'selected':''}>Valid</option><option ${d.t1==='Expired'?'selected':''}>Expired</option></select></td><td><select class="status-select"><option ${d.t2==='Due'?'selected':''}>Due</option><option ${d.t2==='Valid'?'selected':''}>Valid</option><option ${d.t2==='Expired'?'selected':''}>Expired</option></select></td><td><select class="status-select"><option ${d.t3==='Due'?'selected':''}>Due</option><option ${d.t3==='Valid'?'selected':''}>Valid</option><option ${d.t3==='Expired'?'selected':''}>Expired</option></select></td><td><select class="status-select"><option ${d.t4==='Due'?'selected':''}>Due</option><option ${d.t4==='Valid'?'selected':''}>Valid</option><option ${d.t4==='Expired'?'selected':''}>Expired</option></select></td><td><select class="status-select"><option ${d.t5==='Due'?'selected':''}>Due</option><option ${d.t5==='Valid'?'selected':''}>Valid</option><option ${d.t5==='Expired'?'selected':''}>Expired</option></select></td></tr>`;
-                body.insertAdjacentHTML('beforeend', row);
-            });
-            alert("🔄 Matrix loaded!");
+            body.innerHTML = ''; // Purana saaf karein
+            data.forEach(d => addNewRow(d));
+            alert("🔄 Matrix Loaded Successfully!");
         }
     </script>
 </body>
