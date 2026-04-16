@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAPA Tracker | Aramco Standard</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #8e24aa; /* Purple Theme */
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #8e24aa;
+            margin: 0;
+            font-size: 26px;
+        }
+        .header p {
+            color: #555;
+            margin: 5px 0 0 0;
+            font-size: 14px;
+        }
+
+        /* Form Sections */
+        .form-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            border-left: 5px solid #8e24aa;
+        }
+        .form-section h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 18px;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        /* Grid Layouts */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+        
+        @media (max-width: 600px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        }
+
+        /* Inputs */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+        .form-group label {
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 5px;
+            color: #444;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* Action Status Badges */
+        select.status-open { color: #d32f2f; font-weight: bold; }
+        select.status-closed { color: #388e3c; font-weight: bold; }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        button, .btn-link {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+        .btn-pdf { background-color: #2e7d32; color: white; margin-left: auto; }
+        .btn-pdf:hover { background-color: #1b5e20; }
+        .btn-back { background-color: #607d8b; color: white; }
+        .btn-back:hover { background-color: #455a64; }
+
+        /* ========================================= */
+        /* 🖨️ ADVANCED PRINT & PDF SETTINGS */
+        /* ========================================= */
+        @media print {
+            @page {
+                size: portrait;
+                margin: 10mm;
+            }
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+                max-width: 100%;
+            }
+            .no-print { display: none !important; }
+            .form-section {
+                background-color: white !important;
+                border: 1px solid #000 !important;
+                border-left: 1px solid #000 !important;
+                page-break-inside: avoid;
+            }
+            input, select, textarea {
+                border: none !important;
+                border-bottom: 1px dashed #ccc !important;
+                background: transparent !important;
+                padding: 2px !important;
+                resize: none !important;
+                appearance: none; /* removes dropdown arrow */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="header">
+            <h1>🛠️ CAPA Report Form</h1>
+            <p>Corrective and Preventive Action Tracker (Aramco SSMS Appendix 11)</p>
+        </div>
+
+        <div class="form-section">
+            <h3>1. General Information</h3>
+            <div class="grid-3">
+                <div class="form-group">
+                    <label>CAPA Reference No:</label>
+                    <input type="text" placeholder="e.g. CAPA-2026-001">
+                </div>
+                <div class="form-group">
+                    <label>Date Issued:</label>
+                    <input type="date">
+                </div>
+                <div class="form-group">
+                    <label>Source of Finding:</label>
+                    <select>
+                        <option>Internal Audit</option>
+                        <option>Site Inspection</option>
+                        <option>Incident Investigation</option>
+                        <option>Management Review</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Department / Facility:</label>
+                    <input type="text" placeholder="Location...">
+                </div>
+                <div class="form-group">
+                    <label>Issued By (Auditor/HSE):</label>
+                    <input type="text" placeholder="Name...">
+                </div>
+                <div class="form-group">
+                    <label>Issued To (Action Owner):</label>
+                    <input type="text" placeholder="Manager Name...">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>2. Problem Description & Root Cause Analysis</h3>
+            <div class="form-group">
+                <label>Description of Non-Conformance / Finding:</label>
+                <textarea placeholder="Describe what went wrong or what the violation was..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Root Cause Analysis (Why did it happen?):</label>
+                <textarea placeholder="List the fundamental system, process, or behavioral failures..."></textarea>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>3. Corrective & Preventive Action Plan</h3>
+            
+            <label style="font-weight: bold; color: #8e24aa; margin-top: 10px; display: block;">A. Immediate Corrective Action (Fixing the current issue)</label>
+            <div class="form-group">
+                <textarea placeholder="What immediate action will be taken?"></textarea>
+            </div>
+            <div class="grid-3">
+                <div class="form-group">
+                    <label>Assigned To:</label>
+                    <input type="text" placeholder="Name">
+                </div>
+                <div class="form-group">
+                    <label>Target Date:</label>
+                    <input type="date">
+                </div>
+                <div class="form-group">
+                    <label>Status:</label>
+                    <select class="status-open">
+                        <option value="Open" class="status-open">🔴 Open</option>
+                        <option value="Closed" class="status-closed">🟢 Closed</option>
+                    </select>
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px dashed #ccc; margin: 20px 0;">
+
+            <label style="font-weight: bold; color: #8e24aa; display: block;">B. Preventive Action (Preventing it from happening again)</label>
+            <div class="form-group">
+                <textarea placeholder="What system or process changes will be made?"></textarea>
+            </div>
+            <div class="grid-3">
+                <div class="form-group">
+                    <label>Assigned To:</label>
+                    <input type="text" placeholder="Name">
+                </div>
+                <div class="form-group">
+                    <label>Target Date:</label>
+                    <input type="date">
+                </div>
+                <div class="form-group">
+                    <label>Status:</label>
+                    <select class="status-open">
+                        <option value="Open" class="status-open">🔴 Open</option>
+                        <option value="Closed" class="status-closed">🟢 Closed</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>4. Verification & Closure</h3>
+            <div class="form-group">
+                <label>Verification Comments (Has the action been effective?):</label>
+                <textarea placeholder="Auditor/HSE comments after reviewing the implemented actions..."></textarea>
+            </div>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Closed By (Sign/Name):</label>
+                    <input type="text" placeholder="HSE Manager...">
+                </div>
+                <div class="form-group">
+                    <label>Closure Date:</label>
+                    <input type="date">
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-group no-print">
+            <a href="index.html" class="btn-link btn-back">⬅️ Back to Dashboard</a>
+            <button class="btn-pdf" onclick="window.print()">📄 Save / Print as PDF</button>
+        </div>
+
+    </div>
+
+</body>
+</html>
