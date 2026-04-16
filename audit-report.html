@@ -3,117 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Safety Audit Report | Aramco Standard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Audit Report | Aramco Appendix 12</title>
     <style>
-        body { font-family: 'Poppins', sans-serif; background: #f4f6f9; padding: 15px; margin: 0; }
-        .container { max-width: 1000px; margin: 0 auto; background: #fff; border: 2px solid #333; }
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
+        .audit-form { max-width: 1000px; margin: 0 auto; background: white; border: 2px solid #000; }
+        .header-box { display: flex; border-bottom: 2px solid #000; }
+        .logo-area { width: 150px; border-right: 2px solid #000; padding: 10px; text-align: center; font-weight: bold; }
+        .title-area { flex: 1; padding: 10px; text-align: center; }
+        .title-area h1 { margin: 0; font-size: 20px; }
         
-        .audit-header { display: flex; border-bottom: 2px solid #333; background: #f8f9fa; }
-        .header-logo { width: 150px; border-right: 2px solid #333; padding: 15px; text-align: center; font-weight: bold; }
-        .header-title { flex: 1; padding: 15px; text-align: center; }
-        .header-title h1 { margin: 0; font-size: 20px; text-transform: uppercase; }
-        
-        .info-row { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid #333; }
-        .info-cell { border-right: 1px solid #333; padding: 8px; }
-        .info-cell:last-child { border-right: none; }
-        .info-cell label { font-size: 10px; font-weight: bold; color: #555; text-transform: uppercase; }
-        .info-cell input { width: 100%; border: none; font-size: 13px; outline: none; background: transparent; }
+        .field-row { display: grid; grid-template-columns: repeat(2, 1fr); border-bottom: 1px solid #000; }
+        .field { padding: 8px; border-right: 1px solid #000; }
+        .field:last-child { border-right: none; }
+        .field label { display: block; font-size: 10px; font-weight: bold; }
+        .field input { width: 100%; border: none; outline: none; font-size: 13px; }
 
-        .section-head { background: #e0e0e0; padding: 8px 15px; font-weight: bold; font-size: 14px; border-bottom: 1px solid #333; border-top: 1px solid #333; }
-        
-        .text-area-box { padding: 10px; border-bottom: 1px solid #333; }
-        .text-area-box label { font-size: 11px; font-weight: bold; display: block; margin-bottom: 5px; }
-        .text-area-box textarea { width: 100%; height: 80px; border: 1px solid #ccc; font-family: 'Poppins'; resize: none; }
+        .section-header { background: #333; color: white; padding: 5px 10px; font-weight: bold; font-size: 14px; }
+        .content-box { padding: 10px; border-bottom: 1px solid #000; min-height: 80px; }
+        .content-box textarea { width: 100%; border: none; min-height: 70px; font-family: Arial; resize: none; outline: none; }
 
-        .sign-row { display: grid; grid-template-columns: 1fr 1fr; border-top: 2px solid #333; background: #fafafa; }
-        .sign-cell { border-right: 1px solid #333; padding: 15px; text-align: center; }
-        
-        .btn-group { display: flex; gap: 10px; margin-top: 20px; }
-        .btn { padding: 12px; border: none; border-radius: 4px; color: white; font-weight: bold; cursor: pointer; flex: 1; text-align: center; text-decoration: none; }
-
-        @media print {
-            .no-print { display: none !important; }
-            body { padding: 0; }
-            .container { width: 100%; }
-        }
+        @media print { .no-print { display: none; } .audit-form { border: 2px solid #000; width: 100%; } }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="audit-header">
-            <div class="header-logo">HSE DEPT</div>
-            <div class="header-title">
-                <h1>HSE Compliance Audit Report</h1>
-                <p style="font-size: 10px; font-weight: bold;">AS PER SAUDI ARAMCO SSMS APPENDIX 12</p>
+
+    <div class="audit-form">
+        <div class="header-box">
+            <div class="logo-area">HSE SYSTEM</div>
+            <div class="title-area">
+                <h1>APPENDIX 12: INTERNAL HSE AUDIT REPORT</h1>
+                <p style="font-size: 11px;">Saudi Aramco Suppliers Safety Management System (SSMS)</p>
             </div>
         </div>
 
-        <div class="info-row">
-            <div class="info-cell"><label>Audit Title:</label><input type="text" id="a_title"></div>
-            <div class="info-cell"><label>Date of Audit:</label><input type="date" id="a_date"></div>
-            <div class="info-cell"><label>Report No:</label><input type="text" id="a_ref"></div>
+        <div class="field-row">
+            <div class="field"><label>AUDIT NO:</label><input type="text" id="a_no"></div>
+            <div class="field"><label>DATE OF AUDIT:</label><input type="date" id="a_date"></div>
+        </div>
+        <div class="field-row">
+            <div class="field"><label>LEAD AUDITOR:</label><input type="text" id="a_lead"></div>
+            <div class="field"><label>FACILITY/DEPT:</label><input type="text" id="a_fac"></div>
         </div>
 
-        <div class="info-row">
-            <div class="info-cell"><label>Lead Auditor:</label><input type="text" id="a_lead"></div>
-            <div class="info-cell"><label>Auditee (Dept):</label><input type="text" id="a_dept"></div>
-            <div class="info-cell"><label>Site Location:</label><input type="text" id="a_loc"></div>
-        </div>
+        <div class="section-header">1. AUDIT SCOPE & OBJECTIVES</div>
+        <div class="content-box"><textarea id="a_scope"></textarea></div>
 
-        <div class="section-head">1. EXECUTIVE SUMMARY</div>
-        <div class="text-area-box">
-            <label>Overall Observation & Audit Summary:</label>
-            <textarea id="a_summary"></textarea>
-        </div>
+        <div class="section-header">2. EXECUTIVE SUMMARY (Overall Findings)</div>
+        <div class="content-box"><textarea id="a_sum"></textarea></div>
 
-        <div class="section-head">2. POSITIVE FINDINGS (STRENGTHS)</div>
-        <div class="text-area-box">
-            <textarea id="a_strengths"></textarea>
-        </div>
+        <div class="section-header">3. STRENGTHS (Positive Observations)</div>
+        <div class="content-box"><textarea id="a_strength"></textarea></div>
 
-        <div class="section-head">3. NON-CONFORMANCES & AREAS FOR IMPROVEMENT</div>
-        <div class="text-area-box">
-            <textarea id="a_nc"></textarea>
-        </div>
+        <div class="section-header">4. NON-CONFORMANCES (Areas for Improvement)</div>
+        <div class="content-box"><textarea id="a_nc"></textarea></div>
 
-        <div class="section-head">4. EVIDENCE LIST (ARAMCO COMPLIANCE)</div>
-        <div class="text-area-box" style="background: #fff8e1;">
-            <label>Reference of Photos/Docs Checked:</label>
-            <textarea id="a_evidence" placeholder="1. Site Photo Ref-01... 2. Training Log Page 5..."></textarea>
-        </div>
+        <div class="section-header">5. LIST OF EVIDENCE (Traceability)</div>
+        <div class="content-box" style="background:#fff8e1;"><textarea id="a_evid" placeholder="List documents, photos and interview references..."></textarea></div>
 
-        <div class="sign-row">
-            <div class="sign-cell"><p style="font-size:10px;">LEAD AUDITOR SIGNATURE</p><br>_________________</div>
-            <div class="sign-cell" style="border:none;"><p style="font-size:10px;">DEPARTMENT MANAGER SIGNATURE</p><br>_________________</div>
+        <div style="display:flex; border-top:2px solid #000;">
+            <div style="flex:1; border-right:1px solid #000; padding:15px; text-align:center;">
+                <p style="font-size:10px;">LEAD AUDITOR SIGN-OFF</p><br>_________________
+            </div>
+            <div style="flex:1; padding:15px; text-align:center;">
+                <p style="font-size:10px;">AUDITEE MANAGER SIGN-OFF</p><br>_________________
+            </div>
         </div>
     </div>
 
-    <div class="btn-group no-print">
-        <a href="index.html" class="btn" style="background:#607d8b;">Back</a>
-        <button class="btn" style="background:#1976d2;" onclick="saveAudit()">💾 Save</button>
-        <button class="btn" style="background:#f57c00;" onclick="loadAudit()">🔄 Load</button>
-        <button class="btn" style="background:#2e7d32;" onclick="window.print()">📄 Print PDF</button>
+    <div class="no-print" style="margin-top:20px; text-align:center;">
+        <button onclick="window.print()" style="padding:10px 30px; background:#2e7d32; color:white; border:none; cursor:pointer; font-weight:bold;">📄 PRINT OFFICIAL PDF</button>
     </div>
 
-    <script>
-        function saveAudit() {
-            const data = {
-                title: document.getElementById('a_title').value,
-                summary: document.getElementById('a_summary').value,
-                evidence: document.getElementById('a_evidence').value
-            };
-            localStorage.setItem('aramco_audit_master', JSON.stringify(data));
-            alert("✅ Audit Template Saved!");
-        }
-        function loadAudit() {
-            const data = JSON.parse(localStorage.getItem('aramco_audit_master'));
-            if(!data) return alert("No data!");
-            document.getElementById('a_title').value = data.title;
-            document.getElementById('a_summary').value = data.summary;
-            document.getElementById('a_evidence').value = data.evidence;
-            alert("🔄 Data Loaded!");
-        }
-    </script>
 </body>
 </html>
