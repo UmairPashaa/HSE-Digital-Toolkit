@@ -229,7 +229,77 @@
                 </tbody>
             </table>
         </div>
-
+<div class="no-print" style="margin-top: 30px; border: 2px solid #b71c1c; padding: 20px; border-radius: 10px; background: #fff;">
+    <h4 style="margin-top: 0; color: #b71c1c; border-bottom: 2px solid #b71c1c; display: inline-block; padding-bottom: 5px;">
+        📊 Risk Assessment Matrix (Reference Only)
+    </h4>
+    <p style="font-size: 12px; color: #666; margin-bottom: 15px;">Use this matrix to calculate Residual Risk in the table above ($Likelihood \times Severity$).</p>
+    
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: 12px; min-width: 500px; border: 1px solid #ddd;">
+            <thead>
+                <tr style="background: #f5f5f5;">
+                    <th style="padding: 10px; border: 1px solid #ddd;">Severity (S) ↓ / Likelihood (L) →</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">1 (Rare)</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">2 (Unlikely)</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">3 (Possible)</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">4 (Likely)</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">5 (Frequent)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="background: #f5f5f5; font-weight: bold; border: 1px solid #ddd;">5 (Catastrophic)</td>
+                    <td style="background: #fff176; border: 1px solid #ddd;">5 (M)</td>
+                    <td style="background: #ffb74d; border: 1px solid #ddd;">10 (H)</td>
+                    <td style="background: #e57373; color: white; border: 1px solid #ddd;">15 (H)</td>
+                    <td style="background: #d32f2f; color: white; border: 1px solid #ddd;">20 (VH)</td>
+                    <td style="background: #b71c1c; color: white; border: 1px solid #ddd;">25 (VH)</td>
+                </tr>
+                <tr>
+                    <td style="background: #f5f5f5; font-weight: bold; border: 1px solid #ddd;">4 (Major)</td>
+                    <td style="background: #dce775; border: 1px solid #ddd;">4 (L)</td>
+                    <td style="background: #fff176; border: 1px solid #ddd;">8 (M)</td>
+                    <td style="background: #ffb74d; border: 1px solid #ddd;">12 (H)</td>
+                    <td style="background: #e57373; color: white; border: 1px solid #ddd;">16 (H)</td>
+                    <td style="background: #d32f2f; color: white; border: 1px solid #ddd;">20 (VH)</td>
+                </tr>
+                <tr>
+                    <td style="background: #f5f5f5; font-weight: bold; border: 1px solid #ddd;">3 (Moderate)</td>
+                    <td style="background: #dce775; border: 1px solid #ddd;">3 (L)</td>
+                    <td style="background: #dce775; border: 1px solid #ddd;">6 (M)</td>
+                    <td style="background: #fff176; border: 1px solid #ddd;">9 (M)</td>
+                    <td style="background: #ffb74d; border: 1px solid #ddd;">12 (H)</td>
+                    <td style="background: #e57373; color: white; border: 1px solid #ddd;">15 (H)</td>
+                </tr>
+                <tr>
+                    <td style="background: #f5f5f5; font-weight: bold; border: 1px solid #ddd;">2 (Minor)</td>
+                    <td style="background: #aed581; border: 1px solid #ddd;">2 (L)</td>
+                    <td style="background: #dce775; border: 1px solid #ddd;">4 (L)</td>
+                    <td style="background: #dce775; border: 1px solid #ddd;">6 (M)</td>
+                    <td style="background: #fff176; border: 1px solid #ddd;">8 (M)</td>
+                    <td style="background: #ffb74d; border: 1px solid #ddd;">10 (H)</td>
+                </tr>
+                <tr>
+                    <td style="background: #f5f5f5; font-weight: bold; border: 1px solid #ddd;">1 (Slight)</td>
+                    <td style="background: #aed581; border: 1px solid #ddd;">1 (L)</td>
+                    <td style="background: #aed581; border: 1px solid #ddd;">2 (L)</td>
+                    <td style="background: #dce775; border: 1px solid #ddd;">3 (L)</td>
+                    <td style="background: #dce775; border: 1px solid #ddd;">4 (L)</td>
+                    <td style="background: #fff176; border: 1px solid #ddd;">5 (M)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div style="margin-top: 15px; font-size: 11px; display: flex; flex-wrap: wrap; gap: 10px;">
+        <span style="padding: 2px 8px; background: #aed581; border-radius: 3px;">1-4: Low (L)</span>
+        <span style="padding: 2px 8px; background: #fff176; border-radius: 3px;">5-9: Medium (M)</span>
+        <span style="padding: 2px 8px; background: #ffb74d; border-radius: 3px;">10-16: High (H)</span>
+        <span style="padding: 2px 8px; background: #d32f2f; color: white; border-radius: 3px;">17-25: Very High (VH)</span>
+    </div>
+</div>
+        
         <div class="btn-group no-print">
             <a href="index.html" class="btn-back">⬅️ Back to Dashboard</a>
             <button class="btn-add" onclick="addRow()">➕ Add New Step</button>
