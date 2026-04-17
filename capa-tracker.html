@@ -7,14 +7,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { --aramco-green: #00843D; --aramco-dark: #1e1e1e; }
-        body { font-family: 'Roboto', sans-serif; background: #555; margin: 0; padding: 20px; }
+        body { font-family: 'Roboto', sans-serif; background: #555; margin: 0; padding: 10px; padding-bottom: 80px; }
         
-        .document-page { background: #fff; width: 210mm; min-height: 297mm; margin: 0 auto; padding: 15mm; border: 2px solid #000; box-shadow: 0 0 20px rgba(0,0,0,0.5); position: relative; }
+        .document-page { background: #fff; width: 210mm; min-height: 297mm; margin: 0 auto; padding: 10mm; border: 2px solid #000; box-shadow: 0 0 20px rgba(0,0,0,0.5); position: relative; box-sizing: border-box; }
         
-        /* 🏛️ Official Header Table */
+        /* 🏛️ Editable Header */
         .header-table { width: 100%; border-collapse: collapse; border: 2px solid #000; }
         .header-table td { border: 1px solid #000; padding: 10px; vertical-align: middle; }
-        .capa-title { font-size: 18px; font-weight: bold; text-align: center; background: #f2f2f2; color: var(--aramco-green); }
+        .capa-title-box { text-align: center; background: #f2f2f2; }
+        .capa-title-box input { width: 100%; border: none; background: transparent; text-align: center; font-weight: bold; font-size: 16px; color: var(--aramco-green); outline: none; }
+        .capa-title-box small input { font-size: 11px; color: #333; font-weight: normal; }
+
+        .rev-box input { border: none; font-size: 10px; width: 100%; text-align: right; outline: none; font-weight: bold; }
 
         /* 📋 Info Grid */
         .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); border: 2px solid #000; border-top: none; }
@@ -23,10 +27,9 @@
         .field label { display: block; font-size: 10px; font-weight: bold; color: #555; text-transform: uppercase; }
         .field input, .field select { width: 100%; border: none; font-size: 13px; outline: none; background: transparent; font-weight: bold; }
 
-        /* ✍️ Section Bar */
         .section-bar { background: var(--aramco-green); color: white; padding: 8px; font-weight: bold; text-transform: uppercase; font-size: 13px; border: 2px solid #000; border-top: none; }
 
-        /* 📸 Finding & Action Row */
+        /* 📸 Finding Row */
         .finding-row { border: 2px solid #000; border-top: none; display: grid; grid-template-columns: 1fr 1fr 200px; }
         .col-box { padding: 10px; border-right: 1px solid #000; }
         .col-box:last-child { border-right: none; }
@@ -34,11 +37,11 @@
         textarea { width: 100%; min-height: 80px; border: none; font-family: inherit; font-size: 12px; resize: none; outline: none; }
 
         .photo-area { padding: 10px; text-align: center; background: #fafafa; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .img-preview { width: 170px; height: 110px; border: 1px dashed #ccc; object-fit: cover; margin-bottom: 5px; background: #eee; }
+        .img-preview { width: 100%; max-width: 170px; height: 110px; border: 1px dashed #ccc; object-fit: cover; margin-bottom: 5px; background: #eee; }
 
-        /* 🕹️ Controls */
-        .controls { position: fixed; top: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
-        .btn { padding: 12px 20px; border: none; border-radius: 5px; color: white; font-weight: bold; cursor: pointer; font-size: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        /* 🕹️ NEW: Bottom Controls (Mobile Responsive) */
+        .controls { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(30,30,30,0.9); padding: 10px; display: flex; justify-content: center; gap: 8px; z-index: 2000; flex-wrap: wrap; }
+        .btn { padding: 8px 12px; border: none; border-radius: 4px; color: white; font-weight: bold; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 5px; }
         .btn-green { background: var(--aramco-green); }
         .btn-blue { background: #1976d2; }
         .btn-orange { background: #f57c00; }
@@ -47,57 +50,73 @@
 
         @media print {
             body { background: white; padding: 0; }
-            .document-page { border: 2px solid #000; box-shadow: none; width: 100%; margin: 0; }
+            .document-page { border: 2px solid #000; box-shadow: none; width: 100%; margin: 0; padding: 10mm; }
             .controls, .btn-cam { display: none !important; }
-            .section-bar { -webkit-print-color-adjust: exact; background-color: var(--aramco-green) !important; }
         }
-        @media (max-width: 800px) { 
-            .document-page { width: 95%; padding: 5mm; } 
+
+        @media (max-width: 800px) {
+            body { padding: 5px; padding-bottom: 120px; }
+            .document-page { width: 100%; padding: 5mm; min-height: auto; }
             .info-grid { grid-template-columns: 1fr; }
-            .finding-row { grid-template-columns: 1fr; } 
+            .finding-row { grid-template-columns: 1fr; }
+            .col-box { border-right: none; border-bottom: 1px solid #000; }
             .photo-area { border-top: 1px solid #000; }
+            .controls { padding: 5px; gap: 5px; }
+            .btn { flex: 1 1 45%; font-size: 10px; justify-content: center; }
         }
     </style>
 </head>
 <body>
 
     <div class="controls no-print">
-        <button class="btn btn-green" onclick="window.print()">📄 PRINT/PDF REPORT</button>
-        <button class="btn btn-blue" onclick="saveCAPA()">💾 SAVE TO BROWSER</button>
-        <button class="btn btn-orange" onclick="loadCAPA()">🔄 LOAD SAVED</button>
-        <button class="btn btn-red" onclick="addCAPARow()">➕ ADD NEW ACTION</button>
-        <a href="index.html" class="btn btn-blue" style="text-align:center; text-decoration:none;">⬅️ DASHBOARD</a>
+        <button class="btn btn-green" onclick="window.print()">📄 PRINT</button>
+        <button class="btn btn-blue" onclick="saveCAPA()">💾 SAVE</button>
+        <button class="btn btn-orange" onclick="loadCAPA()">🔄 LOAD</button>
+        <button class="btn btn-red" onclick="addCAPARow()">➕ ACTION</button>
+        <a href="index.html" class="btn btn-blue" style="text-decoration:none;">⬅️ DASHBOARD</a>
     </div>
 
     <div class="document-page">
-       <table class="header-table">
-    <tr>
-        <td width="20%" style="text-align:center;">
-            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/44/Saudi_Aramco_Logo.svg/1200px-Saudi_Aramco_Logo.svg.png" style="width:80px;">
-        </td>
-        <td class="capa-title">
-            <input type="text" value="CORRECTIVE & PREVENTIVE ACTION (CAPA) LOG" style="text-align:center; font-weight:bold; font-size:18px; width:100%; color:#00843D;">
-            <br>
-            <input type="text" value="Saudi Aramco Suppliers Safety Management System (Appendix 11)" style="text-align:center; font-size:12px; width:100%; color:#333;">
-        </td>
-        <td width="20%" style="font-size:10px; text-align:right;">
-            <b><input type="text" value="APPENDIX 11" style="text-align:right; font-weight:bold; width:100%;"></b><br>
-            <label>Rev:</label> <input type="text" value="April 2026" style="width:70px; text-align:right;"><br>
-            <label>Page:</label> <input type="text" value="1 of 1" style="width:50px; text-align:right;">
-        </td>
-    </tr>
-</table>
+        <table class="header-table">
+            <tr>
+                <td width="20%" style="text-align:center;">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/44/Saudi_Aramco_Logo.svg/1200px-Saudi_Aramco_Logo.svg.png" style="width:60px;">
+                </td>
+                <td class="capa-title-box">
+                    <input type="text" value="CORRECTIVE & PREVENTIVE ACTION (CAPA) LOG">
+                    <br>
+                    <small><input type="text" value="Saudi Aramco Suppliers Safety Management System (Appendix 11)"></small>
+                </td>
+                <td width="25%" class="rev-box">
+                    <input type="text" value="APPENDIX 11" style="font-size: 12px;"><br>
+                    <input type="text" value="Rev: April 2026"><br>
+                    <input type="text" value="Page 1 of 1">
+                </td>
+            </tr>
+        </table>
+
+        <div class="info-grid">
+            <div class="field"><label>Company Name:</label><input type="text" id="comp_name"></div>
+            <div class="field"><label>Contract Number:</label><input type="text" id="cont_no"></div>
+            <div class="field"><label>Facility / Area:</label><input type="text" id="fac_area"></div>
+            <div class="field"><label>CAPA Log Ref #:</label><input type="text" id="capa_ref" placeholder="CP-2026-001"></div>
+            <div class="field"><label>Report Date:</label><input type="date" id="report_date"></div>
+            <div class="field"><label>Status:</label>
+                <select id="overall_status"><option>OPEN</option><option>CLOSED</option><option>IN-PROGRESS</option></select>
+            </div>
+        </div>
+
         <div class="section-bar">Action Tracking & Evidence of Closure</div>
 
         <div id="capa-container">
             <div class="finding-row">
                 <div class="col-box">
                     <label>NON-CONFORMANCE & ROOT CAUSE:</label>
-                    <textarea class="nc-desc" placeholder="Describe what went wrong and WHY..."></textarea>
+                    <textarea class="nc-desc" placeholder="Describe issue..."></textarea>
                 </div>
                 <div class="col-box">
-                    <label>CORRECTIVE / PREVENTIVE ACTIONS:</label>
-                    <textarea class="pa-desc" placeholder="Action to fix and prevent recurrence..."></textarea>
+                    <label>CORRECTIVE ACTIONS:</label>
+                    <textarea class="pa-desc" placeholder="Actions taken..."></textarea>
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px; margin-top:5px;">
                         <div><label>OWNER:</label><input type="text" class="owner-name" style="width:100%; border:1px solid #eee;"></div>
                         <div><label>TARGET:</label><input type="date" class="target-date" style="width:100%; border:1px solid #eee;"></div>
@@ -113,12 +132,12 @@
         </div>
 
         <div class="section-bar">Authorizations</div>
-        <div style="display:flex; border:2px solid #000; border-top:none; min-height: 100px;">
-            <div style="flex:1; padding:15px; border-right:1px solid #000;">
-                <label style="font-size:10px; font-weight:bold;">ORIGINATOR (HSE/AUDITOR):</label><br><br>____________________
+        <div style="display:flex; border:2px solid #000; border-top:none; min-height: 80px;">
+            <div style="flex:1; padding:10px; border-right:1px solid #000;">
+                <label style="font-size:10px; font-weight:bold;">ORIGINATOR (HSE):</label><br><br>____________________
             </div>
-            <div style="flex:1; padding:15px;">
-                <label style="font-size:10px; font-weight:bold;">ACTION OWNER (MANAGER):</label><br><br>____________________
+            <div style="flex:1; padding:10px;">
+                <label style="font-size:10px; font-weight:bold;">MANAGER:</label><br><br>____________________
             </div>
         </div>
     </div>
@@ -135,7 +154,7 @@
                     <textarea class="nc-desc" placeholder="Describe finding..."></textarea>
                 </div>
                 <div class="col-box">
-                    <label>CORRECTIVE / PREVENTIVE ACTIONS:</label>
+                    <label>CORRECTIVE ACTIONS:</label>
                     <textarea class="pa-desc" placeholder="Describe actions..."></textarea>
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px; margin-top:5px;">
                         <div><label>OWNER:</label><input type="text" class="owner-name" style="width:100%; border:1px solid #eee;"></div>
@@ -144,9 +163,9 @@
                 </div>
                 <div class="photo-area">
                     <label>EVIDENCE PHOTO</label>
-                    <img id="prev_${rowCount}" class="img-preview" src="" alt="Pending Evidence">
+                    <img id="prev_${rowCount}" class="img-preview" src="" alt="Pending">
                     <input type="file" id="file_${rowCount}" accept="image/*" style="display:none" onchange="previewImage(this, 'prev_${rowCount}')">
-                    <button class="btn-cam" onclick="document.getElementById('file_${rowCount}').click()">📷 TAKE PHOTO</button>
+                    <button class="btn-cam" onclick="document.getElementById('file_${rowCount}').click()">📷 PHOTO</button>
                 </div>
             </div>`;
             document.getElementById('capa-container').insertAdjacentHTML('beforeend', html);
@@ -162,29 +181,22 @@
 
         function saveCAPA() {
             const data = {
-                header: {
-                    comp: document.getElementById('comp_name').value,
-                    ref: document.getElementById('capa_ref').value
-                },
+                header: { comp: document.getElementById('comp_name').value, ref: document.getElementById('capa_ref').value },
                 rows: []
             };
-            document.querySelectorAll('.finding-row').forEach((row, i) => {
-                data.rows.push({
-                    nc: row.querySelector('.nc-desc').value,
-                    pa: row.querySelector('.pa-desc').value,
-                    img: row.querySelector('.img-preview').src
-                });
+            document.querySelectorAll('.finding-row').forEach((row) => {
+                data.rows.push({ nc: row.querySelector('.nc-desc').value, pa: row.querySelector('.pa-desc').value, img: row.querySelector('.img-preview').src });
             });
-            localStorage.setItem('aramco_capa_v3', JSON.stringify(data));
-            alert("✅ CAPA Log & Photos Saved!");
+            localStorage.setItem('aramco_capa_v4', JSON.stringify(data));
+            alert("✅ CAPA Saved!");
         }
 
         function loadCAPA() {
-            const data = JSON.parse(localStorage.getItem('aramco_capa_v3'));
-            if(!data) return alert("No Saved Data!");
+            const data = JSON.parse(localStorage.getItem('aramco_capa_v4'));
+            if(!data) return alert("No Data!");
             document.getElementById('comp_name').value = data.header.comp;
             document.getElementById('capa_ref').value = data.header.ref;
-            alert("🔄 Header Loaded! Row data is in storage.");
+            alert("🔄 Header Loaded! Row data in memory.");
         }
     </script>
 </body>
