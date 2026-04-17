@@ -1,4 +1,4 @@
-const cacheName = 'hse-toolkit-v2';
+const cacheName = 'hse-toolkit-v6';
 const assets = [
   './',
   './index.html',
