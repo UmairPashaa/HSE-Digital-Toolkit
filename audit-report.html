@@ -2,77 +2,76 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Audit Report | Aramco Appendix 12</title>
+    <title>APPENDIX 12 - INTERNAL HSE AUDIT REPORT</title>
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; background: #f4f4f4; }
-        .audit-form { max-width: 1000px; margin: 0 auto; background: white; border: 2px solid #000; }
-        .header-box { display: flex; border-bottom: 2px solid #000; }
-        .logo-area { width: 150px; border-right: 2px solid #000; padding: 10px; text-align: center; font-weight: bold; }
-        .title-area { flex: 1; padding: 10px; text-align: center; }
-        .title-area h1 { margin: 0; font-size: 20px; }
+        body { font-family: Arial, sans-serif; padding: 20px; background: #555; }
+        .page { background: white; width: 210mm; min-height: 297mm; margin: 0 auto; padding: 10mm; box-sizing: border-box; border: 2px solid #000; }
         
-        .field-row { display: grid; grid-template-columns: repeat(2, 1fr); border-bottom: 1px solid #000; }
-        .field { padding: 8px; border-right: 1px solid #000; }
-        .field:last-child { border-right: none; }
-        .field label { display: block; font-size: 10px; font-weight: bold; }
-        .field input { width: 100%; border: none; outline: none; font-size: 13px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: -2px; }
+        td { border: 1px solid #000; padding: 8px; vertical-align: top; font-size: 12px; }
+        
+        .title-bg { background: #000; color: #fff; text-align: center; font-weight: bold; padding: 5px; text-transform: uppercase; }
+        .label { font-weight: bold; font-size: 10px; display: block; margin-bottom: 4px; }
+        
+        textarea { width: 100%; border: none; font-family: Arial; font-size: 13px; min-height: 120px; outline: none; resize: none; }
+        input { width: 100%; border: none; outline: none; font-size: 13px; }
 
-        .section-header { background: #333; color: white; padding: 5px 10px; font-weight: bold; font-size: 14px; }
-        .content-box { padding: 10px; border-bottom: 1px solid #000; min-height: 80px; }
-        .content-box textarea { width: 100%; border: none; min-height: 70px; font-family: Arial; resize: none; outline: none; }
+        .no-print { position: fixed; bottom: 20px; right: 20px; background: #b71c1c; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; }
 
-        @media print { .no-print { display: none; } .audit-form { border: 2px solid #000; width: 100%; } }
+        @media print {
+            body { background: white; padding: 0; }
+            .page { margin: 0; border: 2px solid #000; width: 100%; }
+            .no-print { display: none; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="audit-form">
-        <div class="header-box">
-            <div class="logo-area">HSE SYSTEM</div>
-            <div class="title-area">
-                <h1>APPENDIX 12: INTERNAL HSE AUDIT REPORT</h1>
-                <p style="font-size: 11px;">Saudi Aramco Suppliers Safety Management System (SSMS)</p>
-            </div>
-        </div>
+<div class="page">
+    <table>
+        <tr>
+            <td width="20%" style="text-align:center;"><strong>HSE SYSTEM</strong></td>
+            <td style="text-align:center; font-size: 16px;"><strong>APPENDIX 12: INTERNAL HSE AUDIT REPORT</strong><br><small>Saudi Aramco Suppliers Safety Management System (SSMS)</small></td>
+            <td width="20%">REV: 01<br>PAGE: 1 OF 1</td>
+        </tr>
+    </table>
 
-        <div class="field-row">
-            <div class="field"><label>AUDIT NO:</label><input type="text" id="a_no"></div>
-            <div class="field"><label>DATE OF AUDIT:</label><input type="date" id="a_date"></div>
-        </div>
-        <div class="field-row">
-            <div class="field"><label>LEAD AUDITOR:</label><input type="text" id="a_lead"></div>
-            <div class="field"><label>FACILITY/DEPT:</label><input type="text" id="a_fac"></div>
-        </div>
+    <table>
+        <tr>
+            <td width="30%"><span class="label">AUDIT NO:</span><input type="text"></td>
+            <td width="40%"><span class="label">DATE OF AUDIT:</span><input type="date"></td>
+            <td width="30%"><span class="label">FACILITY/LOCATION:</span><input type="text"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><span class="label">LEAD AUDITOR:</span><input type="text"></td>
+            <td><span class="label">AUDIT TEAM:</span><input type="text"></td>
+        </tr>
+    </table>
 
-        <div class="section-header">1. AUDIT SCOPE & OBJECTIVES</div>
-        <div class="content-box"><textarea id="a_scope"></textarea></div>
+    <div class="title-bg">1. AUDIT SCOPE & OBJECTIVES</div>
+    <div style="border: 1px solid #000; padding: 5px;"><textarea></textarea></div>
 
-        <div class="section-header">2. EXECUTIVE SUMMARY (Overall Findings)</div>
-        <div class="content-box"><textarea id="a_sum"></textarea></div>
+    <div class="title-bg">2. EXECUTIVE SUMMARY (OVERALL FINDINGS)</div>
+    <div style="border: 1px solid #000; padding: 5px;"><textarea></textarea></div>
 
-        <div class="section-header">3. STRENGTHS (Positive Observations)</div>
-        <div class="content-box"><textarea id="a_strength"></textarea></div>
+    <div class="title-bg">3. STRENGTHS (POSITIVE OBSERVATIONS)</div>
+    <div style="border: 1px solid #000; padding: 5px;"><textarea></textarea></div>
 
-        <div class="section-header">4. NON-CONFORMANCES (Areas for Improvement)</div>
-        <div class="content-box"><textarea id="a_nc"></textarea></div>
+    <div class="title-bg">4. NON-CONFORMANCES (AREAS FOR IMPROVEMENT)</div>
+    <div style="border: 1px solid #000; padding: 5px;"><textarea></textarea></div>
 
-        <div class="section-header">5. LIST OF EVIDENCE (Traceability)</div>
-        <div class="content-box" style="background:#fff8e1;"><textarea id="a_evid" placeholder="List documents, photos and interview references..."></textarea></div>
+    <div class="title-bg">5. LIST OF EVIDENCE (TRACEABILITY)</div>
+    <div style="border: 1px solid #000; padding: 5px; background: #fffde7;"><textarea placeholder="Enter Photo/Document References..."></textarea></div>
 
-        <div style="display:flex; border-top:2px solid #000;">
-            <div style="flex:1; border-right:1px solid #000; padding:15px; text-align:center;">
-                <p style="font-size:10px;">LEAD AUDITOR SIGN-OFF</p><br>_________________
-            </div>
-            <div style="flex:1; padding:15px; text-align:center;">
-                <p style="font-size:10px;">AUDITEE MANAGER SIGN-OFF</p><br>_________________
-            </div>
-        </div>
-    </div>
+    <table style="margin-top: 10px;">
+        <tr>
+            <td width="50%" height="80"><span class="label">LEAD AUDITOR SIGN-OFF:</span><br><br><br>__________________________</td>
+            <td width="50%"><span class="label">AUDITEE MANAGER SIGN-OFF:</span><br><br><br>__________________________</td>
+        </tr>
+    </table>
+</div>
 
-    <div class="no-print" style="margin-top:20px; text-align:center;">
-        <button onclick="window.print()" style="padding:10px 30px; background:#2e7d32; color:white; border:none; cursor:pointer; font-weight:bold;">📄 PRINT OFFICIAL PDF</button>
-    </div>
+<button class="no-print" onclick="window.print()">📄 PRINT OFFICIAL REPORT</button>
 
 </body>
 </html>
