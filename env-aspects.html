@@ -67,6 +67,19 @@
             document.getElementById('env-body').insertAdjacentHTML('beforeend', html);
         }
         function saveEnv() { alert("Environmental Register Saved!"); }
+   // 🔄 Settings se Data Auto-Fill karne ka Magic Code
+    window.addEventListener('load', () => {
+        const gComp = localStorage.getItem('g_comp');
+        const gCont = localStorage.getItem('g_cont');
+        const gName = localStorage.getItem('g_name');
+        const gSite = localStorage.getItem('g_site');
+
+        if(gComp && document.getElementById('comp_name')) document.getElementById('comp_name').value = gComp;
+        if(gCont && document.getElementById('cont_no')) document.getElementById('cont_no').value = gCont;
+        if(gName && document.getElementById('auditor')) document.getElementById('auditor').value = gName;
+        if(gSite && document.getElementById('facility')) document.getElementById('facility').value = gSite;
+        if(gSite && document.getElementById('fac_area')) document.getElementById('fac_area').value = gSite;
+    });
     </script>
 </body>
 </html>
