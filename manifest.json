@@ -1,0 +1,21 @@
+{
+  "name": "HSE Digital Toolkit",
+  "short_name": "HSE Tool",
+  "description": "Saudi Aramco SSMS Standard Safety Toolkit",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f8f9fa",
+  "theme_color": "#00843D",
+  "icons": [
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/en/thumb/4/44/Saudi_Aramco_Logo.svg/1200px-Saudi_Aramco_Logo.svg.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/en/thumb/4/44/Saudi_Aramco_Logo.svg/1200px-Saudi_Aramco_Logo.svg.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
