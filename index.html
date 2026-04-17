@@ -5,29 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HSE Digital Toolkit | Professional Dashboard</title>
   
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#00843D">
+  <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/en/thumb/4/44/Saudi_Aramco_Logo.svg/1200px-Saudi_Aramco_Logo.svg.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛑️</text></svg>">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛑️</text></svg>">
 
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#00843D">
-<link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/en/thumb/4/44/Saudi_Aramco_Logo.svg/1200px-Saudi_Aramco_Logo.svg.png">
-
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js')
-        .then(reg => console.log('HSE App Registered!'))
-        .catch(err => console.log('Registration failed', err));
-    });
-  }
-</script>
-
-<style>
-  :root {
   <style>
     :root {
       --bg: #eef4f1;
@@ -86,6 +73,9 @@
       transition: 0.25s ease; border: 1px solid rgba(255,255,255,0.1);
     }
     .nav a:hover { background: rgba(132, 204, 22, 0.15); border-color: rgba(132, 204, 22, 0.45); }
+    
+    /* ⚙️ Settings Button Style */
+    .btn-settings { background: #facc15 !important; color: #1e2937 !important; font-weight: bold; }
 
     .menu-toggle { display: none; color: white; font-size: 28px; cursor: pointer; padding: 5px; transition: 0.3s; }
     .menu-toggle:hover { color: var(--lime); }
@@ -279,6 +269,7 @@
         <a href="#tools" onclick="closeMobileMenu()"><i class="fa-solid fa-toolbox"></i> Tools</a>
         <a href="#downloads" onclick="closeMobileMenu()"><i class="fa-solid fa-download"></i> Downloads</a>
         <a href="#contact" onclick="closeMobileMenu()"><i class="fa-solid fa-address-card"></i> Profile</a>
+        <a href="settings.html" class="btn-settings"><i class="fa-solid fa-gear"></i> Settings</a>
       </nav>
     </div>
   </header>
@@ -358,8 +349,8 @@
       </div>
     </div>
   </section>
-<section id="premium-tools" style="margin-top: 50px; margin-bottom: 50px; background-color: #f8f9fa; padding: 30px; border-radius: 10px;">
-    
+
+  <section id="premium-tools" style="margin-top: 50px; margin-bottom: 50px; background-color: #f8f9fa; padding: 30px; border-radius: 10px;">
     <div class="section-title" style="margin-bottom: 30px;">
         <h2 style="color: #b71c1c; border-bottom: 3px solid #b71c1c; display: inline-block; padding-bottom: 8px; font-weight: bold;">
             🏆 Premium Tools <span style="font-size: 16px; color: #555; font-weight: normal;">(Saudi Aramco & International Standards)</span>
@@ -368,41 +359,16 @@
     </div>
 
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-
         <div style="background: white; padding: 25px; border-radius: 10px; border-left: 6px solid #b71c1c; box-shadow: 0 4px 10px rgba(0,0,0,0.08); display: flex; flex-direction: column; justify-content: space-between;">
             <div><h3 style="font-size: 18px; color: #333; margin-top: 0;">🛡️ Digital JSA</h3>
             <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Activity-based risk assessment form aligned with Aramco SSMS Appendix 2.</p></div>
             <a href="aramco-jsa.html" style="display: inline-block; padding: 10px; background-color: #b71c1c; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 13px; text-align: center;">Open Tool ➔</a>
         </div>
-
-        <div style="background: white; padding: 25px; border-radius: 10px; border-left: 6px solid #ff9800; box-shadow: 0 4px 10px rgba(0,0,0,0.08); display: flex; flex-direction: column; justify-content: space-between;">
-            <div><h3 style="font-size: 18px; color: #333; margin-top: 0;">🚨 Incident Reporter</h3>
-            <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Initial field reporting and investigation tool based on Aramco Appendices 8 & 9.</p></div>
-            <a href="incident-report.html" style="display: inline-block; padding: 10px; background-color: #ff9800; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 13px; text-align: center;">Open Tool ➔</a>
-        </div>
-
-        <div style="background: white; padding: 25px; border-radius: 10px; border-left: 6px solid #1976d2; box-shadow: 0 4px 10px rgba(0,0,0,0.08); display: flex; flex-direction: column; justify-content: space-between;">
-            <div><h3 style="font-size: 18px; color: #333; margin-top: 0;">✅ QSI General Inspection</h3>
-            <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Standard walkthrough checklist covering Fire, Plant, and Procedures (Appx 6).</p></div>
-            <a href="qsi-checklist.html" style="display: inline-block; padding: 10px; background-color: #1976d2; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 13px; text-align: center;">Open Tool ➔</a>
-        </div>
-
+        
         <div style="background: white; padding: 25px; border-radius: 10px; border-left: 6px solid #8e24aa; box-shadow: 0 4px 10px rgba(0,0,0,0.08); display: flex; flex-direction: column; justify-content: space-between;">
             <div><h3 style="font-size: 18px; color: #333; margin-top: 0;">🛠️ CAPA Tracker</h3>
             <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Corrective & Preventive Action tool to track and close safety issues (Appx 11).</p></div>
             <a href="capa-tracker.html" style="display: inline-block; padding: 10px; background-color: #8e24aa; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 13px; text-align: center;">Open Tool ➔</a>
-        </div>
-
-        <div style="background: white; padding: 25px; border-radius: 10px; border-left: 6px solid #00897b; box-shadow: 0 4px 10px rgba(0,0,0,0.08); display: flex; flex-direction: column; justify-content: space-between;">
-            <div><h3 style="font-size: 18px; color: #333; margin-top: 0;">🏢 Office Safety</h3>
-            <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Ergonomics, electrical, and fire safety checklist for office/camp areas (Appx 7).</p></div>
-            <a href="office-safety.html" style="display: inline-block; padding: 10px; background-color: #00897b; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 13px; text-align: center;">Open Tool ➔</a>
-        </div>
-
-        <div style="background: white; padding: 25px; border-radius: 10px; border-left: 6px solid #f4511e; box-shadow: 0 4px 10px rgba(0,0,0,0.08); display: flex; flex-direction: column; justify-content: space-between;">
-            <div><h3 style="font-size: 18px; color: #333; margin-top: 0;">📊 Training Matrix</h3>
-            <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Digital versatility chart to track worker safety skills and training needs (Appx 9).</p></div>
-            <a href="training-matrix.html" style="display: inline-block; padding: 10px; background-color: #f4511e; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 13px; text-align: center;">Open Tool ➔</a>
         </div>
 
         <div style="background: white; padding: 25px; border-radius: 10px; border-left: 6px solid #d84315; box-shadow: 0 4px 10px rgba(0,0,0,0.08); display: flex; flex-direction: column; justify-content: space-between;">
@@ -410,50 +376,8 @@
             <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Internal safety management system audit form aligned with SSMS Appendix 12.</p></div>
             <a href="audit-report.html" style="display: inline-block; padding: 10px; background-color: #d84315; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 13px; text-align: center;">Open Tool ➔</a>
         </div>
-
-        <div style="background: white; padding: 25px; border-radius: 10px; border-left: 6px solid #283593; box-shadow: 0 4px 10px rgba(0,0,0,0.08); display: flex; flex-direction: column; justify-content: space-between;">
-            <div><h3 style="font-size: 18px; color: #333; margin-top: 0;">🎯 HSE Objectives Planner</h3>
-            <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Strategic planning tool to set, assign, and track safety targets (Appx 3).</p></div>
-            <a href="hse-objectives.html" style="display: inline-block; padding: 10px; background-color: #283593; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 13px; text-align: center;">Open Tool ➔</a>
-        </div>
-
-        <div style="background: white; padding: 25px; border-radius: 10px; border-left: 6px solid #00695c; box-shadow: 0 4px 10px rgba(0,0,0,0.08); display: flex; flex-direction: column; justify-content: space-between;">
-            <div><h3 style="font-size: 18px; color: #333; margin-top: 0;">⚠️ Master Hazard ID</h3>
-            <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Comprehensive walkdown checklist to identify baseline hazards (Appx 1).</p></div>
-            <a href="hazard-id.html" style="display: inline-block; padding: 10px; background-color: #00695c; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 13px; text-align: center;">Open Tool ➔</a>
-        </div>
-
-        <div style="background: white; padding: 25px; border-radius: 10px; border-left: 6px solid #388e3c; box-shadow: 0 4px 10px rgba(0,0,0,0.08); display: flex; flex-direction: column; justify-content: space-between;">
-            <div><h3 style="font-size: 18px; color: #333; margin-top: 0;">📢 HSE Meeting Minutes</h3>
-            <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Weekly/Monthly safety meeting records and attendee tracking (Appendix 5).</p></div>
-            <a href="hse-meetings.html" style="display: inline-block; padding: 10px; background-color: #388e3c; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 13px; text-align: center;">Open Tool ➔</a>
-        </div>
-
-        <div style="background: white; padding: 25px; border-radius: 10px; border-left: 6px solid #455a64; box-shadow: 0 4px 10px rgba(0,0,0,0.08); display: flex; flex-direction: column; justify-content: space-between;">
-            <div><h3 style="font-size: 18px; color: #333; margin-top: 0;">♻️ Waste Tracker</h3>
-            <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Daily tracking of hazardous and non-hazardous waste disposal (Appendix 13).</p></div>
-            <a href="waste-tracker.html" style="display: inline-block; padding: 10px; background-color: #455a64; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 13px; text-align: center;">Open Tool ➔</a>
-        </div>
-
-        <div style="background: white; padding: 25px; border-radius: 10px; border-left: 6px solid #00796b; box-shadow: 0 4px 10px rgba(0,0,0,0.08); display: flex; flex-direction: column; justify-content: space-between;">
-            <div><h3 style="font-size: 18px; color: #333; margin-top: 0;">🌍 Env. Aspect ID</h3>
-            <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Identify environmental risks and impacts of site activities (Appendix 4).</p></div>
-            <a href="env-aspects.html" style="display: inline-block; padding: 10px; background-color: #00796b; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 13px; text-align: center;">Open Tool ➔</a>
-        </div>
-
-        <div style="background: white; padding: 25px; border-radius: 10px; border-left: 6px solid #c62828; box-shadow: 0 4px 10px rgba(0,0,0,0.08); display: flex; flex-direction: column; justify-content: space-between;">
-            <div><h3 style="font-size: 18px; color: #333; margin-top: 0;">🚒 Emergency Plan (ERP)</h3>
-            <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Site-specific emergency response and evacuation procedures (Appendix 14).</p></div>
-            <a href="erp-plan.html" style="display: inline-block; padding: 10px; background-color: #c62828; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 13px; text-align: center;">Open Tool ➔</a>
-        </div>
-
-        <div style="background: white; padding: 25px; border-radius: 10px; border-left: 6px solid #5d4037; box-shadow: 0 4px 10px rgba(0,0,0,0.08); display: flex; flex-direction: column; justify-content: space-between;">
-            <div><h3 style="font-size: 18px; color: #333; margin-top: 0;">👷‍♂️ Sub-Contractor Eval.</h3>
-            <p style="color: #666; font-size: 13px; margin-bottom: 20px;">Safety performance evaluation for third-party contractors (Appendix 10).</p></div>
-            <a href="sub-eval.html" style="display: inline-block; padding: 10px; background-color: #5d4037; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 13px; text-align: center;">Open Tool ➔</a>
-        </div>
-
-    </div> </section>
+    </div>
+  </section>
   
   <section class="section" id="downloads">
     <div class="section-head fade-in">
@@ -468,94 +392,16 @@
         <p>IGC study notes, IG2 practicals, and exam preparation.</p>
         <a class="download-btn download-green" href="https://drive.google.com/drive/folders/1jInRzzT1GG8CDCcQb2KYgahoE4-dhoSR?usp=sharing" target="_blank"><i class="fa-brands fa-google-drive"></i> Open Folder</a>
       </div>
-      <div class="info-card fade-in">
-        <h4><i class="fa-solid fa-book"></i> IOSH Managing Safely</h4>
-        <p>Templates, study materials, and hazard guides for IOSH.</p>
-        <a class="download-btn download-blue" href="https://drive.google.com/drive/folders/1TCTpGHD6vOcAkCvoQ6hem871mNS0fJIo?usp=sharing" target="_blank"><i class="fa-brands fa-google-drive"></i> Open Folder</a>
-      </div>
-      <div class="info-card fade-in">
-        <h4><i class="fa-solid fa-hard-hat"></i> OSHA Standards</h4>
-        <p>OSHA 30-hour construction guidelines and CFR 1926 standards.</p>
-        <a class="download-btn download-red" href="https://drive.google.com/drive/folders/1-Ibsy1lWn9lhdH5zPiQuiFBK6174FT_I?usp=sharing" target="_blank"><i class="fa-brands fa-google-drive"></i> Open Folder</a>
-      </div>
-      <div class="info-card fade-in">
-        <h4><i class="fa-solid fa-file-signature"></i> WPR (Permit Receiver)</h4>
-        <p>Standard Work Permit Receiver study guides, mock tests, and clearance procedures.</p>
-        <a class="download-btn" style="background: linear-gradient(135deg, #f59e0b, #d97706);" href="https://drive.google.com/drive/folders/1OS6UhgWeh6h0gk-_Alp7vcS80KCpr6m7?usp=sharing" target="_blank"><i class="fa-brands fa-google-drive"></i> Open Folder</a>
-      </div>
-      <div class="info-card fade-in">
-        <h4><i class="fa-solid fa-comments"></i> HSE Interview Q&A</h4>
-        <p>Most frequently asked safety officer interview questions and professional answers.</p>
-        <a class="download-btn" style="background: linear-gradient(135deg, #8b5cf6, #4f46e5);" href="https://drive.google.com/drive/folders/1dGe8PRxo5wY5dnqUXq05wxYIF-gcTa6e?usp=sharing" target="_blank"><i class="fa-brands fa-google-drive"></i> Open Folder</a>
-      </div>
     </div>
   </section>
   
   <section class="section fade-in" id="contact">
     <div class="developer-card">
       <img src="profile.jpg.jpg" alt="Ch Umair Pasha" class="dev-img">
-      
       <div class="dev-info">
         <h3>Ch Umair Pasha</h3>
         <p class="dev-title"><i class="fa-solid fa-laptop-code"></i> HSE Professional & Tech Innovator</p>
-        <p class="dev-bio">
-          Dedicated to bridging the gap between field safety execution and modern digital convenience. 
-          With a strong foundation in occupational health and safety systems (NEBOSH IGC, IOSH, OSHA), 
-          I developed this toolkit to empower safety professionals globally with smart, offline-ready, 
-          and mobile-responsive digital inspection systems.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section fade-in">
-    <div class="social-grid">
-      <div class="info-card">
-        <h4><i class="fa-brands fa-linkedin"></i> LinkedIn</h4>
-        <p>Professional profile for networking, career growth, and HSE portfolio visibility.</p>
-        <a class="social-btn linkedin" href="https://www.linkedin.com/in/ch-umair-pasha" target="_blank">
-          <i class="fa-brands fa-linkedin"></i> Open LinkedIn
-        </a>
-      </div>
-
-      <div class="info-card">
-        <h4><i class="fa-solid fa-briefcase"></i> Indeed</h4>
-        <p>Professional job profile and career visibility for opportunities and recruiter access.</p>
-        <a class="social-btn indeed" href="https://profile.indeed.com/p/muhammadumairp-1rstc24" target="_blank">
-          <i class="fa-solid fa-briefcase"></i> Open Indeed
-        </a>
-      </div>
-
-      <div class="info-card">
-        <h4><i class="fa-brands fa-instagram"></i> Instagram</h4>
-        <p>Personal and public profile link for visibility, updates, and social connection.</p>
-        <a class="social-btn instagram" href="https://www.instagram.com/ch_umair_pasha" target="_blank">
-          <i class="fa-brands fa-instagram"></i> Open Instagram
-        </a>
-      </div>
-
-      <div class="info-card">
-        <h4><i class="fa-brands fa-x-twitter"></i> Twitter / X</h4>
-        <p>Public social profile for updates, sharing, and online engagement.</p>
-        <a class="social-btn twitter" href="https://twitter.com/Ch_umair_pasha" target="_blank">
-          <i class="fa-brands fa-x-twitter"></i> Open Twitter
-        </a>
-      </div>
-
-      <div class="info-card">
-        <h4><i class="fa-solid fa-envelope"></i> Email</h4>
-        <p>Direct professional communication button for contact, collaboration, and feedback.</p>
-        <a class="social-btn email" href="mailto:umairpasha487@gmail.com">
-          <i class="fa-solid fa-envelope"></i> Send Email
-        </a>
-      </div>
-      
-      <div class="info-card">
-        <h4><i class="fa-solid fa-circle-info"></i> Contact Summary</h4>
-        <p>
-          This toolkit is being developed by <strong>Umair Pasha</strong> to support HSE
-          professionals with practical digital tools and next-level field-ready systems.
-        </p>
+        <p class="dev-bio">Dedicated to bridging the gap between field safety execution and modern digital convenience.</p>
       </div>
     </div>
   </section>
@@ -563,34 +409,20 @@
   <footer class="footer">
     <div class="footer-inner">
       <p>Developed by Ch Umair Pasha • HSE Digital Toolkit</p>
-      <div class="footer-mini">
-        <a href="https://www.linkedin.com/in/ch-umair-pasha" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
-        <a href="https://profile.indeed.com/p/muhammadumairp-1rstc24" target="_blank"><i class="fa-solid fa-briefcase"></i></a>
-        <a href="https://www.instagram.com/ch_umair_pasha" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-        <a href="https://twitter.com/Ch_umair_pasha" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
-        <a href="mailto:umairpasha487@gmail.com"><i class="fa-solid fa-envelope"></i></a>
-      </div>
     </div>
   </footer>
-
-  <div class="fab-container">
-    <div class="fab-menu" id="fabMenu">
-      <a href="safety-inspection.html" class="fab-item" title="New Inspection"><i class="fa-solid fa-clipboard-check"></i></a>
-      <a href="incident-report.html" class="fab-item" title="Report Incident"><i class="fa-solid fa-triangle-exclamation"></i></a>
-      <a href="emergency-contacts.html" class="fab-item" title="Emergency"><i class="fa-solid fa-phone"></i></a>
-    </div>
-    <button class="fab-main" id="fabMain" onclick="toggleFab()">
-      <i class="fa-solid fa-plus"></i>
-    </button>
-  </div>
 
   <script>
     function toggleMobileMenu() { document.getElementById('nav-menu').classList.toggle('active'); }
     function closeMobileMenu() { document.getElementById('nav-menu').classList.remove('active'); }
 
-    function toggleFab() {
-      document.getElementById('fabMenu').classList.toggle('active');
-      document.getElementById('fabMain').classList.toggle('active');
+    // 📱 PWA Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('HSE App Registered!'))
+          .catch(err => console.log('Registration failed', err));
+      });
     }
 
     const faders = document.querySelectorAll('.fade-in');
@@ -603,23 +435,6 @@
       });
     }, appearOptions);
     faders.forEach(fader => appearOnScroll.observe(fader));
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const checkData = (key, badgeId, btnId) => {
-        if (localStorage.getItem(key)) {
-          document.getElementById(badgeId).classList.add('active');
-          const btn = document.getElementById(btnId);
-          btn.innerText = 'Resume Work';
-          btn.classList.add('resume-btn');
-          btn.classList.remove('open-btn');
-        }
-      };
-      checkData('hseInspectionIsoV6', 'badge-inspection', 'btn-inspection');
-      checkData('hsePpeChecklistV3', 'badge-ppe', 'btn-ppe');
-      checkData('yourRiskKey', 'badge-risk', 'btn-risk');
-      checkData('yourIncidentKey', 'badge-incident', 'btn-incident');
-      checkData('yourTbtKey', 'badge-tbt', 'btn-tbt');
-    });
   </script>
 </body>
 </html>
