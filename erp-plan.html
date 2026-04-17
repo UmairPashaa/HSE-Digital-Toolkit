@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Response Plan | Aramco Appendix 14</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --aramco-red: #c62828; --aramco-dark: #1e1e1e; }
+        body { font-family: 'Roboto', sans-serif; background: #555; margin: 0; padding: 10px; padding-bottom: 100px; }
+        .document-page { background: #fff; width: 210mm; min-height: 297mm; margin: 0 auto; padding: 10mm; border: 2px solid #000; box-shadow: 0 0 20px rgba(0,0,0,0.5); position: relative; box-sizing: border-box; }
+        
+        .header-table { width: 100%; border-collapse: collapse; border: 2px solid #000; }
+        .header-table td { border: 1px solid #000; padding: 10px; vertical-align: middle; }
+        .title-box { text-align: center; background: #f2f2f2; }
+        .title-box input { width: 100%; border: none; background: transparent; text-align: center; font-weight: bold; font-size: 16px; color: var(--aramco-red); outline: none; }
+
+        .section-bar { background: var(--aramco-red); color: white; padding: 8px; font-weight: bold; text-transform: uppercase; font-size: 13px; border: 2px solid #000; border-top: none; }
+        
+        .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); border: 2px solid #000; border-top: none; }
+        .field { border-right: 1px solid #000; border-bottom: 1px solid #000; padding: 8px; }
+        .field label { display: block; font-size: 10px; font-weight: bold; color: #555; }
+        .field input { width: 100%; border: none; font-size: 13px; outline: none; font-weight: bold; background: transparent; }
+
+        table.contact-table { width: 100%; border-collapse: collapse; border: 2px solid #000; border-top: none; }
+        table.contact-table th { border: 1px solid #000; padding: 8px; font-size: 11px; background: #f2f2f2; }
+        table.contact-table td { border: 1px solid #000; padding: 5px; }
+
+        textarea { width: 100%; min-height: 80px; border: none; font-family: inherit; font-size: 13px; resize: none; outline: none; }
+
+        .controls { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(30,30,30,0.9); padding: 10px; display: flex; justify-content: center; gap: 8px; z-index: 2000; }
+        .btn { padding: 10px 15px; border: none; border-radius: 4px; color: white; font-weight: bold; cursor: pointer; font-size: 12px; }
+
+        @media print { .no-print { display: none !important; } .document-page { border: 2px solid #000; width: 100%; box-shadow: none; margin: 0; } body { background: white; padding: 0; } .section-bar { background-color: var(--aramco-red) !important; -webkit-print-color-adjust: exact; } }
+        @media (max-width: 800px) { .info-grid { grid-template-columns: 1fr; } .document-page { width: 100%; padding: 5mm; } .btn { flex: 1; font-size: 10px; } }
+    </style>
+</head>
+<body>
+    <div class="controls no-print">
+        <button class="btn" style="background:var(--aramco-red)" onclick="window.print()">📄 PRINT ERP</button>
+        <button class="btn" style="background:#1976d2" onclick="saveERP()">💾 SAVE</button>
+        <button class="btn" style="background:#f57c00" onclick="addRow()">➕ CONTACT</button>
+        <a href="index.html" class="btn" style="background:#444; text-decoration:none;">⬅️ MENU</a>
+    </div>
+
+    <div class="document-page">
+        <table class="header-table">
+            <tr>
+                <td width="20%"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/44/Saudi_Aramco_Logo.svg/1200px-Saudi_Aramco_Logo.svg.png" style="width:60px;"></td>
+                <td class="title-box">
+                    <input type="text" value="EMERGENCY RESPONSE PLAN (ERP)">
+                    <br><small><input type="text" value="Saudi Aramco Suppliers Safety Management System (Appendix 14)" style="text-align:center; border:none; width:100%; font-size:10px;"></small>
+                </td>
+                <td width="25%" style="font-size:10px; text-align:right;"><b>APPENDIX 14</b><br>Rev: 2026</td>
+            </tr>
+        </table>
+
+        <div class="info-grid">
+            <div class="field"><label>Project Name:</label><input type="text" id="project"></div>
+            <div class="field"><label>Site Location:</label><input type="text" id="loc"></div>
+        </div>
+
+        <div class="section-bar">Critical Emergency Contacts</div>
+        <table class="contact-table">
+            <thead>
+                <tr>
+                    <th>Service / Name</th>
+                    <th>Contact Number</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody id="contact-body">
+                <tr>
+                    <td><input type="text" value="Aramco Emergency (911)" style="font-weight:bold;"></td>
+                    <td><input type="text" value="911"></td>
+                    <td><input type="text" value="Direct Link"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" value="Site HSE Manager"></td>
+                    <td><input type="text" placeholder="Number"></td>
+                    <td><input type="text"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="section-bar">Evacuation & Assembly Procedures</div>
+        <div style="border:2px solid #000; border-top:none; padding:10px;">
+            <label style="font-size:10px; font-weight:bold;">Evacuation Route / Instructions:</label>
+            <textarea placeholder="Describe how workers should exit the site during an alarm..."></textarea>
+            <label style="font-size:10px; font-weight:bold; margin-top:10px; display:block;">Primary Assembly Point:</label>
+            <input type="text" placeholder="e.g. Main Gate Entrance Area" style="width:100%; border:1px solid #eee; padding:5px; font-size:13px;">
+        </div>
+
+        <div class="section-bar">Emergency Roles & Responsibilities</div>
+        <div style="border:2px solid #000; border-top:none; padding:10px;">
+            <textarea placeholder="List key personnel and their duties during an emergency..."></textarea>
+        </div>
+    </div>
+
+    <script>
+        function addRow() {
+            const html = `<tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>`;
+            document.getElementById('contact-body').insertAdjacentHTML('beforeend', html);
+        }
+        function saveERP() { alert("ERP Saved Successfully!"); }
+    </script>
+</body>
+</html>
