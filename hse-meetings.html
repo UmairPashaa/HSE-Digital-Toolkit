@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSE Meeting Minutes | Aramco Appendix 5</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --aramco-green: #00843D; --aramco-dark: #1e1e1e; }
+        body { font-family: 'Roboto', sans-serif; background: #555; margin: 0; padding: 10px; padding-bottom: 100px; }
+        .document-page { background: #fff; width: 210mm; min-height: 297mm; margin: 0 auto; padding: 10mm; border: 2px solid #000; box-shadow: 0 0 20px rgba(0,0,0,0.5); position: relative; box-sizing: border-box; }
+        .header-table { width: 100%; border-collapse: collapse; border: 2px solid #000; }
+        .header-table td { border: 1px solid #000; padding: 10px; vertical-align: middle; }
+        .title-box { text-align: center; background: #f2f2f2; }
+        .title-box input { width: 100%; border: none; background: transparent; text-align: center; font-weight: bold; font-size: 16px; color: var(--aramco-green); outline: none; }
+        .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); border: 2px solid #000; border-top: none; }
+        .field { border-right: 1px solid #000; border-bottom: 1px solid #000; padding: 8px; }
+        .field label { display: block; font-size: 10px; font-weight: bold; color: #555; text-transform: uppercase; }
+        .field input { width: 100%; border: none; font-size: 13px; outline: none; background: transparent; font-weight: bold; }
+        .section-bar { background: var(--aramco-green); color: white; padding: 8px; font-weight: bold; text-transform: uppercase; font-size: 13px; border: 2px solid #000; border-top: none; }
+        table.action-items { width: 100%; border-collapse: collapse; border: 2px solid #000; border-top: none; }
+        table.action-items th { border: 1px solid #000; padding: 8px; font-size: 11px; background: #f2f2f2; }
+        table.action-items td { border: 1px solid #000; padding: 5px; }
+        textarea { width: 100%; border: none; outline: none; font-family: inherit; font-size: 12px; resize: none; min-height: 50px; }
+        .controls { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(30,30,30,0.9); padding: 10px; display: flex; justify-content: center; gap: 8px; z-index: 2000; }
+        .btn { padding: 10px 15px; border: none; border-radius: 4px; color: white; font-weight: bold; cursor: pointer; font-size: 12px; }
+        @media print { .no-print { display: none !important; } .document-page { border: 2px solid #000; width: 100%; box-shadow: none; margin: 0; } body { background: white; padding: 0; } }
+        @media (max-width: 800px) { .info-grid { grid-template-columns: 1fr; } .document-page { width: 100%; padding: 5mm; } }
+    </style>
+</head>
+<body>
+    <div class="controls no-print">
+        <button class="btn" style="background:var(--aramco-green)" onclick="window.print()">📄 PRINT</button>
+        <button class="btn" style="background:#1976d2" onclick="saveMeeting()">💾 SAVE</button>
+        <button class="btn" style="background:#d32f2f" onclick="addRow()">➕ ADD TOPIC</button>
+        <a href="index.html" class="btn" style="background:#444; text-decoration:none;">⬅️ MENU</a>
+    </div>
+
+    <div class="document-page">
+        <table class="header-table">
+            <tr>
+                <td width="20%"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/44/Saudi_Aramco_Logo.svg/1200px-Saudi_Aramco_Logo.svg.png" style="width:60px;"></td>
+                <td class="title-box">
+                    <input type="text" value="HSE MEETING MINUTES">
+                    <br><small><input type="text" value="Saudi Aramco Suppliers Safety Management System (Appendix 5)" style="font-size:10px; font-weight:normal; text-align:center; border:none; width:100%;"></small>
+                </td>
+                <td width="25%" style="font-size:10px; text-align:right;"><b>APPENDIX 5</b><br>Rev: 2026</td>
+            </tr>
+        </table>
+
+        <div class="info-grid">
+            <div class="field"><label>Meeting Date:</label><input type="date"></div>
+            <div class="field"><label>Location:</label><input type="text"></div>
+            <div class="field"><label>Chairman:</label><input type="text"></div>
+        </div>
+
+        <div class="section-bar">Attendees List</div>
+        <div style="border:2px solid #000; border-top:none; padding:10px;">
+            <textarea placeholder="Enter names of attendees separated by commas..."></textarea>
+        </div>
+
+        <div class="section-bar">Meeting Agenda & Action Points</div>
+        <table class="action-items" id="action-table">
+            <thead>
+                <tr>
+                    <th width="30%">Topic / Discussion</th>
+                    <th width="40%">Action Required</th>
+                    <th width="15%">By Whom</th>
+                    <th width="15%">Target Date</th>
+                </tr>
+            </thead>
+            <tbody id="meeting-body">
+                <tr>
+                    <td><textarea></textarea></td>
+                    <td><textarea></textarea></td>
+                    <td><input type="text" style="text-align:center; font-size:11px;"></td>
+                    <td><input type="date" style="font-size:11px;"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="display:flex; border:2px solid #000; border-top:none; min-height: 80px; margin-top:20px;">
+            <div style="flex:1; padding:10px; border-right:1px solid #000;"><label style="font-size:9px; font-weight:bold;">CHAIRMAN SIGN:</label><br><br>_________</div>
+            <div style="flex:1; padding:10px;"><label style="font-size:9px; font-weight:bold;">HSE REPRESENTATIVE SIGN:</label><br><br>_________</div>
+        </div>
+    </div>
+
+    <script>
+        function addRow() {
+            const html = `<tr><td><textarea></textarea></td><td><textarea></textarea></td><td><input type="text" style="text-align:center; font-size:11px;"></td><td><input type="date" style="font-size:11px;"></td></tr>`;
+            document.getElementById('meeting-body').insertAdjacentHTML('beforeend', html);
+        }
+        function saveMeeting() { alert("Meeting Minutes Saved Locally!"); }
+    </script>
+</body>
+</html>
