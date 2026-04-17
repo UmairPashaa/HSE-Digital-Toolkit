@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Settings | HSE Toolkit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background: #f4f7f6; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 450px; border-top: 8px solid #0f766e; }
+        h2 { color: #0f766e; text-align: center; margin-bottom: 20px; }
+        .group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; font-size: 13px; color: #555; margin-bottom: 5px; }
+        input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 14px; outline: none; }
+        input:focus { border-color: #0f766e; }
+        .btn-save { width: 100%; padding: 14px; background: #0f766e; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s; }
+        .btn-save:hover { background: #0b5d57; }
+        .back { display: block; text-align: center; margin-top: 15px; color: #666; text-decoration: none; font-size: 13px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>⚙️ Master Settings</h2>
+        <p style="text-align:center; font-size:11px; color:#888;">Yahan save kiya hua data har tool mein khud-ba-khud fill ho jayega.</p>
+        
+        <div class="group"><label>Company Name:</label><input type="text" id="g_comp"></div>
+        <div class="group"><label>Contract Number:</label><input type="text" id="g_cont"></div>
+        <div class="group"><label>Auditor/HSE Name:</label><input type="text" id="g_name"></div>
+        <div class="group"><label>Site Location:</label><input type="text" id="g_site"></div>
+
+        <button class="btn-save" onclick="save()">💾 Save Settings</button>
+        <a href="index.html" class="back">⬅️ Back to Dashboard</a>
+    </div>
+
+    <script>
+        // Load data on start
+        window.onload = () => {
+            document.getElementById('g_comp').value = localStorage.getItem('g_comp') || '';
+            document.getElementById('g_cont').value = localStorage.getItem('g_cont') || '';
+            document.getElementById('g_name').value = localStorage.getItem('g_name') || '';
+            document.getElementById('g_site').value = localStorage.getItem('g_site') || '';
+        };
+
+        function save() {
+            localStorage.setItem('g_comp', document.getElementById('g_comp').value);
+            localStorage.setItem('g_cont', document.getElementById('g_cont').value);
+            localStorage.setItem('g_name', document.getElementById('g_name').value);
+            localStorage.setItem('g_site', document.getElementById('g_site').value);
+            alert("✅ Data Saved! Ab saari tools mein ye data auto-fill hoga.");
+        }
+    </script>
+</body>
+</html>
