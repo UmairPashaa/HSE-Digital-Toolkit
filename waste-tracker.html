@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste Tracker | Aramco Appendix 13</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --aramco-green: #00843D; }
+        body { font-family: 'Roboto', sans-serif; background: #555; margin: 0; padding: 10px; padding-bottom: 80px; }
+        .document-page { background: #fff; width: 297mm; min-height: 210mm; margin: 0 auto; padding: 10mm; border: 2px solid #000; box-sizing: border-box; }
+        .header-table { width: 100%; border-collapse: collapse; border: 2px solid #000; }
+        .header-table td { border: 1px solid #000; padding: 10px; text-align: center; }
+        .section-bar { background: var(--aramco-green); color: white; padding: 8px; font-weight: bold; text-transform: uppercase; font-size: 13px; border: 2px solid #000; border-top: none; }
+        table.waste-table { width: 100%; border-collapse: collapse; border: 2px solid #000; border-top: none; }
+        table.waste-table th { border: 1px solid #000; padding: 8px; font-size: 11px; background: #f2f2f2; }
+        table.waste-table td { border: 1px solid #000; padding: 5px; }
+        input, select { width: 100%; border: none; font-size: 11px; outline: none; background: transparent; }
+        .controls { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(30,30,30,0.9); padding: 10px; display: flex; justify-content: center; gap: 8px; z-index: 2000; }
+        .btn { padding: 10px 15px; border: none; border-radius: 4px; color: white; font-weight: bold; cursor: pointer; font-size: 12px; }
+        @media print { @page { size: landscape; } .no-print { display: none !important; } .document-page { border: 2px solid #000; width: 100%; } body { background: white; padding: 0; } }
+    </style>
+</head>
+<body>
+    <div class="controls no-print">
+        <button class="btn" style="background:var(--aramco-green)" onclick="window.print()">📄 PRINT (LANDSCAPE)</button>
+        <button class="btn" style="background:#1976d2" onclick="saveWaste()">💾 SAVE</button>
+        <button class="btn" style="background:#d32f2f" onclick="addWasteRow()">➕ ADD ENTRY</button>
+        <a href="index.html" class="btn" style="background:#444; text-decoration:none;">⬅️ MENU</a>
+    </div>
+
+    <div class="document-page">
+        <table class="header-table">
+            <tr>
+                <td width="20%"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/44/Saudi_Aramco_Logo.svg/1200px-Saudi_Aramco_Logo.svg.png" style="width:60px;"></td>
+                <td style="background:#f2f2f2;"><strong>WASTE MANAGEMENT & DISPOSAL LOG</strong><br><small>Saudi Aramco SSMS Appendix 13</small></td>
+                <td width="20%"><b>APPENDIX 13</b><br>Rev: 2026</td>
+            </tr>
+        </table>
+
+        <div class="section-bar">Waste Generation Tracking</div>
+        <table class="waste-table">
+            <thead>
+                <tr>
+                    <th width="10%">Date</th>
+                    <th width="20%">Type of Waste</th>
+                    <th width="15%">Category (H/NH)</th>
+                    <th width="10%">Quantity</th>
+                    <th width="15%">Disposal Method</th>
+                    <th width="15%">Manifest/Ticket #</th>
+                    <th width="15%">Remarks</th>
+                </tr>
+            </thead>
+            <tbody id="waste-body">
+                <tr>
+                    <td><input type="date"></td>
+                    <td><input type="text" placeholder="e.g. Used Oil"></td>
+                    <td><select><option>Non-Hazardous</option><option>Hazardous</option></select></td>
+                    <td><input type="text" placeholder="50 Liters"></td>
+                    <td><input type="text" placeholder="Recycling"></td>
+                    <td><input type="text" placeholder="MAN-123"></td>
+                    <td><input type="text"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function addWasteRow() {
+            const html = `<tr><td><input type="date"></td><td><input type="text"></td><td><select><option>Non-Hazardous</option><option>Hazardous</option></select></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>`;
+            document.getElementById('waste-body').insertAdjacentHTML('beforeend', html);
+        }
+        function saveWaste() { alert("Waste Log Saved!"); }
+    </script>
+</body>
+</html>
