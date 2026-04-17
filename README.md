@@ -1,74 +1,86 @@
 # ⛑️ HSE Digital Toolkit (Pro Version)
 
-![Version](https://img.shields.io/badge/Version-1.0.0-success)
-![Platform](https://img.shields.io/badge/Platform-Web%20%7C%20Mobile-blue)
+![Version](https://img.shields.io/badge/Version-2.0.0-success)
+![Platform](https://img.shields.io/badge/Platform-PWA%20%7C%20Web%20%7C%20Mobile-blue)
 ![Tech Stack](https://img.shields.io/badge/Tech-HTML5%20%7C%20CSS3%20%7C%20Vanilla%20JS-orange)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-**HSE Digital Toolkit** is a comprehensive, mobile-responsive, and offline-capable digital platform designed exclusively for Health, Safety, and Environment (HSE) professionals. It transforms traditional paper-based safety systems into a fast, reliable, and secure digital experience.
+**HSE Digital Toolkit** is a state-of-the-art, mobile-responsive, and offline-capable Progressive Web App (PWA) designed specifically for Health, Safety, and Environment (HSE) professionals. 
 
-Developed by **Umair Pasha**, this project aims to provide practical, field-ready safety tools directly on smartphones and tablets.
+Its primary objective is to transform traditional, paper-based field safety systems into a fast, secure, and fully digital format. It is strictly built upon **Saudi Aramco SSMS Standards, OSHA, and ISO 45001** guidelines.
 
-🌍 **Live Demo:** [Visit HSEPASHA.com](#) *(Add your live domain link here once purchased)*
-
----
-
-## 🚀 Key Features
-
-* **📱 100% Mobile Responsive:** Specifically designed for field work. Includes mobile-first touch targets, horizontal scrollable tables, and dynamic hamburger menus.
-* **📄 Advanced PDF Export (`html2pdf`):** Highly optimized PDF generation. Automatically locks to **A4 Landscape**, converts form inputs to plain text to prevent layout breaking, and hides UI toolbars before printing.
-* **💾 Local Storage Persistence:** Never lose your data. The toolkit automatically saves inspection rows, observations, and PPE checklists directly to the browser's local storage.
-* **🎯 Dynamic UI/UX:** Smart "Data Saved" badges on the dashboard that track which tools currently have active/saved data.
-* **📸 In-line Photo & Signature Evidence:** Users can upload evidence photos and digital signatures directly into the inspection tables.
+🌍 **Live App:** [Access the Toolkit Here](https://umairpashaa.github.io/HSE-Digital-Toolkit/)
 
 ---
 
-## 🧰 Toolkit Modules Included
+## ⚙️ Core Technical Features
 
-1.  **⚠️ Risk Assessment:** Professional site risk assessment with multi-hazard format, risk matrix logic (Severity x Likelihood), and action tracking.
-2.  **🦺 PPE Checklist:** Advanced Personnel Protective Equipment compliance check with automatic Pass/Fail color styling and dynamic status calculations.
-3.  **📋 Safety Inspection:** Site walkdown and hazard identification record aligned with ISO 45001 & OSHA 29 CFR 1926.
-4.  **🚨 Incident Report:** Structured reporting format for recording events, injuries, and immediate corrective actions.
-5.  **💬 Toolbox Talk (TBT):** Attendance-style format for pre-job discussions and safety awareness sessions.
-6.  **📞 Emergency Contacts:** Fast-access directory for site emergency support and quick communication.
+* **📱 PWA (Progressive Web App):** More than just a website, it is an installable app that runs natively on mobile devices and laptops, functioning **100% offline**.
+* **🧠 Global Smart Settings:** A centralized auto-fill system where users can save their Company Name, Contract No., and Auditor Name. This data automatically populates across all 20 tools.
+* **💾 Local Storage Persistence:** Features a "Resume Work" capability that saves data in the browser's memory, ensuring no data loss even if the internet connection drops.
+* **📄 PDF Generation:** Allows users to generate professional, print-ready PDF reports at the end of every tool.
+
+---
+
+## 🛠️ The Standard Tools (Basic Field Modules)
+These are the 6 foundational tools used daily on any standard construction or plant site:
+
+1. **⚠️ Risk Assessment:** Hazard identification with risk matrix scoring (Severity x Likelihood).
+2. **🦺 PPE Checklist:** A visual compliance checking format for workers and visitors.
+3. **🚨 Incident Report:** For recording on-site events, injuries, and immediate actions taken.
+4. **✅ Safety Inspection:** For general site walkdowns and logging unsafe acts/conditions.
+5. **💬 Toolbox Talk (TBT):** Records attendance and topics for pre-job discussions and safety awareness sessions.
+6. **📞 Emergency Contacts:** A quick-access directory for site emergency support.
+
+---
+
+## 🏆 The Premium Tools (Aramco Standard Modules)
+This is the true power of the toolkit. These 14 highly professional digital forms are directly mapped to the **Saudi Aramco Safety Management System (SSMS) Appendices**:
+
+1. **🛡️ Digital JSA:** Activity-based risk assessment *(Appendix 2)*.
+2. **🚨 Incident Reporter:** Field reporting & investigation *(Appendix 8 & 9)*.
+3. **✅ QSI General Inspection:** Fire, Plant, and Procedures walkthrough *(Appendix 6)*.
+4. **🛠️ CAPA Tracker:** Corrective & Preventive Action log *(Appendix 11)*.
+5. **🏢 Office Safety:** Ergonomics and fire safety checklist for camp/office environments *(Appendix 7)*.
+6. **📊 Training Matrix:** Worker safety skills tracking *(Appendix 9)*.
+7. **📋 Safety Audit Report:** Internal safety management audit *(Appendix 12)*.
+8. **🎯 HSE Objectives Planner:** Strategic targeting and planning tool *(Appendix 3)*.
+9. **⚠️ Master Hazard ID:** Baseline hazard identification *(Appendix 1)*.
+10. **📢 HSE Meeting Minutes:** Weekly/Monthly safety meeting records *(Appendix 5)*.
+11. **♻️ Waste Tracker:** Hazardous/Non-hazardous waste log *(Appendix 13)*.
+12. **🌍 Env. Aspect ID:** Identification of environmental impacts from site activities *(Appendix 4)*.
+13. **🚒 Emergency Plan (ERP):** Site-specific response and evacuation procedures *(Appendix 14)*.
+14. **👷‍♂️ Sub-Contractor Eval:** Third-party safety performance evaluation *(Appendix 10)*.
 
 ---
 
 ## 📚 Downloads & Study Resources
+This section serves as a free library for new professionals and knowledge seekers, directly linked via Google Drive:
 
-The toolkit also serves as a central hub for HSE learning, providing direct Google Drive links to premium study materials:
-* 🎓 NEBOSH IGC Study Notes & IG2 Practicals
-* 📘 IOSH Managing Safely Templates
-* 👷 OSHA 30-Hour Construction Guidelines
-* 📝 WPR (Work Permit Receiver) Mock Tests
-* 🗣️ Top HSE Interview Q&A
-
----
-
-## 💻 Technical Architecture
-
-* **Frontend:** Pure HTML5, CSS3, and Vanilla JavaScript (No heavy frameworks, ensuring 0ms load time).
-* **Icons & Typography:** FontAwesome 6.5.2 and Google Fonts (Inter & Poppins).
-* **PDF Generation:** `html2pdf.js` with custom DOM manipulation (pre-print and post-print event listeners) to ensure flawless data rendering.
-* **State Management:** Browser `localStorage` API for handling complex arrays and base64 image strings.
+* **🎓 NEBOSH Materials:** IGC study notes, IG2 practicals, and exam preparation.
+* **📘 IOSH Managing Safely:** Templates and hazard guides.
+* **👷 OSHA Standards:** 30-hour construction guidelines and CFR 1926.
+* **📝 WPR (Permit Receiver):** Study guides, mock tests, and clearance procedures.
+* **💬 HSE Interview Q&A:** Most frequently asked safety officer questions along with professional answers.
 
 ---
 
-## 🔮 Future Roadmap
-
-- [ ] **PWA (Progressive Web App):** Full offline functionality with an "Install to Home Screen" feature.
-- [ ] **Live Digital Signatures:** Canvas-based drawing for signatures instead of image uploads.
-- [ ] **Excel Export:** Convert table data directly into `.csv` or `.xlsx` files.
-- [ ] **Dashboard Analytics:** Live charts summarizing open hazards and compliance percentages.
-
----
-
-## 👨‍💻 About the Developer
-
-**Umair Pasha** is an HSE Professional with a passion for integrating technology into occupational health and safety. This toolkit is a reflection of bridging the gap between field safety execution and modern digital convenience.
-
-* 💼 **LinkedIn:** [Ch Umair Pasha](https://www.linkedin.com/in/ch-umair-pasha)
-* 📧 **Email:** umairpasha487@gmail.com
+## 📲 How to Install (PWA Guide)
+You don't need an App Store to install this toolkit:
+1. Open the [Live Link](https://umairpashaa.github.io/HSE-Digital-Toolkit/) on your Google Chrome or Safari browser.
+2. Tap the **3-dots menu** (⋮) in the top right corner (or the Share button on iOS).
+3. Select **"Install App"** or **"Add to Home Screen"**.
+4. The Toolkit will now appear on your device's home screen with its official logo, ready to use offline!
 
 ---
-*If you find this toolkit helpful, feel free to give this repository a ⭐ Star!*
+
+## 👨‍💻 About The Developer
+
+This project was designed and developed by **Ch Umair Pasha**, an HSE Professional and Tech Innovator. His mission is to bridge the gap between field safety execution and modern digital convenience. With a strong foundation in occupational health and safety systems (NEBOSH IGC, IOSH, OSHA), he built this platform to provide global safety professionals with smart, offline-ready, and mobile-responsive inspection systems.
+
+* **💼 LinkedIn:** [Connect with Ch Umair Pasha](https://www.linkedin.com/in/ch-umair-pasha)
+* **🌐 Indeed:** [View Professional Profile](https://profile.indeed.com/p/muhammadumairp-1rstc24)
+* **📧 Email:** [umairpasha487@gmail.com](mailto:umairpasha487@gmail.com)
+
+---
+*If you find this toolkit helpful, please consider giving this repository a ⭐ Star!*
